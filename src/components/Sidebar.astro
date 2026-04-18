@@ -1,4 +1,5 @@
 ---
+import LucideIcon from './LucideIcon.astro';
 import LinkIcon from './LinkIcon.astro';
 import { languageOptions } from '../data/portfolio';
 import type { LinkItem, PortfolioContent, SectionItem, Locale } from '../data/portfolio';
@@ -12,6 +13,8 @@ interface Props {
 }
 
 const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
+const emailLink = links.find((link) => link.type === 'email');
+const isExternalHref = (href: string) => href.startsWith('http://') || href.startsWith('https://');
 ---
 
 <aside class="sidebar" aria-label="Profile and site navigation">
@@ -45,15 +48,48 @@ const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
     <ul class="sidebar__links" aria-label="External links">
       {links.map((link) => (
         <li>
-          <a href={link.href}>
-            <span class="sidebar__link-icon" aria-hidden="true">
-              <LinkIcon type={link.type} />
-            </span>
-            <span class="sidebar__link-label">{link.label}</span>
-          </a>
+          {link.type === 'email' ? (
+            <button
+              type="button"
+              class="sidebar__link-button"
+              data-open-email-dialog
+              aria-haspopup="dialog"
+              aria-controls="email-dialog"
+            >
+              <span class="sidebar__link-icon" aria-hidden="true">
+                <LinkIcon type={link.type} />
+              </span>
+              <span class="sidebar__link-label">{link.label}</span>
+            </button>
+          ) : (
+            <a href={link.href} target={isExternalHref(link.href) ? '_blank' : undefined} rel={isExternalHref(link.href) ? 'noreferrer' : undefined}>
+              <span class="sidebar__link-icon" aria-hidden="true">
+                <LinkIcon type={link.type} />
+              </span>
+              <span class="sidebar__link-label">{link.label}</span>
+            </a>
+          )}
         </li>
       ))}
     </ul>
+
+    {emailLink ? (
+      <dialog id="email-dialog" class="email-dialog" data-email-dialog aria-label="Email options">
+        <button type="button" class="email-dialog__close" data-close-email-dialog aria-label="Close email dialog">
+          <span aria-hidden="true">+</span>
+        </button>
+        <div class="email-dialog__address-row">
+          <code class="email-dialog__address" data-email-address>{emailLink.href.replace('mailto:', '')}</code>
+          <button type="button" class="email-dialog__copy" data-copy-email>
+            <LucideIcon name="Copy" />
+            <span data-copy-email-label>Copy</span>
+          </button>
+        </div>
+        <div class="email-dialog__actions">
+          <a class="email-dialog__action email-dialog__action--primary" href={emailLink.href}>Open mail app</a>
+        </div>
+      </dialog>
+    ) : null}
 
     <section class="sidebar__language" aria-labelledby="sidebar-language-label">
       <p class="sidebar__language-label" id="sidebar-language-label">{languageLabel}</p>

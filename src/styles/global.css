@@ -8,6 +8,8 @@
   --border: rgba(0, 0, 0, 0.1);
   --border-strong: rgba(0, 0, 0, 0.18);
   --accent: #0070f3;
+  --accent-gradient-button: linear-gradient(0deg, #005fe8 0%, #2e8eff 100%);
+  --accent-gradient-pill: linear-gradient(0deg, #0a67ee 0%, #3a95ff 100%);
   --accent-soft: rgba(0, 112, 243, 0.1);
   --shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
   --hover-bg: rgba(0, 112, 243, 0.08);
@@ -223,6 +225,23 @@ select {
   line-height: 1.4;
 }
 
+.sidebar__link-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.62em;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  font-size: 0.96rem;
+  font-weight: 500;
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
 .sidebar__link-label {
   display: inline-flex;
   align-items: center;
@@ -252,6 +271,8 @@ select {
 
 .sidebar__links a:hover,
 .sidebar__links a:focus-visible,
+.sidebar__link-button:hover,
+.sidebar__link-button:focus-visible,
 .project-card__link:hover,
 .project-card__link:focus-visible,
 .contact-link:hover,
@@ -260,12 +281,173 @@ select {
 }
 
 .sidebar__links a:hover .sidebar__link-label,
-.sidebar__links a:focus-visible .sidebar__link-label {
+.sidebar__links a:focus-visible .sidebar__link-label,
+.sidebar__link-button:hover .sidebar__link-label,
+.sidebar__link-button:focus-visible .sidebar__link-label {
   text-decoration-color: currentColor;
 }
 
 .sidebar__links a:hover .sidebar__link-icon,
-.sidebar__links a:focus-visible .sidebar__link-icon {
+.sidebar__links a:focus-visible .sidebar__link-icon,
+.sidebar__link-button:hover .sidebar__link-icon,
+.sidebar__link-button:focus-visible .sidebar__link-icon {
+  color: var(--text);
+}
+
+.email-dialog {
+  width: min(100% - 32px, 22rem);
+  padding: 0;
+  border: 0;
+  outline: 0;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 18px 40px rgba(15, 17, 21, 0.1);
+  overflow: hidden;
+  color: var(--text);
+}
+
+.email-dialog::backdrop {
+  background: rgba(15, 17, 21, 0.22);
+  backdrop-filter: blur(6px);
+}
+
+.email-dialog[open] {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  justify-items: center;
+}
+
+.email-dialog__close,
+.email-dialog__copy,
+.email-dialog__action {
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--text);
+  transition:
+    border-color var(--transition),
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.email-dialog__close {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  margin: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.email-dialog__close span {
+  display: inline-block;
+  font-size: 1.7rem;
+  line-height: 1;
+  transform: rotate(45deg);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.email-dialog__address-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f7f7f8;
+}
+
+.email-dialog__address {
+  flex: 1;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.email-dialog__copy {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-width: 5rem;
+  min-height: 2.25rem;
+  padding: 0 0.75rem;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.email-dialog__copy svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: 0 0 0.9rem;
+}
+
+.email-dialog__actions {
+  display: flex;
+  width: 100%;
+}
+
+.email-dialog__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.email-dialog__action--primary {
+  border-color: transparent;
+  background: var(--accent-gradient-button);
+  background-clip: padding-box;
+  color: #fff;
+}
+
+.email-dialog__close:hover,
+.email-dialog__close:focus-visible,
+.email-dialog__copy:hover,
+.email-dialog__copy:focus-visible,
+.email-dialog__action:hover,
+.email-dialog__action:focus-visible {
+  color: var(--text);
+}
+
+.email-dialog__copy:hover,
+.email-dialog__copy:focus-visible,
+.email-dialog__action:hover,
+.email-dialog__action:focus-visible {
+  border-color: #d7d9dd;
+  background: #f3f4f6;
+}
+
+.email-dialog__action--primary:hover,
+.email-dialog__action--primary:focus-visible {
+  border-color: transparent;
+  background: linear-gradient(0deg, #0056d6 0%, #2386ff 100%);
+  background-clip: padding-box;
+  color: #fff;
+}
+
+.email-dialog__copy:hover,
+.email-dialog__copy:focus-visible {
   color: var(--text);
 }
 
@@ -384,7 +566,8 @@ select {
 }
 
 .sidebar__language-option.is-selected {
-  background: var(--accent);
+  background: var(--accent-gradient-pill);
+  background-clip: padding-box;
   color: #fff;
 }
 
@@ -392,8 +575,12 @@ select {
 .text-button:focus-visible,
 .project-card__title-anchor:focus-visible,
 .project-card__secondary-link:focus-visible,
+.sidebar__link-button:focus-visible,
 .sidebar__links a:focus-visible,
-.sidebar__nav a:focus-visible {
+.sidebar__nav a:focus-visible,
+.email-dialog__close:focus-visible,
+.email-dialog__copy:focus-visible,
+.email-dialog__action:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
@@ -876,7 +1063,8 @@ select {
     gap: 12px 18px;
   }
 
-  .sidebar__links a {
+  .sidebar__links a,
+  .sidebar__link-button {
     width: auto;
   }
 
@@ -969,9 +1157,25 @@ select {
     gap: 10px 16px;
   }
 
-  .sidebar__links a {
+  .sidebar__links a,
+  .sidebar__link-button {
     font-size: 0.92rem;
     min-height: 2rem;
+  }
+
+  .email-dialog[open] {
+    width: min(100% - 24px, 32rem);
+    padding: 20px;
+  }
+
+  .email-dialog__address-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .email-dialog__copy,
+  .email-dialog__action {
+    width: 100%;
   }
 
   .sidebar__language-label {

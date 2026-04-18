@@ -73,8 +73,8 @@ const englishContent: PortfolioContent = {
     ],
   },
   links: [
-    { label: 'GitHub', href: '#', type: 'github' },
-    { label: 'Email', href: 'mailto:hello@example.com', type: 'email' },
+    { label: 'GitHub', href: 'https://github.com/cornellsh', type: 'github' },
+    { label: 'Email', href: 'mailto:cornellshakh@proton.me', type: 'email' },
     { label: 'CV', href: '#', type: 'cv' },
   ],
   sections: [

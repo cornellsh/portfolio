@@ -89,7 +89,12 @@ const content = getPortfolioContent(locale);
   <script is:inline>
     const sections = [...document.querySelectorAll('[data-section]')];
     const links = [...document.querySelectorAll('[data-section-link]')];
-    
+    const emailDialog = document.querySelector('[data-email-dialog]');
+    const openEmailDialogButton = document.querySelector('[data-open-email-dialog]');
+    const closeEmailDialogButtons = [...document.querySelectorAll('[data-close-email-dialog]')];
+    const copyEmailButton = document.querySelector('[data-copy-email]');
+    const copyEmailLabel = document.querySelector('[data-copy-email-label]');
+    const emailAddress = document.querySelector('[data-email-address]')?.textContent?.trim() ?? '';
     const languageDropdown = document.querySelector('.sidebar__language-dropdown');
 
     const setActiveLink = (id) => {
@@ -123,6 +128,74 @@ const content = getPortfolioContent(locale);
     updateActiveSection();
     window.addEventListener('scroll', updateActiveSection, { passive: true });
     window.addEventListener('resize', updateActiveSection);
+
+    const copyEmailToClipboard = async () => {
+      if (!emailAddress || !copyEmailLabel) {
+        return;
+      }
+
+      const setCopyLabel = (value) => {
+        copyEmailLabel.textContent = value;
+        window.setTimeout(() => {
+          copyEmailLabel.textContent = 'Copy';
+        }, 1800);
+      };
+
+      try {
+        await navigator.clipboard.writeText(emailAddress);
+        setCopyLabel('Copied');
+      } catch {
+        const textArea = document.createElement('textarea');
+        textArea.value = emailAddress;
+        textArea.setAttribute('readonly', '');
+        textArea.style.position = 'absolute';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+
+        try {
+          document.execCommand('copy');
+          setCopyLabel('Copied');
+        } catch {
+          setCopyLabel('Copy failed');
+        } finally {
+          textArea.remove();
+        }
+      }
+    };
+
+    openEmailDialogButton?.addEventListener('click', () => {
+      if (!emailDialog || typeof emailDialog.showModal !== 'function') {
+        if (emailAddress) {
+          window.location.href = `mailto:${emailAddress}`;
+        }
+
+        return;
+      }
+
+      emailDialog.showModal();
+    });
+
+    closeEmailDialogButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        emailDialog?.close();
+      });
+    });
+
+    copyEmailButton?.addEventListener('click', copyEmailToClipboard);
+
+    emailDialog?.addEventListener('click', (event) => {
+      const dialogBounds = emailDialog.getBoundingClientRect();
+      const isBackdropClick =
+        event.clientX < dialogBounds.left ||
+        event.clientX > dialogBounds.right ||
+        event.clientY < dialogBounds.top ||
+        event.clientY > dialogBounds.bottom;
+
+      if (isBackdropClick) {
+        emailDialog.close();
+      }
+    });
 
     document.addEventListener('click', (event) => {
       if (!languageDropdown?.hasAttribute('open')) {

@@ -7,6 +7,7 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const isExternalHref = (href: string) => href.startsWith('http://') || href.startsWith('https://');
 ---
 
 <article class="project-card">
@@ -15,6 +16,8 @@ const { project } = Astro.props;
       <a
         class="project-card__media"
         href={project.websiteHref}
+        target={isExternalHref(project.websiteHref) ? '_blank' : undefined}
+        rel={isExternalHref(project.websiteHref) ? 'noreferrer' : undefined}
         aria-label={`${project.name} website`}
         draggable="false"
         ondragstart="return false;"
@@ -29,7 +32,12 @@ const { project } = Astro.props;
       <div>
         <div class="project-card__title-row">
           <h3>
-            <a class="project-card__title-anchor" href={project.websiteHref}>
+            <a
+              class="project-card__title-anchor"
+              href={project.websiteHref}
+              target={isExternalHref(project.websiteHref) ? '_blank' : undefined}
+              rel={isExternalHref(project.websiteHref) ? 'noreferrer' : undefined}
+            >
               <span>{project.name}</span>
               <LucideIcon name="ArrowUpRight" />
             </a>
@@ -44,7 +52,12 @@ const { project } = Astro.props;
       <ul class="project-card__links" aria-label={`${project.name} links`}>
             {project.links.map((link) => (
               <li>
-                <a class="project-card__secondary-link" href={link.href}>
+                <a
+                  class="project-card__secondary-link"
+                  href={link.href}
+                  target={isExternalHref(link.href) ? '_blank' : undefined}
+                  rel={isExternalHref(link.href) ? 'noreferrer' : undefined}
+                >
                   <LucideIcon name="Link" />
                   <span>{link.label}</span>
                 </a>
