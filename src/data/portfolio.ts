@@ -67,8 +67,9 @@ const englishContent: PortfolioContent = {
     role: 'Full-Stack Product Engineer',
     summary: 'Engineer by mind, builder at heart.',
     intro: [
-      'I build software products, web applications, and internal tools from the ground up. My work usually covers both the technical side and the product thinking behind it, so I care just as much about how something works as how it feels to use.',
-      'Over the last few years, I have been developing and shipping independent products, which taught me to keep things practical. I am drawn to software that is clear, reliable, and genuinely useful once people start depending on it.',
+      'I build full-stack software products, mainly SaaS tools and internal systems, from backend services to frontend interfaces.',
+      'I started by building and selling my own software, where I handled development, distribution, and ongoing iteration. That work gave me early experience with shipping and maintaining real products used outside of personal projects.',
+      'Today, I work as a full-stack engineer building web-based tools for real business use cases.',
     ],
   },
   links: [

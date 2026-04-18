@@ -1,15 +1,17 @@
 :root {
   color-scheme: light;
-  --bg: #edf1f4;
-  --surface: rgba(249, 251, 252, 0.86);
-  --surface-strong: #f8fafc;
-  --text: #18232d;
-  --text-muted: #4e5d6b;
-  --border: rgba(107, 123, 139, 0.18);
-  --border-strong: rgba(73, 91, 109, 0.38);
-  --accent: #2f4a61;
-  --accent-soft: rgba(47, 74, 97, 0.08);
-  --shadow: 0 14px 32px rgba(18, 28, 39, 0.05);
+  --bg: #fafafa;
+  --surface: rgba(250, 250, 250, 0.88);
+  --surface-strong: #f5f5f5;
+  --text: #0f1115;
+  --text-muted: #54575c;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.18);
+  --accent: #0070f3;
+  --accent-soft: rgba(0, 112, 243, 0.1);
+  --shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
+  --hover-bg: rgba(0, 112, 243, 0.08);
+  --hover-border: rgba(0, 112, 243, 0.25);
   --font-sans: 'Public Sans Variable', system-ui, sans-serif;
   --font-display: 'Manrope', 'Public Sans Variable', system-ui, sans-serif;
   --text-xl: clamp(3rem, 3.8vw, 4.1rem);
@@ -31,7 +33,7 @@
 
 html {
   background:
-    linear-gradient(180deg, #eff3f6 0%, #e9edf1 100%);
+    linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
 }
 
 body {
@@ -43,19 +45,19 @@ body {
 }
 
 ::selection {
-  background: rgba(49, 76, 99, 0.18);
+  background: rgba(0, 112, 243, 0.25);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  -webkit-tap-highlight-color: rgba(47, 74, 97, 0.08);
+  -webkit-tap-highlight-color: rgba(0, 112, 243, 0.1);
 }
 
 .content-section p a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-decoration-color: rgba(24, 35, 45, 0.2);
+  text-decoration-color: rgba(0, 112, 243, 0.4);
   text-underline-offset: 2px;
   transition: text-decoration-color var(--transition);
 }
@@ -75,7 +77,7 @@ input,
 textarea,
 select {
   font: inherit;
-  -webkit-tap-highlight-color: rgba(47, 74, 97, 0.08);
+  -webkit-tap-highlight-color: rgba(0, 112, 243, 0.1);
 }
 
 .shell {
@@ -340,7 +342,7 @@ select {
   padding: 3px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(250, 250, 250, 0.88);
 }
 
 .sidebar__language-option {
@@ -378,7 +380,7 @@ select {
 
 .sidebar__language-option:hover,
 .sidebar__language-option:focus-visible {
-  background: rgba(47, 74, 97, 0.07);
+  background: rgba(0, 112, 243, 0.1);
 }
 
 .sidebar__language-option.is-selected {
@@ -392,7 +394,7 @@ select {
 .project-card__secondary-link:focus-visible,
 .sidebar__links a:focus-visible,
 .sidebar__nav a:focus-visible {
-  outline: 2px solid rgba(47, 74, 97, 0.22);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 
@@ -501,12 +503,30 @@ select {
   max-width: 54ch;
   color: var(--text);
   font-size: 1.18rem;
-  line-height: 1.9;
+  line-height: 1.6;
   text-wrap: pretty;
 }
 
-.intro-text:not(:last-child) {
-  margin-bottom: 1.2em;
+/* reserved for potential future emphasis */
+
+.intro-text + .intro-text {
+  margin-top: 1em;
+}
+
+/* Lead / support styles for intro paragraphs */
+.intro-text.intro-lead {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.06rem, 1.6vw, 1.32rem);
+  color: var(--text);
+  margin-bottom: 0.6em;
+}
+
+.intro-text.intro-support {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 0.8em;
 }
 
 .intro-section {
@@ -537,8 +557,8 @@ select {
 
 .project-card:hover,
 .project-card:has(a:focus-visible) {
-  background-color: var(--accent-soft);
-  border-color: var(--border);
+  background-color: #f4f4f5;
+  border-color: #e5e7eb;
 }
 
 .project-card__media {
@@ -701,28 +721,16 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.45rem 0.7rem;
-  border: 1px solid rgba(47, 74, 97, 0.12);
-  border-radius: 10px;
-  background: rgba(47, 74, 97, 0.04);
-  color: rgba(24, 35, 45, 0.82);
-  font-size: 0.78rem;
+  padding: 0.4rem 0.65rem;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  background: #374151;
+  color: #fff;
+  font-size: 0.75rem;
   font-weight: 600;
   line-height: 1;
   letter-spacing: 0.015em;
   white-space: nowrap;
-  transition:
-    color var(--transition),
-    background-color var(--transition),
-    border-color var(--transition);
-}
-
-.project-card:hover .badge-list li,
-.project-card:has(a:focus-visible) .badge-list li,
-.experience-item:hover .badge-list li {
-  background: transparent;
-  border-color: rgba(47, 74, 97, 0.28);
-  color: var(--text);
 }
 
 .experience-list {
@@ -747,8 +755,8 @@ select {
 }
 
 .experience-item:hover {
-  background-color: var(--accent-soft);
-  border-color: var(--border);
+  background-color: #f4f4f5;
+  border-color: #e5e7eb;
 }
 
 .experience-item__content {
@@ -761,7 +769,7 @@ select {
   align-items: center;
   gap: 0.34em;
   align-self: start;
-  color: var(--accent);
+  color: var(--text-muted);
   padding-top: 2px;
   font-size: 0.76rem;
   font-weight: 600;
@@ -847,7 +855,7 @@ select {
     align-items: center;
     height: 48px;
     padding: 0 16px;
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(250, 250, 250, 0.85);
     backdrop-filter: blur(12px);
   }
 
@@ -978,12 +986,12 @@ select {
   .intro-text {
     max-width: none;
     font-size: 1rem;
-    line-height: 1.72;
+    line-height: 1.6;
     text-wrap: auto;
   }
 
-  .intro-text:not(:last-child) {
-    margin-bottom: 1em;
+  .intro-text + .intro-text {
+    margin-top: 0.85em;
   }
 
   .project-card h3,
@@ -1122,7 +1130,11 @@ select {
   .intro-text {
     max-width: none;
     font-size: 0.96rem;
-    line-height: 1.62;
+    line-height: 1.6;
+  }
+
+  .intro-text + .intro-text {
+    margin-top: 0.75em;
   }
 
   .project-card,
@@ -1193,21 +1205,8 @@ select {
 @media (hover: none) {
   .project-card:hover,
   .experience-item:hover {
-    background-color: transparent;
-    border-color: transparent;
-  }
-
-  .project-card:hover .badge-list li,
-  .experience-item:hover .badge-list li {
-    background: rgba(47, 74, 97, 0.04);
-    border-color: rgba(47, 74, 97, 0.12);
-    color: rgba(24, 35, 45, 0.75);
-  }
-
-  .badge-list li:hover {
-    background: rgba(47, 74, 97, 0.04);
-    border-color: rgba(47, 74, 97, 0.12);
-    color: rgba(24, 35, 45, 0.75);
+    background-color: #f4f4f5;
+    border-color: #e5e7eb;
   }
 }
 

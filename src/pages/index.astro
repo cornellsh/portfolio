@@ -30,9 +30,7 @@ const content = getPortfolioContent(locale);
       <div class="content">
         <section class="content-section intro-section" id="intro" data-section>
           {content.profile.intro.map((paragraph) => (
-            <p class="intro-copy intro-text">
-              {paragraph}
-            </p>
+            <p class="intro-copy intro-text" set:html={paragraph} />
           ))}
         </section>
 
