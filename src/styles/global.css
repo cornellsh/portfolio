@@ -129,7 +129,7 @@ select {
 
 .sidebar__identity {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 5px;
 }
 
@@ -139,7 +139,6 @@ select {
   flex: 0 0 calc(3rem - 2px);
   user-select: none;
   -webkit-user-drag: none;
-  transform: translateY(calc(0.04rem - 2px));
 }
 
 .sidebar__role {
@@ -956,7 +955,6 @@ select {
     width: calc(2.5rem - 2px);
     height: calc(2.5rem - 2px);
     flex-basis: calc(2.5rem - 2px);
-    transform: translateY(1px);
   }
 
   .sidebar__role {
@@ -1135,7 +1133,6 @@ select {
     width: calc(1.9rem + 3px);
     height: calc(1.9rem + 3px);
     flex-basis: calc(1.9rem + 3px);
-    transform: translateY(0);
   }
 
   .sidebar__role {
