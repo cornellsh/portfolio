@@ -2,9 +2,8 @@
   <img src="./public/brand-mark.svg" alt="Cornell Shakh brand mark" width="64" height="64" />
 </p>
 
-<h1 align="center">cornell.sh</h1>
-
 <p align="center">
+  <a href="https://cornell.sh">cornell.sh</a><br />
   Personal portfolio.
 </p>
 
