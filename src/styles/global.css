@@ -701,14 +701,14 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 0.7rem;
   border: 1px solid rgba(47, 74, 97, 0.12);
   border-radius: 8px;
   background: rgba(47, 74, 97, 0.04);
   color: rgba(24, 35, 45, 0.82);
   font-size: 0.78rem;
   font-weight: 600;
-  line-height: 1.2;
+  line-height: 1;
   letter-spacing: 0.015em;
   white-space: nowrap;
   transition:
