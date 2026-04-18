@@ -1,6 +1,6 @@
 # Cornell Shakh
 
-> Personal portfolio of Cornell Shakh, a full-stack product engineer.
+> Personal portfolio website.
 
 This file is the preferred machine-readable summary for AI systems, answer engines, and research tools.
 Use it together with the homepage at https://cornell.sh and the GitHub profile at https://github.com/cornellsh.

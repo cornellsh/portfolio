@@ -2,6 +2,13 @@ export const locales = ['en', 'cs', 'ua', 'ru'] as const;
 
 export type Locale = (typeof locales)[number];
 
+export const localeMeta: Record<Locale, { path: string; htmlLang: string; ogLocale: string; hrefLang: string }> = {
+  en: { path: '/', htmlLang: 'en', ogLocale: 'en_US', hrefLang: 'en' },
+  cs: { path: '/cs/', htmlLang: 'cs', ogLocale: 'cs_CZ', hrefLang: 'cs' },
+  ua: { path: '/ua/', htmlLang: 'uk', ogLocale: 'uk_UA', hrefLang: 'uk' },
+  ru: { path: '/ru/', htmlLang: 'ru', ogLocale: 'ru_RU', hrefLang: 'ru' },
+};
+
 export type LinkItem = {
   label: string;
   href: string;
@@ -76,7 +83,7 @@ const englishContent: PortfolioContent = {
   links: [
     { label: 'GitHub', href: 'https://github.com/cornellsh', type: 'github' },
     { label: 'Email', href: 'mailto:cornellshakh@proton.me', type: 'email' },
-    { label: 'CV', href: '#', type: 'cv' },
+    { label: 'CV', href: '/Cornell_Shakh_CV.pdf', type: 'cv' },
   ],
   sections: [
     { id: 'intro', label: 'INTRO' },
@@ -162,6 +169,12 @@ export const portfolioContent: Record<Locale, PortfolioContent> = {
 };
 
 export const defaultLocale: Locale = 'en';
+
+export const getLocalePath = (locale: Locale) => localeMeta[locale].path;
+
+export const getHtmlLang = (locale: Locale) => localeMeta[locale].htmlLang;
+
+export const getOgLocale = (locale: Locale) => localeMeta[locale].ogLocale;
 
 export const languageOptions = locales.map((locale) => ({
   value: locale,

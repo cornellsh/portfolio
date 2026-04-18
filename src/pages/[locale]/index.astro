@@ -1,6 +1,6 @@
 ---
-import HomePage from '../components/HomePage.astro';
-import BaseLayout from '../layouts/BaseLayout.astro';
+import HomePage from '../../components/HomePage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
 import {
   defaultLocale,
   getHtmlLang,
@@ -9,9 +9,15 @@ import {
   getPortfolioContent,
   localeMeta,
   locales,
-} from '../data/portfolio';
+  type Locale,
+} from '../../data/portfolio';
 
-const locale = defaultLocale;
+export const getStaticPaths = () =>
+  locales
+    .filter((locale) => locale !== defaultLocale)
+    .map((locale) => ({ params: { locale } }));
+
+const locale = Astro.params.locale as Locale;
 const content = getPortfolioContent(locale);
 const siteUrl = 'https://cornell.sh';
 const canonicalUrl = `${siteUrl}${getLocalePath(locale)}`;

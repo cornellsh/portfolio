@@ -1,0 +1,198 @@
+---
+import ProjectCard from './ProjectCard.astro';
+import Sidebar from './Sidebar.astro';
+import LucideIcon from './LucideIcon.astro';
+import type { Locale, PortfolioContent } from '../data/portfolio';
+
+interface Props {
+  locale: Locale;
+  content: PortfolioContent;
+}
+
+const { locale, content } = Astro.props;
+const splitPeriod = (period: string) => period.split('\u2013').map((part) => part.trim());
+---
+
+<div id="top"></div>
+<div class="shell">
+  <main class="page">
+    <Sidebar
+      profile={content.profile}
+      links={content.links}
+      sections={content.sections}
+      languageLabel={content.headings.language}
+      currentLocale={locale}
+    />
+
+    <div class="content">
+      <section class="content-section intro-section" id="intro" data-section>
+        {content.profile.intro.map((paragraph) => (
+          <p class="intro-copy intro-text">{paragraph}</p>
+        ))}
+      </section>
+
+      <section class="content-section experience-list" id="experience" data-section>
+        <div class="section-header">
+          <h2 class="section-heading">{content.headings.experience}</h2>
+        </div>
+
+        {content.experience.map((item) => (
+          <article class="experience-item">
+            <p class="experience-item__meta">
+              <span>{splitPeriod(item.period)[0]}</span>
+              <span class="experience-item__meta-separator" aria-hidden="true">–</span>
+              <span>{splitPeriod(item.period)[1]}</span>
+            </p>
+            <div class="experience-item__content">
+              <h3>
+                <span>{item.role}</span>
+                <span class="experience-item__separator" aria-hidden="true">•</span>
+                <span>{item.organization}</span>
+              </h3>
+              <p>{item.summary}</p>
+              <ul class="badge-list" aria-label={`${item.role} technologies`}>
+                {item.stack.map((tech) => (
+                  <li>{tech}</li>
+                ))}
+              </ul>
+            </div>
+          </article>
+        ))}
+      </section>
+
+      <section class="content-section" id="projects" data-section>
+        <div class="section-header">
+          <h2 class="section-heading">{content.headings.projects}</h2>
+        </div>
+
+        <div class="project-list">
+          {content.projects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </div>
+
+        <div class="section-actions">
+          <a class="text-button" href="#top">
+            <LucideIcon name="ArrowUp" />
+            <span>Back to top</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script is:inline>
+  const sections = [...document.querySelectorAll('[data-section]')];
+  const sectionLinks = [...document.querySelectorAll('[data-section-link]')];
+  const emailDialog = document.querySelector('[data-email-dialog]');
+  const openEmailDialogButton = document.querySelector('[data-open-email-dialog]');
+  const closeEmailDialogButtons = [...document.querySelectorAll('[data-close-email-dialog]')];
+  const copyEmailButton = document.querySelector('[data-copy-email]');
+  const copyEmailLabel = document.querySelector('[data-copy-email-label]');
+  const emailAddress = document.querySelector('[data-email-address]')?.textContent?.trim() ?? '';
+
+  const setActiveLink = (id) => {
+    sectionLinks.forEach((link) => {
+      const isCurrent = link.dataset.target === id;
+      link.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+    });
+  };
+
+  const updateActiveSection = () => {
+    const marker = window.scrollY + window.innerHeight * 0.28;
+    let activeSection = sections[0];
+
+    for (const section of sections) {
+      if (section.offsetTop <= marker) {
+        activeSection = section;
+      }
+    }
+
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 24;
+
+    if (nearBottom) {
+      activeSection = sections.at(-1) ?? activeSection;
+    }
+
+    if (activeSection?.id) {
+      setActiveLink(activeSection.id);
+    }
+  };
+
+  const setCopyLabel = (value) => {
+    if (!copyEmailLabel) {
+      return;
+    }
+
+    copyEmailLabel.textContent = value;
+    window.setTimeout(() => {
+      copyEmailLabel.textContent = 'Copy';
+    }, 1800);
+  };
+
+  const copyEmailToClipboard = async () => {
+    if (!emailAddress) {
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(emailAddress);
+      setCopyLabel('Copied');
+    } catch {
+      const textArea = document.createElement('textarea');
+      textArea.value = emailAddress;
+      textArea.setAttribute('readonly', '');
+      textArea.style.position = 'absolute';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+
+      try {
+        document.execCommand('copy');
+        setCopyLabel('Copied');
+      } catch {
+        setCopyLabel('Copy failed');
+      } finally {
+        textArea.remove();
+      }
+    }
+  };
+
+  updateActiveSection();
+  window.addEventListener('scroll', updateActiveSection, { passive: true });
+  window.addEventListener('resize', updateActiveSection);
+
+  openEmailDialogButton?.addEventListener('click', () => {
+    if (!emailDialog || typeof emailDialog.showModal !== 'function') {
+      if (emailAddress) {
+        window.location.href = `mailto:${emailAddress}`;
+      }
+
+      return;
+    }
+
+    emailDialog.showModal();
+  });
+
+  closeEmailDialogButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      emailDialog?.close();
+    });
+  });
+
+  copyEmailButton?.addEventListener('click', copyEmailToClipboard);
+
+  emailDialog?.addEventListener('click', (event) => {
+    const dialogBounds = emailDialog.getBoundingClientRect();
+    const isBackdropClick =
+      event.clientX < dialogBounds.left ||
+      event.clientX > dialogBounds.right ||
+      event.clientY < dialogBounds.top ||
+      event.clientY > dialogBounds.bottom;
+
+    if (isBackdropClick) {
+      emailDialog.close();
+    }
+  });
+</script>

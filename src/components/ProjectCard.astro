@@ -8,22 +8,31 @@ interface Props {
 
 const { project } = Astro.props;
 const isExternalHref = (href: string) => href.startsWith('http://') || href.startsWith('https://');
+const hasActiveHref = (href: string) => href.trim() !== '' && href !== '#';
+const hasWebsiteLink = hasActiveHref(project.websiteHref);
+const visibleLinks = project.links.filter((link) => hasActiveHref(link.href));
 ---
 
 <article class="project-card">
   {
     project.image ? (
-      <a
-        class="project-card__media"
-        href={project.websiteHref}
-        target={isExternalHref(project.websiteHref) ? '_blank' : undefined}
-        rel={isExternalHref(project.websiteHref) ? 'noreferrer' : undefined}
-        aria-label={`${project.name} website`}
-        draggable="false"
-        ondragstart="return false;"
-      >
-        <img src={project.image} alt="" width="92" height="92" loading="lazy" decoding="async" draggable="false" />
-      </a>
+      hasWebsiteLink ? (
+        <a
+          class="project-card__media"
+          href={project.websiteHref}
+          target={isExternalHref(project.websiteHref) ? '_blank' : undefined}
+          rel={isExternalHref(project.websiteHref) ? 'noopener noreferrer' : undefined}
+          aria-label={`${project.name} website`}
+          draggable="false"
+          ondragstart="return false;"
+        >
+          <img src={project.image} alt="" width="92" height="92" loading="lazy" decoding="async" draggable="false" />
+        </a>
+      ) : (
+        <div class="project-card__media" aria-hidden="true">
+          <img src={project.image} alt="" width="92" height="92" loading="lazy" decoding="async" draggable="false" />
+        </div>
+      )
     ) : null
   }
 
@@ -32,15 +41,19 @@ const isExternalHref = (href: string) => href.startsWith('http://') || href.star
       <div>
         <div class="project-card__title-row">
           <h3>
-            <a
-              class="project-card__title-anchor"
-              href={project.websiteHref}
-              target={isExternalHref(project.websiteHref) ? '_blank' : undefined}
-              rel={isExternalHref(project.websiteHref) ? 'noreferrer' : undefined}
-            >
+            {hasWebsiteLink ? (
+              <a
+                class="project-card__title-anchor"
+                href={project.websiteHref}
+                target={isExternalHref(project.websiteHref) ? '_blank' : undefined}
+                rel={isExternalHref(project.websiteHref) ? 'noopener noreferrer' : undefined}
+              >
+                <span>{project.name}</span>
+                <LucideIcon name="ArrowUpRight" />
+              </a>
+            ) : (
               <span>{project.name}</span>
-              <LucideIcon name="ArrowUpRight" />
-            </a>
+            )}
           </h3>
         </div>
       </div>
@@ -48,20 +61,20 @@ const isExternalHref = (href: string) => href.startsWith('http://') || href.star
 
     <p>{project.summary}</p>
 
-    {project.links.length > 0 ? (
+    {visibleLinks.length > 0 ? (
       <ul class="project-card__links" aria-label={`${project.name} links`}>
-            {project.links.map((link) => (
-              <li>
-                <a
-                  class="project-card__secondary-link"
-                  href={link.href}
-                  target={isExternalHref(link.href) ? '_blank' : undefined}
-                  rel={isExternalHref(link.href) ? 'noreferrer' : undefined}
-                >
-                  <LucideIcon name="Link" />
-                  <span>{link.label}</span>
-                </a>
-              </li>
+        {visibleLinks.map((link) => (
+          <li>
+            <a
+              class="project-card__secondary-link"
+              href={link.href}
+              target={isExternalHref(link.href) ? '_blank' : undefined}
+              rel={isExternalHref(link.href) ? 'noopener noreferrer' : undefined}
+            >
+              <LucideIcon name="Link" />
+              <span>{link.label}</span>
+            </a>
+          </li>
         ))}
       </ul>
     ) : null}

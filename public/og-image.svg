@@ -1,0 +1,47 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="surface" x1="600" y1="0" x2="600" y2="630" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" />
+      <stop offset="1" stop-color="#F7F9FC" />
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(980 110) rotate(132.5) scale(420 620)">
+      <stop offset="0" stop-color="#60AFFF" stop-opacity="0.16" />
+      <stop offset="1" stop-color="#60AFFF" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="brand-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3294FF" />
+      <stop offset="100%" stop-color="#0058E6" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="630" rx="32" fill="url(#surface)" />
+  <rect width="1200" height="630" rx="32" fill="url(#glow)" />
+
+  <g opacity="0.6">
+    <path d="M108 506H270" stroke="#DDE3EA" stroke-width="1" />
+    <path d="M964 118H1092" stroke="#E3E8EE" stroke-width="1" />
+  </g>
+
+  <g transform="translate(106 118) scale(4.75)">
+    <g fill="none" fill-rule="evenodd" stroke="#0070F3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,0.3)">
+      <path d="M22 10C32.5 11 38.5 18 38 39H15C15 30 25 32.5 23 18" fill="url(#brand-gradient)"/>
+      <path d="M24 18C24.38 20.91 18.45 25.37 16 27C13 29 13.18 31.34 11 31C9.958 30.06 12.41 27.96 11 28C10 28 11.19 29.23 10 30C9 30 5.997 31 6 26C6 24 12 14 12 14C12 14 13.89 12.1 14 10.5C13.27 9.506 13.5 8.5 13.5 7.5C14.5 6.5 16.5 10 16.5 10H18.5C18.5 10 19.28 8.008 21 7C22 7 22 10 22 10" fill="url(#brand-gradient)"/>
+      <path d="M9.5 25.5A0.5 0.5 0 1 1 8.5 25.5A0.5 0.5 0 1 1 9.5 25.5Z" fill="#FAFAFA" stroke="#FAFAFA"/>
+      <path d="M15 15.5A0.5 1.5 0 1 1 14 15.5A0.5 1.5 0 1 1 15 15.5Z" transform="matrix(0.866 0.5 -0.5 0.866 9.693 -5.173)" fill="#FAFAFA" stroke="#FAFAFA"/>
+      <path d="M24.55 10.4L24.1 11.85L24.6 12C27.75 13 30.25 14.49 32.5 18.75C34.75 23.01 35.75 29.06 35.25 39L35.2 39.5H37.45L37.5 39C38 28.94 36.62 22.15 34.25 17.66C31.88 13.17 28.46 11.02 25.06 10.5L24.55 10.4Z" fill="#FAFAFA" stroke="none"/>
+    </g>
+  </g>
+
+  <text x="108" y="396" fill="#0F1115" font-family="sans-serif" font-size="84" font-weight="700" letter-spacing="-2.8">
+    Cornell Shakh
+  </text>
+  <text x="108" y="456" fill="#47515C" font-family="sans-serif" font-size="34" font-weight="500">
+    Full-Stack Product Engineer
+  </text>
+  <text x="108" y="518" fill="#58636F" font-family="sans-serif" font-size="26" font-weight="400">
+    Software products, web tools, and internal systems.
+  </text>
+  <text x="108" y="570" fill="#0070F3" font-family="sans-serif" font-size="24" font-weight="600">
+    cornell.sh
+  </text>
+</svg>

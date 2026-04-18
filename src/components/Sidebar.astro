@@ -1,7 +1,7 @@
 ---
 import LucideIcon from './LucideIcon.astro';
 import LinkIcon from './LinkIcon.astro';
-import { languageOptions } from '../data/portfolio';
+import { getLocalePath, languageOptions } from '../data/portfolio';
 import type { LinkItem, PortfolioContent, SectionItem, Locale } from '../data/portfolio';
 
 interface Props {
@@ -15,6 +15,9 @@ interface Props {
 const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
 const emailLink = links.find((link) => link.type === 'email');
 const isExternalHref = (href: string) => href.startsWith('http://') || href.startsWith('https://');
+const opensInNewTab = (href: string) => isExternalHref(href) || href.toLowerCase().endsWith('.pdf');
+const hasActiveHref = (href: string) => href.trim() !== '' && href !== '#';
+const visibleLinks = links.filter((link) => link.type === 'email' || hasActiveHref(link.href));
 ---
 
 <aside class="sidebar" aria-label="Profile and site navigation">
@@ -57,7 +60,7 @@ const isExternalHref = (href: string) => href.startsWith('http://') || href.star
 
   <div class="sidebar__utility">
     <ul class="sidebar__links" aria-label="External links">
-      {links.map((link) => (
+      {visibleLinks.map((link) => (
         <li>
           {link.type === 'email' ? (
             <button
@@ -73,7 +76,7 @@ const isExternalHref = (href: string) => href.startsWith('http://') || href.star
               <span class="sidebar__link-label">{link.label}</span>
             </button>
           ) : (
-            <a href={link.href} target={isExternalHref(link.href) ? '_blank' : undefined} rel={isExternalHref(link.href) ? 'noreferrer' : undefined}>
+            <a href={link.href} target={opensInNewTab(link.href) ? '_blank' : undefined} rel={opensInNewTab(link.href) ? 'noopener noreferrer' : undefined}>
               <span class="sidebar__link-icon" aria-hidden="true">
                 <LinkIcon type={link.type} />
               </span>
@@ -106,11 +109,11 @@ const isExternalHref = (href: string) => href.startsWith('http://') || href.star
       <p class="sidebar__language-label" id="sidebar-language-label">{languageLabel}</p>
       <div class="sidebar__language-box">
         {languageOptions.map((option) => (
-          <a
-            href={option.value === 'en' ? '/' : `/${option.value}/`}
-            class:list={['sidebar__language-option', option.value === currentLocale && 'is-selected']}
-            aria-current={option.value === currentLocale ? 'page' : undefined}
-          >
+            <a
+              href={getLocalePath(option.value)}
+              class:list={['sidebar__language-option', option.value === currentLocale && 'is-selected']}
+              aria-current={option.value === currentLocale ? 'page' : undefined}
+            >
             <span>{option.shortLabel}</span>
           </a>
         ))}
