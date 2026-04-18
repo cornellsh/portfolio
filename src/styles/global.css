@@ -1098,18 +1098,41 @@ select {
   }
 
   .email-dialog[open] {
-    width: min(100% - 24px, 32rem);
-    padding: 20px;
+    width: min(100% - 32px, 20rem);
+    padding: 16px;
+    gap: 10px;
   }
 
   .email-dialog__address-row {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .email-dialog__address {
+    font-size: 0.88rem;
   }
 
   .email-dialog__copy,
   .email-dialog__action {
     width: 100%;
+    min-height: 2.2rem;
+    font-size: 0.9rem;
+  }
+
+  .email-dialog__copy {
+    padding: 0 0.6rem;
+  }
+
+  .email-dialog__actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .email-dialog__action {
+    padding: 0 0.8rem;
   }
 
   .sidebar__language-label {
@@ -1228,6 +1251,67 @@ select {
 }
 
 @media (max-width: 520px) {
+  .email-dialog[open] {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: min(calc(100% - 32px), 20rem);
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
+    padding: 14px;
+    gap: 8px;
+    border-radius: 14px;
+  }
+
+  .email-dialog__close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 1.8rem;
+    height: 1.8rem;
+  }
+
+  .email-dialog__close span {
+    font-size: 1.5rem;
+  }
+
+  .email-dialog__address-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .email-dialog__address {
+    font-size: 0.86rem;
+    word-break: break-all;
+  }
+
+  .email-dialog__copy {
+    width: 100%;
+    min-height: 2rem;
+    padding: 0 0.6rem;
+    font-size: 0.86rem;
+  }
+
+  .email-dialog__actions {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .email-dialog__action {
+    width: 100%;
+    min-height: 2rem;
+    padding: 0 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  .email-dialog__action--primary {
+    padding: 0 0.8rem;
+  }
+}
   .shell {
     width: min(calc(100% - 36px), var(--page-width));
   }
