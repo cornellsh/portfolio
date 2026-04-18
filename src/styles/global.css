@@ -926,10 +926,6 @@ select {
     padding: 48px 16px 32px;
   }
 
-  .mobile-header {
-    display: none;
-  }
-
   .content {
     padding: 16px 0 32px;
   }
