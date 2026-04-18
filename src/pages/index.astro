@@ -28,7 +28,7 @@ const content = getPortfolioContent(locale);
       />
 
       <div class="content">
-        <section class="content-section intro-section" id="intro" data-section data-reveal>
+        <section class="content-section intro-section" id="intro" data-section>
           {content.profile.intro.map((paragraph) => (
             <p class="intro-copy intro-text">
               {paragraph}
@@ -36,13 +36,13 @@ const content = getPortfolioContent(locale);
           ))}
         </section>
 
-        <section class="content-section experience-list" id="experience" data-section data-reveal>
+        <section class="content-section experience-list" id="experience" data-section>
           <div class="section-header">
             <h2 class="section-heading">{content.headings.experience}</h2>
           </div>
 
           {content.experience.map((item) => (
-            <article class="experience-item" data-reveal>
+            <article class="experience-item">
               <p class="experience-item__meta">
                 <span>{splitPeriod(item.period)[0]}</span>
                 <span class="experience-item__meta-separator" aria-hidden="true">–</span>
@@ -65,7 +65,7 @@ const content = getPortfolioContent(locale);
           ))}
         </section>
 
-        <section class="content-section" id="projects" data-section data-reveal>
+        <section class="content-section" id="projects" data-section>
           <div class="section-header">
             <h2 class="section-heading">{content.headings.projects}</h2>
           </div>
@@ -91,7 +91,7 @@ const content = getPortfolioContent(locale);
   <script is:inline>
     const sections = [...document.querySelectorAll('[data-section]')];
     const links = [...document.querySelectorAll('[data-section-link]')];
-    const revealItems = [...document.querySelectorAll('[data-reveal]')];
+    
     const languageDropdown = document.querySelector('.sidebar__language-dropdown');
 
     const setActiveLink = (id) => {
@@ -126,25 +126,6 @@ const content = getPortfolioContent(locale);
     window.addEventListener('scroll', updateActiveSection, { passive: true });
     window.addEventListener('resize', updateActiveSection);
 
-    if (window.matchMedia('(max-width: 720px)').matches) {
-      const sectionHeaders = document.querySelectorAll('.section-header');
-      sectionHeaders.forEach((header) => {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.remove('stuck');
-              } else {
-                entry.target.classList.add('stuck');
-              }
-            });
-          },
-          { threshold: 0 },
-        );
-        observer.observe(header);
-      });
-    }
-
     document.addEventListener('click', (event) => {
       if (!languageDropdown?.hasAttribute('open')) {
         return;
@@ -155,30 +136,7 @@ const content = getPortfolioContent(locale);
       }
     });
 
-    revealItems.forEach((item, index) => {
-      item.style.setProperty('--reveal-delay', `${Math.min(index * 45, 180)}ms`);
-    });
-
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      revealItems.forEach((item) => item.classList.add('is-visible'));
-    } else {
-      const revealObserver = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              revealObserver.unobserve(entry.target);
-            }
-          });
-        },
-        {
-          rootMargin: '0px 0px -8% 0px',
-          threshold: 0.06,
-        },
-      );
-
-      revealItems.forEach((item) => revealObserver.observe(item));
-    }
+    
 
     </script>
 </BaseLayout>

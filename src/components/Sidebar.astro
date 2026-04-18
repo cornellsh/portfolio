@@ -18,7 +18,7 @@ const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
   <div class="sidebar__intro">
     <div class="sidebar__identity">
       <h1>{profile.name}</h1>
-      <img class="sidebar__brand-mark" src="/brand-mark.svg" alt="" aria-hidden="true" draggable="false" />
+      <img class="sidebar__brand-mark" src="/brand-mark.svg" alt="" aria-hidden="true" decoding="async" draggable="false" />
     </div>
     <h2 class="sidebar__role">{profile.role}</h2>
     <p class="sidebar__summary">{profile.summary}</p>

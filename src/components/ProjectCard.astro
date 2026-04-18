@@ -9,7 +9,7 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<article class="project-card" data-reveal>
+<article class="project-card">
   {
     project.image ? (
       <a
@@ -19,7 +19,7 @@ const { project } = Astro.props;
         draggable="false"
         ondragstart="return false;"
       >
-        <img src={project.image} alt="" loading="lazy" draggable="false" />
+        <img src={project.image} alt="" loading="lazy" decoding="async" draggable="false" />
       </a>
     ) : null
   }
