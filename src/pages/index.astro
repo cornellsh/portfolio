@@ -18,6 +18,19 @@ const content = getPortfolioContent(locale);
 >
   <div id="top"></div>
   <div class="shell">
+    <header class="mobile-header">
+      <nav class="mobile-header__nav" aria-label="Section navigation">
+        {content.sections.map((section, index) => (
+          <a
+            href={`#${section.id}`}
+            class="mobile-header__link"
+            data-target={section.id}
+          >
+            {section.label}
+          </a>
+        ))}
+      </nav>
+    </header>
     <main class="page">
       <Sidebar
         profile={content.profile}
