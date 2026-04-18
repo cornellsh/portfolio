@@ -435,8 +435,8 @@ select {
   z-index: 10;
 }
 
-#experience:has(.experience-item:hover) .section-header,
-#projects:has(.project-card:hover) .section-header {
+#experience:has(.experience-item:first-child:hover) .section-header,
+#projects:has(.project-card:first-child:hover) .section-header {
   border-color: transparent;
 }
 
