@@ -126,6 +126,25 @@ const content = getPortfolioContent(locale);
     window.addEventListener('scroll', updateActiveSection, { passive: true });
     window.addEventListener('resize', updateActiveSection);
 
+    if (window.matchMedia('(max-width: 720px)').matches) {
+      const sectionHeaders = document.querySelectorAll('.section-header');
+      sectionHeaders.forEach((header) => {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.remove('stuck');
+              } else {
+                entry.target.classList.add('stuck');
+              }
+            });
+          },
+          { threshold: 0 },
+        );
+        observer.observe(header);
+      });
+    }
+
     document.addEventListener('click', (event) => {
       if (!languageDropdown?.hasAttribute('open')) {
         return;
