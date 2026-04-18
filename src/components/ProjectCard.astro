@@ -1,0 +1,62 @@
+---
+import LucideIcon from './LucideIcon.astro';
+import type { ProjectItem } from '../data/portfolio';
+
+interface Props {
+  project: ProjectItem;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="project-card" data-reveal>
+  {
+    project.image ? (
+      <a
+        class="project-card__media"
+        href={project.websiteHref}
+        aria-label={`${project.name} website`}
+        draggable="false"
+        ondragstart="return false;"
+      >
+        <img src={project.image} alt="" loading="lazy" draggable="false" />
+      </a>
+    ) : null
+  }
+
+  <div class="project-card__content">
+    <div class="project-card__header">
+      <div>
+        <div class="project-card__title-row">
+          <h3>
+            <a class="project-card__title-anchor" href={project.websiteHref}>
+              <span>{project.name}</span>
+              <LucideIcon name="ArrowUpRight" />
+            </a>
+          </h3>
+        </div>
+      </div>
+    </div>
+
+    <p>{project.summary}</p>
+
+    {project.links.length > 0 ? (
+      <ul class="project-card__links" aria-label={`${project.name} links`}>
+            {project.links.map((link) => (
+              <li>
+                <a class="project-card__secondary-link" href={link.href}>
+                  <LucideIcon name="Link" />
+                  <span>{link.label}</span>
+                </a>
+              </li>
+        ))}
+      </ul>
+    ) : null}
+
+    <ul class="badge-list" aria-label={`${project.name} technologies`}>
+      {project.stack.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ul>
+  </div>
+</article>

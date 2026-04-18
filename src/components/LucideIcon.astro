@@ -1,0 +1,34 @@
+---
+import lucide from 'lucide';
+
+type IconName = 'ArrowUp' | 'ArrowUpRight' | 'ExternalLink' | 'Link' | 'Link2' | 'Mail' | 'FileText' | 'GitBranch';
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+
+const { name, class: className } = Astro.props;
+const iconNode = lucide[name] as Array<[string, Record<string, string>]>;
+const iconMarkup = iconNode
+  .map(([tag, attrs]) => {
+    const attrText = Object.entries(attrs)
+      .map(([key, value]) => `${key}="${value}"`)
+      .join(' ');
+
+    return `<${tag} ${attrText}></${tag}>`;
+  })
+  .join('');
+---
+
+<svg
+  aria-hidden="true"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  class={className}
+  set:html={iconMarkup}
+/>

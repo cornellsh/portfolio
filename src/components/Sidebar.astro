@@ -1,0 +1,80 @@
+---
+import LinkIcon from './LinkIcon.astro';
+import { languageOptions } from '../data/portfolio';
+import type { LinkItem, PortfolioContent, SectionItem, Locale } from '../data/portfolio';
+
+interface Props {
+  profile: PortfolioContent['profile'];
+  links: LinkItem[];
+  sections: SectionItem[];
+  languageLabel: string;
+  currentLocale: Locale;
+}
+
+const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
+---
+
+<aside class="sidebar">
+  <div class="sidebar__intro">
+    <div class="sidebar__identity">
+      <h1>{profile.name}</h1>
+      <img class="sidebar__brand-mark" src="/brand-mark.svg" alt="" aria-hidden="true" draggable="false" />
+    </div>
+    <p class="sidebar__role">{profile.role}</p>
+    <p class="sidebar__summary">{profile.summary}</p>
+  </div>
+
+  <nav class="sidebar__nav" aria-label="Section index">
+    <ul>
+      {sections.map((section, index) => (
+        <li>
+          <a
+            href={`#${section.id}`}
+            data-section-link
+            data-target={section.id}
+            aria-current={index === 0 ? 'true' : 'false'}
+          >
+            {section.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+
+  <div class="sidebar__utility">
+    <ul class="sidebar__links" aria-label="External links">
+      {links.map((link) => (
+        <li>
+          <a href={link.href}>
+            <span class="sidebar__link-icon" aria-hidden="true">
+              <LinkIcon type={link.type} />
+            </span>
+            <span class="sidebar__link-label">{link.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="sidebar__language" aria-label="Language selection">
+      <p class="sidebar__language-label">{languageLabel}</p>
+      <details class="sidebar__language-dropdown">
+        <summary class="sidebar__language-button" aria-label={`Selected language: ${languageOptions.find((option) => option.value === currentLocale)?.label ?? 'English'}`}>
+          <span>{languageOptions.find((option) => option.value === currentLocale)?.shortLabel ?? 'EN'}</span>
+        </summary>
+
+        <div class="sidebar__language-menu" role="listbox" aria-label="Available languages">
+          {languageOptions.map((option) => (
+            <button
+              type="button"
+              class:list={['sidebar__language-option', option.value === currentLocale && 'is-selected']}
+              role="option"
+              aria-selected={option.value === currentLocale ? 'true' : 'false'}
+            >
+              <span>{option.label}</span>
+            </button>
+          ))}
+        </div>
+      </details>
+    </div>
+  </div>
+</aside>

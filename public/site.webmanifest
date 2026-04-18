@@ -1,0 +1,15 @@
+{
+  "name": "Cornell Shakh",
+  "short_name": "Shakh",
+  "icons": [
+    {
+      "src": "/brand-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#edf1f4",
+  "background_color": "#edf1f4",
+  "display": "standalone"
+}
