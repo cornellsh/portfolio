@@ -41,6 +41,7 @@ const content = getPortfolioContent(locale);
 
           {content.experience.map((item) => (
             <article class="experience-item">
+              <span class="experience-item__initial" aria-hidden="true">{item.organization.charAt(0)}</span>
               <p class="experience-item__meta">
                 <span>{splitPeriod(item.period)[0]}</span>
                 <span class="experience-item__meta-separator" aria-hidden="true">–</span>
