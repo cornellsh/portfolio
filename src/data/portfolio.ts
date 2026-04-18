@@ -67,7 +67,7 @@ const englishContent: PortfolioContent = {
   seo: {
     title: 'Cornell Shakh | Full-Stack Product Engineer',
     description:
-      'Cornell Shakh is a full-stack product engineer building software products, web tools, and internal systems.',
+      'A full-stack product engineer building software products, web tools, and internal systems.',
     siteName: 'Cornell Shakh',
   },
   profile: {
