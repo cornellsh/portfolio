@@ -427,9 +427,11 @@ select {
 }
 
 .section-header {
-  margin-bottom: 24px;
-  padding-bottom: 18px;
+  position: relative;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
+  z-index: 10;
 }
 
 .section-actions {
@@ -525,6 +527,7 @@ select {
 .project-card:hover,
 .project-card:has(a:focus-visible) {
   background-color: var(--accent-soft);
+  border-color: var(--border);
 }
 
 .project-card__media {
@@ -734,6 +737,7 @@ select {
 
 .experience-item:hover {
   background-color: var(--accent-soft);
+  border-color: var(--border);
 }
 
 .experience-item__content {
