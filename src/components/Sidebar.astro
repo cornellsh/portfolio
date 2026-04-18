@@ -57,25 +57,17 @@ const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
 
     <section class="sidebar__language" aria-labelledby="sidebar-language-label">
       <p class="sidebar__language-label" id="sidebar-language-label">{languageLabel}</p>
-      <details class="sidebar__language-dropdown">
-        <summary class="sidebar__language-button" aria-label={`Selected language: ${languageOptions.find((option) => option.value === currentLocale)?.label ?? 'English'}`}>
-          <span>{languageOptions.find((option) => option.value === currentLocale)?.shortLabel ?? 'EN'}</span>
-        </summary>
-
-        <ul class="sidebar__language-menu" aria-label="Available languages">
-          {languageOptions.map((option) => (
-            <li>
-              <button
-                type="button"
-                class:list={['sidebar__language-option', option.value === currentLocale && 'is-selected']}
-                aria-pressed={option.value === currentLocale ? 'true' : 'false'}
-              >
-                <span>{option.label}</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      </details>
+      <div class="sidebar__language-box">
+        {languageOptions.map((option) => (
+          <a
+            href={option.value === 'en' ? '/' : `/${option.value}/`}
+            class:list={['sidebar__language-option', option.value === currentLocale && 'is-selected']}
+            aria-current={option.value === currentLocale ? 'page' : undefined}
+          >
+            <span>{option.shortLabel}</span>
+          </a>
+        ))}
+      </div>
     </section>
   </div>
 </aside>
