@@ -21,7 +21,18 @@ const isExternalHref = (href: string) => href.startsWith('http://') || href.star
   <div class="sidebar__intro">
     <div class="sidebar__identity">
       <h1>{profile.name}</h1>
-      <img class="sidebar__brand-mark" src="/brand-mark.svg" alt="" aria-hidden="true" decoding="async" draggable="false" />
+      <img
+        class="sidebar__brand-mark"
+        src="/brand-mark.svg"
+        alt=""
+        aria-hidden="true"
+        width="45"
+        height="45"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        draggable="false"
+      />
     </div>
     <h2 class="sidebar__role">{profile.role}</h2>
     <p class="sidebar__summary">{profile.summary}</p>

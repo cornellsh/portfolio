@@ -12,9 +12,9 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
     "@fontsource-variable/public-sans": "^5.2.7",
     "@fontsource/manrope": "^5.2.8",
-    "@fontsource/space-mono": "^5.2.9",
     "@vercel/analytics": "^2.0.1",
     "astro": "^6.1.7",
     "lucide": "^1.8.0"

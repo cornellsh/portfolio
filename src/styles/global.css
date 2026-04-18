@@ -8,8 +8,8 @@
   --border: rgba(0, 0, 0, 0.1);
   --border-strong: rgba(0, 0, 0, 0.18);
   --accent: #0070f3;
-  --accent-gradient-button: linear-gradient(0deg, #005fe8 0%, #2e8eff 100%);
-  --accent-gradient-pill: linear-gradient(0deg, #0a67ee 0%, #3a95ff 100%);
+  --accent-gradient-button: linear-gradient(0deg, #1b73ee 0%, #2e8eff 100%);
+  --accent-gradient-pill: linear-gradient(0deg, #2278ef 0%, #3a95ff 100%);
   --accent-soft: rgba(0, 112, 243, 0.1);
   --shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
   --hover-bg: rgba(0, 112, 243, 0.08);
@@ -412,6 +412,10 @@ select {
   font-size: 0.92rem;
   font-weight: 600;
   cursor: pointer;
+  transition:
+    border-color var(--transition),
+    color var(--transition),
+    filter var(--transition);
 }
 
 .email-dialog__action--primary {
@@ -424,16 +428,12 @@ select {
 .email-dialog__close:hover,
 .email-dialog__close:focus-visible,
 .email-dialog__copy:hover,
-.email-dialog__copy:focus-visible,
-.email-dialog__action:hover,
-.email-dialog__action:focus-visible {
+.email-dialog__copy:focus-visible {
   color: var(--text);
 }
 
 .email-dialog__copy:hover,
-.email-dialog__copy:focus-visible,
-.email-dialog__action:hover,
-.email-dialog__action:focus-visible {
+.email-dialog__copy:focus-visible {
   border-color: #d7d9dd;
   background: #f3f4f6;
 }
@@ -441,9 +441,8 @@ select {
 .email-dialog__action--primary:hover,
 .email-dialog__action--primary:focus-visible {
   border-color: transparent;
-  background: linear-gradient(0deg, #0056d6 0%, #2386ff 100%);
-  background-clip: padding-box;
   color: #fff;
+  filter: brightness(1.11) saturate(1.1);
 }
 
 .email-dialog__copy:hover,
@@ -557,7 +556,8 @@ select {
   text-decoration: none;
   transition:
     color var(--transition),
-    background-color var(--transition);
+    background-color var(--transition),
+    filter var(--transition);
 }
 
 .sidebar__language-option:hover,
@@ -569,6 +569,12 @@ select {
   background: var(--accent-gradient-pill);
   background-clip: padding-box;
   color: #fff;
+}
+
+.sidebar__language-option.is-selected:hover,
+.sidebar__language-option.is-selected:focus-visible {
+  color: #fff;
+  filter: brightness(1.11) saturate(1.1);
 }
 
 .sidebar__language-option:focus-visible,
