@@ -887,7 +887,11 @@ select {
 @media (max-width: 720px) {
   .shell {
     width: min(calc(100% - 32px), var(--page-width));
-    padding: 20px 0 28px;
+    padding: 28px 16px 32px;
+  }
+
+  .content {
+    padding: 16px 0 32px;
   }
 
   .page {
