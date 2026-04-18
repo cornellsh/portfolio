@@ -14,7 +14,6 @@
   --hover-border: rgba(0, 112, 243, 0.25);
   --font-sans: 'Public Sans Variable', system-ui, sans-serif;
   --font-display: 'Manrope', 'Public Sans Variable', system-ui, sans-serif;
-  --font-mono: 'Space Mono', monospace;
   --text-xl: clamp(3rem, 3.8vw, 4.1rem);
   --text-lg: clamp(1.7rem, 2.1vw, 2.15rem);
   --text-md: 1.2rem;
@@ -28,16 +27,13 @@
   --transition: 180ms ease-out;
 }
 
-html {
-  background: var(--bg);
-}
-
 * {
   box-sizing: border-box;
 }
 
 html {
-  background: var(--bg);
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
 }
 
 body {
@@ -725,9 +721,7 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.28rem 0.65rem;
-  min-width: 2.2em;
-  min-height: 1.5em;
+  padding: 0.4rem 0.65rem;
   border: 1.5px solid transparent;
   border-radius: 999px;
   background: #374151;
@@ -755,30 +749,9 @@ select {
   margin: -24px;
   border: 1px solid transparent;
   border-radius: var(--radius-md);
-  position: relative;
   transition:
     background-color var(--transition),
     border-color var(--transition);
-}
-
-.experience-item__initial {
-  position: absolute;
-  top: 4px;
-  right: 12px;
-  font-family: var(--font-mono);
-  font-size: 4.5rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.04em;
-  color: transparent;
-  background: linear-gradient(to bottom, #3294ff 0%, #0058b6 40%, transparent 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  opacity: 0.18;
-  pointer-events: none;
-  user-select: none;
-}
-  letter-spacing: -0.03em;
 }
 
 .experience-item:hover {
@@ -1108,6 +1081,7 @@ select {
     padding: 0.32rem 0.56rem;
     font-size: 0.71rem;
     letter-spacing: 0.01em;
+    border-radius: 10px;
   }
 
   .experience-item__meta {
@@ -1211,6 +1185,7 @@ select {
   .badge-list li {
     padding: 0.3rem 0.5rem;
     font-size: 0.69rem;
+    border-radius: 10px;
   }
 
   .badge-list {

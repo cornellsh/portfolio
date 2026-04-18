@@ -128,7 +128,7 @@ const englishContent: PortfolioContent = {
   experience: [
     {
       role: 'Full-Stack Product Engineer',
-      organization: 'Self-employed',
+      organization: 'Independent',
       period: '2024\u00A0\u2013\u00A0Present',
       summary:
         'Building and shipping full-stack products, from architecture and implementation to iteration after release.',
@@ -136,7 +136,7 @@ const englishContent: PortfolioContent = {
     },
     {
       role: 'Software Developer',
-      organization: 'Indie',
+      organization: 'Independent',
       period: '2022\u00A0\u2013\u00A02024',
       summary:
         'Built and sold technical products independently, while also handling distribution, updates, and support.',
@@ -144,7 +144,7 @@ const englishContent: PortfolioContent = {
     },
     {
       role: 'Freelance Developer',
-      organization: 'Clients',
+      organization: 'Independent',
       period: '2020\u00A0\u2013\u00A02022',
       summary:
         'Worked with clients on web and design projects, focusing on clear scope, fast turnaround, and practical delivery.',
