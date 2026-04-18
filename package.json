@@ -12,12 +12,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@fontsource-variable/newsreader": "^5.2.10",
     "@fontsource-variable/public-sans": "^5.2.7",
     "@fontsource/manrope": "^5.2.8",
-    "@tabler/icons": "^3.41.1",
     "astro": "^6.1.7",
-    "flag-icons": "^7.5.0",
     "lucide": "^1.8.0"
   }
 }
