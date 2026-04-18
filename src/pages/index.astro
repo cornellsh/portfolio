@@ -176,7 +176,7 @@ const content = getPortfolioContent(locale);
             const exp = entries.find(e => e.target.id === 'experience');
             const proj = entries.find(e => e.target.id === 'projects');
 
-            if (exp?.isIntersecting && !proj?.isIntersecting) {
+            if (exp?.isIntersecting) {
               mobileHeader.classList.add('is-visible');
               mobileHeaderLink.textContent = 'Experience';
               mobileHeaderLink.setAttribute('href', '#experience');
@@ -189,7 +189,7 @@ const content = getPortfolioContent(locale);
             }
           },
           {
-            rootMargin: '-48px 0px 0px 0px',
+            rootMargin: '-100px 0px 0px 0px',
             threshold: 0,
           },
         );
