@@ -8,22 +8,37 @@ interface Props {
   lang?: string;
   title: string;
   description: string;
+  siteName?: string;
 }
 
-const { lang = 'en', title, description } = Astro.props;
+const { lang = 'en', title, description, siteName = 'Cornell Shakh' } = Astro.props;
 ---
 
 <!doctype html>
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="robots" content="index, follow" />
     <meta name="description" content={description} />
+    <meta name="application-name" content={siteName} />
+    <meta name="apple-mobile-web-app-title" content={siteName} />
     <meta name="theme-color" content="#edf1f4" />
+    <meta name="color-scheme" content="light" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content="/brand-mark.svg" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="/brand-mark.svg" />
     <title>{title}</title>
   </head>
   <body>

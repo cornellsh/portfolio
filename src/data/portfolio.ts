@@ -37,6 +37,7 @@ export type PortfolioContent = {
   seo: {
     title: string;
     description: string;
+    siteName: string;
   };
   profile: {
     name: string;
@@ -57,8 +58,10 @@ export type PortfolioContent = {
 
 const englishContent: PortfolioContent = {
   seo: {
-    title: 'Software Developer Portfolio',
-    description: 'Portfolio website focused on work, experience, and clear technical presentation.',
+    title: 'Cornell Shakh | Full-Stack Product Engineer',
+    description:
+      'Portfolio of Cornell Shakh, a full-stack product engineer building software products, web applications, and internal tools with a focus on clarity, reliability, and practical execution.',
+    siteName: 'Cornell Shakh',
   },
   profile: {
     name: 'Cornell Shakh',

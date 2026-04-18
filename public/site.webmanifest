@@ -1,15 +1,30 @@
 {
   "name": "Cornell Shakh",
   "short_name": "Shakh",
+  "description": "Portfolio of Cornell Shakh, a full-stack product engineer building software products, web applications, and internal tools.",
+  "start_url": "/",
   "icons": [
     {
       "src": "/brand-mark.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
+    },
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "theme_color": "#edf1f4",
   "background_color": "#edf1f4",
-  "display": "standalone"
+  "display": "standalone",
+  "lang": "en"
 }
