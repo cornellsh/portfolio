@@ -927,12 +927,12 @@ select {
   .section-header {
     position: sticky;
     top: 0;
+    right: 0;
+    left: 0;
     z-index: 10;
-    margin: 0 -16px 24px;
     padding: 12px 16px;
     background: rgba(255, 255, 255, 0.72);
     backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
   }
 
   .page {
