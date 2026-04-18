@@ -14,13 +14,13 @@ interface Props {
 const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
 ---
 
-<aside class="sidebar">
+<aside class="sidebar" aria-label="Profile and site navigation">
   <div class="sidebar__intro">
     <div class="sidebar__identity">
       <h1>{profile.name}</h1>
       <img class="sidebar__brand-mark" src="/brand-mark.svg" alt="" aria-hidden="true" draggable="false" />
     </div>
-    <p class="sidebar__role">{profile.role}</p>
+    <h2 class="sidebar__role">{profile.role}</h2>
     <p class="sidebar__summary">{profile.summary}</p>
   </div>
 
@@ -55,26 +55,27 @@ const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
       ))}
     </ul>
 
-    <div class="sidebar__language" aria-label="Language selection">
-      <p class="sidebar__language-label">{languageLabel}</p>
+    <section class="sidebar__language" aria-labelledby="sidebar-language-label">
+      <p class="sidebar__language-label" id="sidebar-language-label">{languageLabel}</p>
       <details class="sidebar__language-dropdown">
         <summary class="sidebar__language-button" aria-label={`Selected language: ${languageOptions.find((option) => option.value === currentLocale)?.label ?? 'English'}`}>
           <span>{languageOptions.find((option) => option.value === currentLocale)?.shortLabel ?? 'EN'}</span>
         </summary>
 
-        <div class="sidebar__language-menu" role="listbox" aria-label="Available languages">
+        <ul class="sidebar__language-menu" aria-label="Available languages">
           {languageOptions.map((option) => (
-            <button
-              type="button"
-              class:list={['sidebar__language-option', option.value === currentLocale && 'is-selected']}
-              role="option"
-              aria-selected={option.value === currentLocale ? 'true' : 'false'}
-            >
-              <span>{option.label}</span>
-            </button>
+            <li>
+              <button
+                type="button"
+                class:list={['sidebar__language-option', option.value === currentLocale && 'is-selected']}
+                aria-pressed={option.value === currentLocale ? 'true' : 'false'}
+              >
+                <span>{option.label}</span>
+              </button>
+            </li>
           ))}
-        </div>
+        </ul>
       </details>
-    </div>
+    </section>
   </div>
 </aside>

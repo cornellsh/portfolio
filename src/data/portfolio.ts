@@ -59,8 +59,7 @@ export type PortfolioContent = {
 const englishContent: PortfolioContent = {
   seo: {
     title: 'Cornell Shakh | Full-Stack Product Engineer',
-    description:
-      'Portfolio of Cornell Shakh, a full-stack product engineer building software products, web applications, and internal tools with a focus on clarity, reliability, and practical execution.',
+    description: '',
     siteName: 'Cornell Shakh',
   },
   profile: {
