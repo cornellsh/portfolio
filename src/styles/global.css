@@ -1081,6 +1081,7 @@ select {
     padding: 0.32rem 0.56rem;
     font-size: 0.71rem;
     letter-spacing: 0.01em;
+    border-radius: 10px;
   }
 
   .experience-item__meta {
@@ -1184,7 +1185,7 @@ select {
   .badge-list li {
     padding: 0.3rem 0.5rem;
     font-size: 0.69rem;
-    border-radius: 5px;
+    border-radius: 10px;
   }
 
   .badge-list {
