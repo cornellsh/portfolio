@@ -19,17 +19,7 @@ const content = getPortfolioContent(locale);
   <div id="top"></div>
   <div class="shell">
     <header class="mobile-header">
-      <nav class="mobile-header__nav" aria-label="Section navigation">
-        {content.sections.map((section, index) => (
-          <a
-            href={`#${section.id}`}
-            class="mobile-header__link"
-            data-target={section.id}
-          >
-            {section.label}
-          </a>
-        ))}
-      </nav>
+      <a href="#experience" class="mobile-header__link" data-target="experience">Experience</a>
     </header>
     <main class="page">
       <Sidebar
@@ -172,6 +162,41 @@ const content = getPortfolioContent(locale);
       );
 
       revealItems.forEach((item) => revealObserver.observe(item));
+    }
+
+    if (window.matchMedia('(max-width: 720px)').matches) {
+      const mobileHeader = document.querySelector('.mobile-header');
+      const mobileHeaderLink = document.querySelector('.mobile-header__link');
+      const experienceSection = document.getElementById('experience');
+      const projectsSection = document.getElementById('projects');
+
+      if (mobileHeader && mobileHeaderLink && experienceSection && projectsSection) {
+        const headerObserver = new IntersectionObserver(
+          (entries) => {
+            const exp = entries.find(e => e.target.id === 'experience');
+            const proj = entries.find(e => e.target.id === 'projects');
+
+            if (exp?.isIntersecting && !proj?.isIntersecting) {
+              mobileHeader.classList.add('is-visible');
+              mobileHeaderLink.textContent = 'Experience';
+              mobileHeaderLink.setAttribute('href', '#experience');
+            } else if (proj?.isIntersecting) {
+              mobileHeader.classList.add('is-visible');
+              mobileHeaderLink.textContent = 'Projects';
+              mobileHeaderLink.setAttribute('href', '#projects');
+            } else {
+              mobileHeader.classList.remove('is-visible');
+            }
+          },
+          {
+            rootMargin: '-48px 0px 0px 0px',
+            threshold: 0,
+          },
+        );
+
+        headerObserver.observe(experienceSection);
+        headerObserver.observe(projectsSection);
+      }
     }
   </script>
 </BaseLayout>
