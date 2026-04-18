@@ -37,6 +37,7 @@ body {
   color: var(--text);
   background:
     linear-gradient(180deg, #eff3f6 0%, #e9edf1 100%);
+  background-attachment: fixed;
 }
 
 ::selection {
