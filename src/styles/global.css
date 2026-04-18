@@ -431,7 +431,13 @@ select {
   margin-bottom: 28px;
   padding-bottom: 20px;
   border-bottom: 1px solid var(--border);
+  transition: border-color var(--transition);
   z-index: 10;
+}
+
+#experience:has(.experience-item:hover) .section-header,
+#projects:has(.project-card:hover) .section-header {
+  border-color: transparent;
 }
 
 .section-actions {
