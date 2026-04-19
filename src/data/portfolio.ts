@@ -75,7 +75,7 @@ const englishContent: PortfolioContent = {
     role: 'Full-Stack Product Engineer',
     summary: 'Engineer by mind, builder at heart.',
     intro: [
-      'I build full-stack software products, mainly SaaS tools and internal systems, from backend services to frontend interfaces.',
+      'I build full-stack software products, mainly web tools and internal systems, from backend services to frontend interfaces.',
       'I started by building and selling my own software, where I handled development, distribution, and ongoing iteration. That work gave me early experience with shipping and maintaining real products used outside of personal projects.',
       'Today, I work as a full-stack engineer building web-based tools for real business use cases.',
     ],
@@ -109,7 +109,7 @@ const englishContent: PortfolioContent = {
       name: 'Ombra',
       summary:
         'A full-stack admin panel for a game development company to manage products and subscriptions. Built for internal use, with a focus on keeping everyday operations clear and manageable.',
-      stack: ['React', 'Flask', 'Subscriptions', 'Admin Tools'],
+      stack: ['React', 'Flask', 'SQLAlchemy', 'Internal Tools'],
       image: '/projects/ombra.svg',
       websiteHref: '#',
       links: [],
@@ -118,7 +118,7 @@ const englishContent: PortfolioContent = {
       name: 'Skill',
       summary:
         'A native licensing system for controlled software distribution, built around hardware-based authentication, backend verification, and a Windows client designed for tighter access control.',
-      stack: ['C++', 'Licensing', 'Authentication', 'Windows'],
+      stack: ['C++', 'LLVM', 'Licensing', 'Windows'],
       image: '/projects/skill-cx.svg',
       websiteHref: '#',
       links: [],
@@ -140,7 +140,7 @@ const englishContent: PortfolioContent = {
       period: '2024\u00A0\u2013\u00A0Present',
       summary:
         'Building and shipping full-stack products, from architecture and implementation to iteration after release.',
-      stack: ['TypeScript', 'React', 'Python', 'SaaS'],
+      stack: ['TypeScript', 'React', 'Python', 'Internal Systems'],
     },
     {
       role: 'Software Developer',
@@ -148,7 +148,7 @@ const englishContent: PortfolioContent = {
       period: '2022\u00A0\u2013\u00A02024',
       summary:
         'Built and sold technical products independently, while also handling distribution, updates, and support.',
-      stack: ['C++', 'Systems Programming', 'Networking', 'Automation'],
+      stack: ['C++', 'Systems Programming', 'LLVM', 'Automation'],
     },
     {
       role: 'Freelance Developer',
@@ -156,7 +156,7 @@ const englishContent: PortfolioContent = {
       period: '2020\u00A0\u2013\u00A02022',
       summary:
         'Worked with clients on web and design projects, focusing on clear scope, fast turnaround, and practical delivery.',
-      stack: ['Graphic Design', 'Web Development', 'Client Work'],
+      stack: ['Web Development', 'Frontend', 'UI Implementation'],
     },
   ],
 };
