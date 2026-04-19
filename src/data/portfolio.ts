@@ -497,3 +497,15 @@ export function getLocalePath(locale: Locale): string {
   }
   return localeMeta[locale].path;
 }
+
+export function getPortfolioContent(locale: Locale): PortfolioContent {
+  return portfolioContent[locale];
+}
+
+export function getHtmlLang(locale: Locale): string {
+  return localeMeta[locale].htmlLang;
+}
+
+export function getOgLocale(locale: Locale): string {
+  return localeMeta[locale].ogLocale;
+}
