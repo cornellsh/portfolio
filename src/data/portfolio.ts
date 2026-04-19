@@ -59,6 +59,7 @@ export type PortfolioContent = {
     projects: string;
     language: string;
     resumeCta: string;
+    backToTop: string;
   };
   projects: ProjectItem[];
   experience: ExperienceItem[];
@@ -96,6 +97,7 @@ const englishContent: PortfolioContent = {
     projects: 'Projects.',
     language: 'Language',
     resumeCta: 'View my résumé',
+    backToTop: 'Back to top',
   },
   projects: [
     {
@@ -195,6 +197,7 @@ const czechContent: PortfolioContent = {
     projects: 'Projekty.',
     language: 'Jazyk',
     resumeCta: 'Zobrazit životopis',
+    backToTop: 'Zpět nahoru',
   },
   projects: [
     {
@@ -294,6 +297,7 @@ const ukrainianContent: PortfolioContent = {
     projects: 'Проєкти.',
     language: 'Мова',
     resumeCta: 'Переглянути резюме',
+    backToTop: 'Назад догори',
   },
   projects: [
     {
@@ -393,6 +397,7 @@ const russianContent: PortfolioContent = {
     projects: 'Проекты.',
     language: 'Язык',
     resumeCta: 'Открыть резюме',
+    backToTop: 'Наверх',
   },
   projects: [
     {

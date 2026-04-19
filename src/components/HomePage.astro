@@ -11,6 +11,7 @@ interface Props {
 
 const { locale, content } = Astro.props;
 const splitPeriod = (period: string) => period.split('\u2013').map((part) => part.trim());
+const resumeLink = content.links.find((link) => link.type === 'resume');
 ---
 
 <div id="top"></div>
@@ -29,6 +30,15 @@ const splitPeriod = (period: string) => period.split('\u2013').map((part) => par
         {content.profile.intro.map((paragraph) => (
           <p class="intro-copy intro-text">{paragraph}</p>
         ))}
+
+        {resumeLink ? (
+          <div class="intro-actions">
+            <a class="text-button" href={resumeLink.href} target="_blank" rel="noopener noreferrer">
+              <span>{content.headings.resumeCta}</span>
+              <LucideIcon name="ArrowUpRight" />
+            </a>
+          </div>
+        ) : null}
       </section>
 
       <section class="content-section experience-list" id="experience" data-section>
@@ -74,7 +84,7 @@ const splitPeriod = (period: string) => period.split('\u2013').map((part) => par
         <div class="section-actions">
           <a class="text-button" href="#top">
             <LucideIcon name="ArrowUp" />
-            <span>Back to top</span>
+            <span>{content.headings.backToTop}</span>
           </a>
         </div>
       </section>
