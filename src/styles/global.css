@@ -955,6 +955,33 @@ select {
   transition:
     background-color var(--transition),
     border-color var(--transition);
+  position: relative;
+}
+
+.experience-item::before {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 28px;
+  bottom: -28px;
+  width: 2px;
+  background: var(--border);
+}
+
+.experience-item::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 28px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--text-muted);
+}
+
+.experience-item:last-child::before {
+  display: none;
 }
 
 .experience-item:hover {
