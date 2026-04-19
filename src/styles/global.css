@@ -967,6 +967,15 @@ select {
   width: 2px;
   background: var(--border);
   z-index: 1;
+  transition: background-color var(--transition);
+}
+
+.experience-item:hover::before {
+  background: #f4f4f5;
+}
+
+.experience-item:last-child::before {
+  display: none;
 }
 
 .experience-item::after {
@@ -990,10 +999,6 @@ select {
   background: #f4f4f5;
   border-color: var(--text);
   transform: scale(1.1);
-}
-
-.experience-item:last-child::before {
-  display: none;
 }
 
 .experience-item:hover {
