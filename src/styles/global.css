@@ -962,8 +962,8 @@ select {
   content: '';
   position: absolute;
   left: 9px;
-  top: 28px;
-  bottom: -28px;
+  top: 22px;
+  bottom: 6px;
   width: 2px;
   background: var(--border);
   z-index: 1;
