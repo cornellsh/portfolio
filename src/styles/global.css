@@ -958,31 +958,31 @@ select {
   position: relative;
 }
 
-.experience-item::before {
+.experience-item {
+  display: flex;
+  gap: 32px;
+  padding: 24px;
+  margin: -24px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  transition:
+    background-color var(--transition),
+    border-color var(--transition);
+  position: relative;
+}
+
+.experience-item__meta {
+  position: relative;
+  padding-left: 16px;
+  flex: 0 0 120px;
+}
+
+.experience-item__meta::before {
   content: '';
   position: absolute;
-  left: 9px;
-  top: 12px;
-  bottom: 0;
-  width: 2px;
-  background: var(--border);
-  z-index: 1;
-  transition: background-color var(--transition);
-}
-
-.experience-item:hover::before {
-  background: #f4f4f5;
-}
-
-.experience-item:last-child::before {
-  display: none;
-}
-
-.experience-item::after {
-  content: '';
-  position: absolute;
-  left: 5px;
-  top: 1px;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -995,10 +995,31 @@ select {
     transform var(--transition);
 }
 
-.experience-item:hover::after {
+.experience-item:hover .experience-item__meta::before {
   background: #f4f4f5;
   border-color: var(--text);
-  transform: scale(1.1);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.experience-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  bottom: -24px;
+  width: 2px;
+  background: var(--border);
+  z-index: 1;
+  transform: translateY(-50%);
+  transition: background-color var(--transition);
+}
+
+.experience-item:hover::before {
+  background: #f4f4f5;
+}
+
+.experience-item:last-child::before {
+  display: none;
 }
 
 .experience-item:hover {
@@ -1009,19 +1030,6 @@ select {
 .experience-item__content {
   display: grid;
   row-gap: 6px;
-}
-
-.experience-item__meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.34em;
-  align-self: start;
-  color: var(--text-muted);
-  padding-top: 2px;
-  font-size: 0.76rem;
-  font-weight: 600;
-  line-height: 1.35;
-  text-transform: uppercase;
 }
 
 .experience-item__meta-separator {
