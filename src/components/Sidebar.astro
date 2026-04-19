@@ -10,9 +10,11 @@ interface Props {
   sections: SectionItem[];
   languageLabel: string;
   currentLocale: Locale;
+  copyEmailLabel?: string;
+  openEmailLabel?: string;
 }
 
-const { profile, links, sections, languageLabel, currentLocale } = Astro.props;
+const { profile, links, sections, languageLabel, currentLocale, copyEmailLabel = 'Copy', openEmailLabel = 'Open mail app' } = Astro.props;
 const emailLink = links.find((link) => link.type === 'email');
 const isExternalHref = (href: string) => href.startsWith('http://') || href.startsWith('https://');
 const opensInNewTab = (href: string) => isExternalHref(href) || href.toLowerCase().endsWith('.pdf');
@@ -96,11 +98,11 @@ const visibleLinks = links.filter((link) => link.type === 'email' || hasActiveHr
           <code class="email-dialog__address" data-email-address>{emailLink.href.replace('mailto:', '')}</code>
           <button type="button" class="email-dialog__copy" data-copy-email>
             <LucideIcon name="Copy" />
-            <span data-copy-email-label>Copy</span>
+            <span data-copy-email-label>{copyEmailLabel}</span>
           </button>
         </div>
         <div class="email-dialog__actions">
-          <a class="email-dialog__action email-dialog__action--primary" href={emailLink.href}>Open mail app</a>
+          <a class="email-dialog__action email-dialog__action--primary" href={emailLink.href}>{openEmailLabel}</a>
         </div>
       </dialog>
     ) : null}
