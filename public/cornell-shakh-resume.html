@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cornell Shakh Résumé</title>
     <style>
-      @page {
-        size: letter;
-        margin: 0.72in 0.72in 0.68in;
-      }
+        @page {
+          size: letter;
+          margin: 0.72in 0.72in 0.68in;
+        }
 
       :root {
         --text: #111;
-        --muted: #444;
-        --rule: #ddd;
+        --muted: #222;
+        --rule: #222;
       }
 
       * {
@@ -26,12 +26,12 @@
         padding: 0;
         background: #fff;
         color: var(--text);
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
       }
 
       body {
-        font-size: 9.5pt;
-        line-height: 1.35;
+        font-size: 9.35pt;
+        line-height: 1.16;
       }
 
       .page {
@@ -40,95 +40,114 @@
 
       .header {
         text-align: center;
-        margin-bottom: 8px;
+        margin-bottom: 1px;
       }
 
       .header h1 {
         margin: 0;
-        font-size: 18pt;
+        font-size: 14pt;
         font-weight: 700;
-        letter-spacing: -0.02em;
+        letter-spacing: 0;
       }
 
-      .contact-line {
-        font-size: 9.25pt;
-        margin-top: 3px;
+      .contact-line,
+      .link-line {
+        margin-top: 2px;
+        font-size: 9.35pt;
       }
 
-      .contact-line a {
+      .section {
+        margin-top: 9px;
+      }
+
+      .section-title {
+        margin: 0 0 4px;
+        font-size: 11.35pt;
+        font-weight: 400;
+        line-height: 1.05;
+        border-bottom: 1px solid var(--rule);
+        padding-bottom: 1px;
+      }
+
+      .summary-copy {
+        margin: 0;
+      }
+
+      .skills-row {
+        margin: 0 0 1px;
+        font-size: 9.35pt;
+      }
+
+      .skills-row strong {
+        font-weight: 700;
+      }
+
+      .entry {
+        margin-top: 4px;
+      }
+
+      .entry-header,
+      .entry-subheader {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 10px;
+      }
+
+      .entry-header {
+        font-size: 9.35pt;
+        font-weight: 700;
+      }
+
+      .entry-subheader {
+        margin-top: 0;
+        font-size: 9.35pt;
+        font-style: italic;
+      }
+
+      .entry-subheader .right {
+        white-space: nowrap;
+      }
+
+      ul {
+        margin: 1px 0 0 13px;
+        padding: 0 0 0 10px;
+      }
+
+      li {
+        margin: 0 0 1px;
+      }
+
+      a {
         color: inherit;
         text-decoration: none;
       }
 
-      .contact-line a:hover {
-        text-decoration: underline;
-      }
-
-      .section {
-        margin-top: 16px;
-      }
-
-      .section-title {
-        font-size: 11pt;
-        font-weight: 600;
-        border-bottom: 1px solid var(--rule);
-        padding-bottom: 2px;
-        margin-bottom: 8px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-      }
-
-      .entry {
-        margin-top: 10px;
-      }
-
-      .entry:first-child {
-        margin-top: 0;
-      }
-
-      .entry-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-        gap: 12px;
-      }
-
-      .entry-header-left {
-        font-weight: 600;
-        font-size: 9.5pt;
-      }
-
-      .entry-header-right {
-        font-size: 9.5pt;
+      .entry-header span:last-child,
+      .entry-subheader span:last-child {
         white-space: nowrap;
       }
 
-      .entry-subheader {
-        font-size: 9.25pt;
-        color: var(--muted);
-        margin-top: 1px;
+      .entry-location,
+      .entry-date {
+        font-weight: 400;
       }
 
-      .entry ul {
-        margin: 4px 0 0 0;
-        padding-left: 16px;
+      .entry-date {
+        font-style: italic;
       }
 
-      .entry li {
-        margin-top: 3px;
+      .project-entry .entry-header span:last-child {
+        font-style: italic;
+        font-weight: 400;
       }
 
-      .skills-row {
-        margin-top: 4px;
-        font-size: 9.25pt;
+      .compact .entry {
+        margin-top: 6px;
       }
 
-      .skills-row:first-child {
-        margin-top: 0;
-      }
-
-      .skills-row strong {
-        font-weight: 600;
+      .compact ul {
+        margin-top: 2px;
       }
     </style>
   </head>
@@ -136,12 +155,8 @@
     <main class="page">
       <header class="header">
         <h1>Cornell Shakh</h1>
-        <div class="contact-line">
-          <a href="mailto:cornellshakh@proton.me">cornellshakh@proton.me</a> • <a href="tel:+420602880898">+420 602 880 898</a> • Prague, Czech Republic
-        </div>
-        <div class="contact-line">
-          <a href="https://cornell.sh">cornell.sh</a> • <a href="https://github.com/cornellsh">github.com/cornellsh</a>
-        </div>
+        <div class="contact-line">cornellshakh@proton.me • +420 602 880 898 • Prague, Czech Republic</div>
+        <div class="link-line">https://cornell.sh/ • https://github.com/cornellsh</div>
       </header>
 
       <section class="section">
@@ -149,34 +164,36 @@
 
         <article class="entry">
           <div class="entry-header">
-            <span class="entry-header-left">University of Finance and Administration (VŠFS), Prague</span>
-            <span class="entry-header-right">2025 – Present</span>
+            <span>University of Finance and Administration (VŠFS)</span>
+            <span class="entry-location">Prague</span>
           </div>
-          <div class="entry-subheader">Bachelor's in Marketing Communication</div>
+          <div class="entry-subheader">
+            <span>Bachelor's in Marketing Communication</span>
+            <span class="entry-date">2025 – Present</span>
+          </div>
         </article>
 
         <article class="entry">
           <div class="entry-header">
-            <span class="entry-header-left">1. KŠPA Kladno, Kladno</span>
-            <span class="entry-header-right">2021 – 2025</span>
+            <span>1. KŠPA Kladno</span>
+            <span class="entry-location">Kladno</span>
           </div>
-          <div class="entry-subheader">Secondary School Diploma in Information Technology</div>
+          <div class="entry-subheader">
+            <span>Secondary School Diploma in Information Technology</span>
+            <span class="entry-date">2021 – 2025</span>
+          </div>
           <ul>
-            <li>Graduated from the Information Technology track.</li>
-            <li>Graduation seminar project: <em>Digitalizace státní správy</em> (Digitalization of Public Administration).</li>
+            <li>Graduated in the Information Technology track.</li>
+            <li>Graduation seminar work: <em>Digitalizace státní správy</em> (Digitalization of Public Administration).</li>
           </ul>
         </article>
       </section>
 
-      <section class="section">
+      <section class="section compact">
         <h2 class="section-title">Technical Skills</h2>
-
-        <p class="skills-row"><strong>Languages:</strong> TypeScript, JavaScript, Python, Go, SQL, C++, C#, HTML/CSS, Shell/Bash</p>
-        <p class="skills-row"><strong>Frontend:</strong> React, Next.js, Tailwind CSS, Astro</p>
-        <p class="skills-row"><strong>Backend:</strong> NestJS, Flask, SQLAlchemy</p>
-        <p class="skills-row"><strong>Databases:</strong> PostgreSQL, MySQL</p>
-        <p class="skills-row"><strong>Tools & Systems:</strong> Git, Docker, Linux, Make/CMake, LLVM</p>
-        <p class="skills-row"><strong>Spoken Languages:</strong> Czech (native), English (C2), Russian (C2)</p>
+        <p class="skills-row"><strong>Programming Languages:</strong> TypeScript, JavaScript, Python, Go, SQL, C#, C++; HTML/CSS; Shell/Bash</p>
+        <p class="skills-row"><strong>Software/Tools:</strong> React, Next.js, Tailwind CSS, Astro; NestJS, Flask, SQLAlchemy; PostgreSQL, MySQL; Git, Docker, Linux, Make/CMake; LLVM</p>
+        <p class="skills-row"><strong>Languages:</strong> Czech (native), English (C2), Russian (C2)</p>
       </section>
 
       <section class="section">
@@ -184,10 +201,9 @@
 
         <article class="entry">
           <div class="entry-header">
-            <span class="entry-header-left">Independent — Remote</span>
-            <span class="entry-header-right">2024 – Present</span>
+            <span>Full-Stack Engineer • Independent</span>
+            <span class="entry-date">2024 – Present</span>
           </div>
-          <div class="entry-subheader">Full-Stack Engineer</div>
           <ul>
             <li>Develop production web applications and internal tools with end-to-end ownership across architecture, APIs, data flows, and frontend implementation.</li>
             <li>Build authentication flows, dashboard interfaces, workflow tooling, and external integrations for day-to-day operations.</li>
@@ -197,10 +213,9 @@
 
         <article class="entry">
           <div class="entry-header">
-            <span class="entry-header-left">Independent — Remote</span>
-            <span class="entry-header-right">2022 – 2024</span>
+            <span>Software Developer • Independent</span>
+            <span class="entry-date">2022 – 2024</span>
           </div>
-          <div class="entry-subheader">Software Developer</div>
           <ul>
             <li>Built and sold commercial desktop software in C++ with hardware-based licensing, backend verification, and controlled distribution.</li>
             <li>Developed automation software for timing-sensitive, real-time multi-account workflows where coordination, reliability, and performance were critical.</li>
@@ -210,10 +225,9 @@
 
         <article class="entry">
           <div class="entry-header">
-            <span class="entry-header-left">Independent — Remote</span>
-            <span class="entry-header-right">2020 – 2022</span>
+            <span>Freelance Developer • Independent</span>
+            <span class="entry-date">2020 – 2022</span>
           </div>
-          <div class="entry-subheader">Freelance Developer</div>
           <ul>
             <li>Built websites and web applications for clients from initial scoping through implementation and launch.</li>
             <li>Worked directly with clients on requirements, revisions, and project delivery.</li>
@@ -224,21 +238,21 @@
       <section class="section">
         <h2 class="section-title">Projects</h2>
 
-        <article class="entry">
+        <article class="entry project-entry">
           <div class="entry-header">
-            <span class="entry-header-left">Dska</span>
-            <span class="entry-header-right"><a href="https://dska.cz">dska.cz</a></span>
+            <span>Dska</span>
+            <span>dska.cz</span>
           </div>
           <ul>
-            <li>Built a web product for Czech businesses looking for a more practical alternative to the Czech government's official data box system for secure communication with public institutions.</li>
+            <li>Built a web product for Czech businesses looking for a more practical alternative to the official data box portal.</li>
             <li>Implemented the full stack with NestJS, Next.js, Go, and ISDS integration.</li>
           </ul>
         </article>
 
-        <article class="entry">
+        <article class="entry project-entry">
           <div class="entry-header">
-            <span class="entry-header-left">Ombra</span>
-            <span class="entry-header-right">Internal Tool</span>
+            <span>Ombra</span>
+            <span>Internal Tool</span>
           </div>
           <ul>
             <li>Developed a full-stack internal admin system for a game development company to manage products, subscriptions, and internal operations.</li>
@@ -246,22 +260,22 @@
           </ul>
         </article>
 
-        <article class="entry">
+        <article class="entry project-entry">
           <div class="entry-header">
-            <span class="entry-header-left">Skill</span>
-            <span class="entry-header-right">Commercial Software</span>
+            <span>Skill</span>
+            <span>Commercial Software</span>
           </div>
           <ul>
             <li>Built a native licensing and authentication system for controlled desktop software distribution.</li>
             <li>Developed a Windows client and server-side verification system in C++ with hardware-based authentication and Winsock networking.</li>
-            <li>Applied LLVM-based obfuscation and anti-reverse-engineering techniques to harden the client.</li>
+            <li>Applied LLVM-based obfuscation and anti-reverse engineering techniques to harden the client.</li>
           </ul>
         </article>
 
-        <article class="entry">
+        <article class="entry project-entry">
           <div class="entry-header">
-            <span class="entry-header-left">Stealth Sniper</span>
-            <span class="entry-header-right">Commercial Software</span>
+            <span>Stealth Sniper</span>
+            <span>Commercial Software</span>
           </div>
           <ul>
             <li>Built a commercial automation product for real-time multi-account workflows.</li>
