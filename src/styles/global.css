@@ -982,9 +982,10 @@ select {
   content: '';
   position: absolute;
   left: 5px;
-  top: 4px;
+  top: 0;
   width: 10px;
   height: 10px;
+  margin-top: 4px;
   border-radius: 50%;
   background: var(--bg);
   border: 2px solid var(--text-muted);
