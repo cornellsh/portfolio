@@ -8,7 +8,7 @@ export default defineConfig({
   output: 'static',
   integrations: [sitemap()],
   prefetch: {
-    prefetchAll: true,
+    prefetchAll: false,
     defaultStrategy: 'viewport',
   },
   compressHTML: true,

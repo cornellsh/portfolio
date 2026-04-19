@@ -1,8 +1,12 @@
 ---
 import Analytics from '@vercel/analytics/astro';
 import '@fontsource-variable/public-sans';
-import '@fontsource/manrope/500.css';
-import '@fontsource/manrope/600.css';
+import '@fontsource/manrope/latin-500.css';
+import '@fontsource/manrope/latin-600.css';
+import '@fontsource/manrope/latin-ext-500.css';
+import '@fontsource/manrope/latin-ext-600.css';
+import '@fontsource/manrope/cyrillic-500.css';
+import '@fontsource/manrope/cyrillic-600.css';
 import '../styles/global.css';
 
 interface Props {
@@ -30,10 +34,29 @@ const {
 const siteUrl = 'https://cornell.sh';
 const socialImageUrl = `${siteUrl}/og-image.png`;
 const socialImageAlt = 'Cornell Shakh social preview card';
+const pageTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 const ogAlternateLocales = [...new Set(alternateLinks.map((link) => link.hrefLang !== lang && link.hrefLang))]
   .filter(Boolean)
   .map((hrefLang) => (hrefLang === 'uk' ? 'uk_UA' : hrefLang === 'cs' ? 'cs_CZ' : hrefLang === 'ru' ? 'ru_RU' : 'en_US'));
 const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    name: pageTitle,
+    url: canonicalUrl,
+    description,
+    inLanguage: lang,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: siteName,
+      url: siteUrl,
+    },
+    mainEntity: {
+      '@type': 'Person',
+      name: 'Cornell Shakh',
+      url: siteUrl,
+    },
+  },
   {
     '@context': 'https://schema.org',
     '@type': 'Person',
@@ -41,7 +64,7 @@ const structuredData = [
     url: siteUrl,
     image: socialImageUrl,
     email: 'mailto:cornellshakh@proton.me',
-    jobTitle: 'Full-Stack Product Engineer',
+    jobTitle: 'Full-Stack Engineer',
     description,
     sameAs: ['https://github.com/cornellsh'],
   },
@@ -70,7 +93,7 @@ const structuredData = [
     <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} />
     {alternateLinks.map((link) => <link rel="alternate" hreflang={link.hrefLang} href={link.href} />)}
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="description" content={description} />
     <meta name="author" content="Cornell Shakh" />
     <meta name="application-name" content={siteName} />
@@ -79,7 +102,7 @@ const structuredData = [
     <meta name="color-scheme" content="light" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalUrl} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:locale" content={ogLocale} />
@@ -92,14 +115,12 @@ const structuredData = [
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:url" content={canonicalUrl} />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageUrl} />
     <meta name="twitter:image:alt" content={socialImageAlt} />
-    <script type="application/ld+json">
-      {JSON.stringify(structuredData)}
-    </script>
-    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
+    <title>{pageTitle}</title>
   </head>
   <body>
     <Analytics />

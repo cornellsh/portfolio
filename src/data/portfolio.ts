@@ -240,7 +240,7 @@ const czechContent: PortfolioContent = {
   experience: [
     {
       role: 'Full-stack vývojář',
-      organization: 'Samostatně',
+      organization: 'Independent',
       period: '2024\u00A0\u2013\u00A0současnost',
       summary:
         'Navrhuji a dodávám full-stack produkty od architektury a implementace až po další iterace po vydání.',
@@ -248,7 +248,7 @@ const czechContent: PortfolioContent = {
     },
     {
       role: 'Vývojář softwaru',
-      organization: 'Samostatně',
+      organization: 'Independent',
       period: '2022\u00A0\u2013\u00A02024',
       summary:
         'Samostatně jsem vyvíjel a prodával technické produkty a zároveň řešil distribuci, aktualizace i podporu.',
@@ -256,7 +256,7 @@ const czechContent: PortfolioContent = {
     },
     {
       role: 'Freelance vývojář',
-      organization: 'Samostatně',
+      organization: 'Independent',
       period: '2020\u00A0\u2013\u00A02022',
       summary:
         'Pracoval jsem na klientských webových a designových projektech, kde byl důležitý jasný rozsah, rychlé dodání a praktický výsledek.',

@@ -713,6 +713,10 @@ select {
   margin-top: 1em;
 }
 
+.intro-actions {
+  margin-top: 1.1rem;
+}
+
 /* Lead / support styles for intro paragraphs */
 .intro-text.intro-lead {
   font-family: var(--font-display);
