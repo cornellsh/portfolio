@@ -962,7 +962,7 @@ select {
   content: '';
   position: absolute;
   left: 9px;
-  top: 14px;
+  top: 12px;
   bottom: 0;
   width: 2px;
   background: var(--border);
@@ -982,10 +982,9 @@ select {
   content: '';
   position: absolute;
   left: 5px;
-  top: 100%;
+  top: 1px;
   width: 10px;
   height: 10px;
-  margin-top: 7px;
   border-radius: 50%;
   background: var(--bg);
   border: 2px solid var(--text-muted);
