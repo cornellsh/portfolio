@@ -966,6 +966,7 @@ select {
   bottom: -28px;
   width: 2px;
   background: var(--border);
+  z-index: 1;
 }
 
 .experience-item::after {
@@ -978,6 +979,7 @@ select {
   border-radius: 50%;
   background: var(--bg);
   border: 2px solid var(--text-muted);
+  z-index: 2;
   transition:
     background-color var(--transition),
     border-color var(--transition),
