@@ -1,4 +1,5 @@
 ---
+import type { CollectionEntry } from 'astro:content';
 import ProjectCard from './ProjectCard.astro';
 import Sidebar from './Sidebar.astro';
 import LucideIcon from './LucideIcon.astro';
@@ -7,9 +8,10 @@ import type { Locale, PortfolioContent } from '../data/portfolio';
 interface Props {
   locale: Locale;
   content: PortfolioContent;
+  blogPosts: CollectionEntry<'blog'>[];
 }
 
-const { locale, content } = Astro.props;
+const { locale, content, blogPosts } = Astro.props;
 const splitPeriod = (period: string) => period.split('\u2013').map((part) => part.trim());
 const resumeLink = content.links.find((link) => link.type === 'resume');
 ---
@@ -25,6 +27,7 @@ const resumeLink = content.links.find((link) => link.type === 'resume');
       currentLocale={locale}
       copyEmailLabel={content.headings.copyEmail}
       openEmailLabel={content.headings.openEmail}
+      blogPosts={blogPosts}
     />
 
     <div class="content">
@@ -43,33 +46,35 @@ const resumeLink = content.links.find((link) => link.type === 'resume');
         ) : null}
       </section>
 
-      <section class="content-section experience-list" id="experience" data-section>
+      <section class="content-section" id="experience" data-section>
         <div class="section-header">
           <h2 class="section-heading">{content.headings.experience}</h2>
         </div>
 
-        {content.experience.map((item) => (
-          <article class="experience-item">
-            <p class="experience-item__meta">
-              <span>{splitPeriod(item.period)[0]}</span>
-              <span class="experience-item__meta-separator" aria-hidden="true">–</span>
-              <span>{splitPeriod(item.period)[1]}</span>
-            </p>
-            <div class="experience-item__content">
-              <h3>
-                <span>{item.role}</span>
-                <span class="experience-item__separator" aria-hidden="true">•</span>
-                <span>{item.organization}</span>
-              </h3>
-              <p>{item.summary}</p>
-              <ul class="badge-list" aria-label={`${item.role} technologies`}>
-                {item.stack.map((tech) => (
-                  <li>{tech}</li>
-                ))}
-              </ul>
-            </div>
-          </article>
-        ))}
+        <div class="experience-list">
+          {content.experience.map((item) => (
+            <article class="experience-item">
+              <p class="experience-item__meta">
+                <span>{splitPeriod(item.period)[0]}</span>
+                <span class="experience-item__meta-separator" aria-hidden="true">–</span>
+                <span>{splitPeriod(item.period)[1]}</span>
+              </p>
+              <div class="experience-item__content">
+                <h3>
+                  <span>{item.role}</span>
+                  <span class="experience-item__separator" aria-hidden="true">•</span>
+                  <span>{item.organization}</span>
+                </h3>
+                <p>{item.summary}</p>
+                <ul class="badge-list" aria-label={`${item.role} technologies`}>
+                  {item.stack.map((tech) => (
+                    <li>{tech}</li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section class="content-section" id="projects" data-section>

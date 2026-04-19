@@ -3,23 +3,54 @@ import LucideIcon from './LucideIcon.astro';
 import LinkIcon from './LinkIcon.astro';
 import { getLocalePath, languageOptions } from '../data/portfolio';
 import type { LinkItem, PortfolioContent, SectionItem, Locale } from '../data/portfolio';
+import type { CollectionEntry } from 'astro:content';
+
+type NavItem = {
+  href: string;
+  label: string;
+  targetId?: string;
+  alwaysMarked?: boolean;
+};
+
+type UtilityItem = {
+  href: string;
+  label: string;
+  iconName: 'ArrowUpLeft' | 'ArrowLeft' | 'ArrowUpRight';
+};
 
 interface Props {
   profile: PortfolioContent['profile'];
   links: LinkItem[];
-  sections: SectionItem[];
+  sections?: SectionItem[];
   languageLabel: string;
   currentLocale: Locale;
   copyEmailLabel?: string;
   openEmailLabel?: string;
+  navItems?: NavItem[];
+  navLabel?: string;
+  blogPosts?: CollectionEntry<'blog'>[];
+  utilityItems?: UtilityItem[];
 }
 
-const { profile, links, sections, languageLabel, currentLocale, copyEmailLabel = 'Copy', openEmailLabel = 'Open mail app' } = Astro.props;
+const {
+  profile,
+  links,
+  sections = [],
+  languageLabel,
+  currentLocale,
+  copyEmailLabel = 'Copy',
+  openEmailLabel = 'Open mail app',
+  navItems,
+  navLabel = 'Section index',
+  blogPosts = [],
+  utilityItems = [],
+} = Astro.props;
 const emailLink = links.find((link) => link.type === 'email');
 const isExternalHref = (href: string) => href.startsWith('http://') || href.startsWith('https://');
 const opensInNewTab = (href: string) => isExternalHref(href) || href.toLowerCase().endsWith('.pdf');
 const hasActiveHref = (href: string) => href.trim() !== '' && href !== '#';
 const visibleLinks = links.filter((link) => link.type === 'email' || hasActiveHref(link.href));
+const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${section.id}`, label: section.label, targetId: section.id }));
 ---
 
 <aside class="sidebar" aria-label="Profile and site navigation">
@@ -43,26 +74,40 @@ const visibleLinks = links.filter((link) => link.type === 'email' || hasActiveHr
     <p class="sidebar__summary">{profile.summary}</p>
   </div>
 
-  <nav class="sidebar__nav" aria-label="Section index">
-    <ul>
-      {sections.map((section, index) => (
+  {resolvedNavItems.length > 0 ? (
+    <nav class="sidebar__nav" aria-label={navLabel}>
+      <ul>
+        {resolvedNavItems.map((item, index) => (
         <li>
           <a
-            href={`#${section.id}`}
-            data-section-link
-            data-target={section.id}
-            aria-current={index === 0 ? 'true' : 'false'}
+            href={item.href}
+            data-section-link={item.targetId ? true : undefined}
+            data-target={item.targetId}
+            aria-current={index === 0 && item.targetId ? 'true' : undefined}
+            data-always-marked={item.alwaysMarked ? 'true' : undefined}
           >
-            {section.label}
+            {item.label}
           </a>
         </li>
-      ))}
-    </ul>
-  </nav>
+        ))}
+      </ul>
+    </nav>
+  ) : null}
 
   <div class="sidebar__utility">
     <ul class="sidebar__links" aria-label="External links">
-      {visibleLinks.map((link) => (
+      {utilityItems.length > 0
+        ? utilityItems.map((item) => (
+        <li>
+          <a href={item.href} class:list={['sidebar__utility-link', item.iconName === 'ArrowLeft' && 'sidebar__utility-link--back']}>
+            <span class="sidebar__link-icon" aria-hidden="true">
+              <LucideIcon name={item.iconName} />
+            </span>
+            <span class="sidebar__link-label">{item.label}</span>
+          </a>
+        </li>
+          ))
+        : visibleLinks.map((link) => (
         <li>
           {link.type === 'email' ? (
             <button
@@ -86,7 +131,17 @@ const visibleLinks = links.filter((link) => link.type === 'email' || hasActiveHr
             </a>
           )}
         </li>
-      ))}
+          ))}
+      {blogPosts.length > 0 && utilityItems.length === 0 ? (
+        <li>
+          <a href="/blog/">
+            <span class="sidebar__link-icon" aria-hidden="true">
+              <LinkIcon type="blog" />
+            </span>
+            <span class="sidebar__link-label">Blog</span>
+          </a>
+        </li>
+      ) : null}
     </ul>
 
     {emailLink ? (

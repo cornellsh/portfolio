@@ -1,0 +1,40 @@
+---
+import LucideIcon from './LucideIcon.astro';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+  compact?: boolean;
+}
+
+const { post, compact = false } = Astro.props;
+
+const formatter = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const cardImage = post.data.image ?? '/brand-mark.svg';
+---
+
+<article class:list={['project-card', 'blog-post-card', compact && 'blog-post-card--compact']}>
+  <a class="project-card__media blog-post-card__media" href={`/blog/${post.id}/`} aria-label={post.data.title}>
+    <img src={cardImage} alt="" width="92" height="92" loading="lazy" decoding="async" draggable="false" />
+  </a>
+  <div class="project-card__content">
+    <div class="project-card__header">
+      <p class="experience-item__meta blog-post-card__meta">{formatter.format(post.data.publishedAt)}</p>
+      <div class="project-card__title-row">
+        <h3>
+          <a class="project-card__title-anchor" href={`/blog/${post.id}/`}>
+            <span>{post.data.title}</span>
+            <LucideIcon name="ArrowUpRight" />
+          </a>
+        </h3>
+      </div>
+    </div>
+
+    <p>{post.data.description}</p>
+  </div>
+</article>

@@ -1,0 +1,199 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import LucideIcon from '../../components/LucideIcon.astro';
+import { getPortfolioContent, getLocalePath, languageOptions } from '../../data/portfolio';
+
+export const getStaticPaths = async () => {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+};
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
+const content = getPortfolioContent('en');
+const siteUrl = 'https://cornell.sh';
+const canonicalUrl = `${siteUrl}/blog/${post.id}/`;
+const formatter = new Intl.DateTimeFormat('en', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+});
+
+const articleMetadata = {
+  publishedTime: post.data.publishedAt.toISOString(),
+  modifiedTime: post.data.updatedAt?.toISOString(),
+  section: 'Blog',
+};
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.data.title,
+  description: post.data.description,
+  author: {
+    '@type': 'Person',
+    name: 'Cornell Shakh',
+    url: siteUrl,
+  },
+  datePublished: post.data.publishedAt.toISOString(),
+  dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
+  mainEntityOfPage: canonicalUrl,
+  url: canonicalUrl,
+  image: post.data.ogImage ? `${siteUrl}${post.data.ogImage}` : `${siteUrl}/og-image.png`,
+};
+---
+
+<BaseLayout
+  lang="en"
+  title={post.data.title}
+  description={post.data.description}
+  siteName={content.seo.siteName}
+  canonicalUrl={canonicalUrl}
+  ogLocale="en_US"
+  pageType="article"
+  articleMetadata={articleMetadata}
+  extraStructuredData={[structuredData]}
+  socialImage={post.data.ogImage}
+>
+  <div id="top"></div>
+  <div class="shell blog-article-shell">
+    <main class="page blog-article-layout">
+      {toc.length > 0 && (
+        <nav class="article-toc" aria-label="Table of contents">
+          <div class="article-toc__container">
+            <p class="article-toc__title">Heading Navigator</p>
+            <ul class="article-toc__list">
+              {toc.map((heading) => (
+                <li class={`article-toc__item article-toc__item--h${heading.depth}`}>
+                  <a
+                    href={`#${heading.slug}`}
+                    class="article-toc__link"
+                    data-toc-link
+                    data-target={heading.slug}
+                  >
+                    {heading.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </nav>
+      )}
+      <div class="content blog-article-content">
+        <article class="content-section article-page">
+          <div class="blog-author-block">
+            <div class="sidebar__intro">
+              <div class="sidebar__identity">
+                <h1>{content.profile.name}</h1>
+                <img
+                  class="sidebar__brand-mark"
+                  src="/brand-mark.svg"
+                  alt=""
+                  width="45"
+                  height="45"
+                  loading="lazy"
+                  decoding="async"
+                  draggable="false"
+                />
+              </div>
+              <h2 class="sidebar__role">{content.profile.role}</h2>
+              <p class="sidebar__summary">{content.profile.summary}</p>
+            </div>
+
+            <div class="sidebar__utility">
+              <ul class="sidebar__links" aria-label="External links">
+                <li>
+                  <a href="/blog/" class="sidebar__utility-link sidebar__utility-link--back">
+                    <span class="sidebar__link-icon" aria-hidden="true">
+                      <LucideIcon name="ArrowLeft" />
+                    </span>
+                    <span class="sidebar__link-label">Back to blog</span>
+                  </a>
+                </li>
+              </ul>
+
+              <section class="sidebar__language" aria-labelledby="sidebar-language-label">
+                <p class="sidebar__language-label" id="sidebar-language-label">{content.headings.language}</p>
+                <div class="sidebar__language-box">
+                  {languageOptions.map((option) => (
+                      <a
+                        href={getLocalePath(option.value)}
+                        class:list={['sidebar__language-option', option.value === 'en' && 'is-selected']}
+                        aria-current={option.value === 'en' ? 'page' : undefined}
+                      >
+                      <span>{option.shortLabel}</span>
+                    </a>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+
+          <header class="article-header">
+            <p class="article-meta">
+              <span>{formatter.format(post.data.publishedAt)}</span>
+              {post.data.updatedAt ? (
+                <>
+                  <span class="article-meta__separator" aria-hidden="true">•</span>
+                  <span>Updated {formatter.format(post.data.updatedAt)}</span>
+                </>
+              ) : null}
+            </p>
+            <h1 class="section-heading article-title">{post.data.title}</h1>
+            <p class="article-dek">{post.data.description}</p>
+          </header>
+
+          <div class="article-prose">
+            <Content />
+          </div>
+
+          <div class="section-actions section-actions--start">
+            <a class="text-button" href="#top">
+              <LucideIcon name="ArrowUp" />
+              <span>{content.headings.backToTop}</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  const headings = [...document.querySelectorAll('.article-prose h2, .article-prose h3')];
+  const tocLinks = [...document.querySelectorAll('[data-toc-link]')];
+
+  const setActiveLink = (id) => {
+    tocLinks.forEach((link) => {
+      const isCurrent = link.dataset.target === id;
+      link.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+    });
+  };
+
+  const updateActiveHeading = () => {
+    const marker = window.scrollY + window.innerHeight * 0.28;
+    let activeHeading = null;
+
+    for (const heading of headings) {
+      if (heading.offsetTop <= marker) {
+        activeHeading = heading;
+      }
+    }
+
+    if (activeHeading?.id) {
+      setActiveLink(activeHeading.id);
+    } else if (window.scrollY < 100) {
+      setActiveLink(null);
+    }
+  };
+
+  updateActiveHeading();
+  window.addEventListener('scroll', updateActiveHeading, { passive: true });
+  window.addEventListener('resize', updateActiveHeading);
+</script>
