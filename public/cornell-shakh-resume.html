@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Cornell Shakh Résumé</title>
     <style>
-        @page {
-          size: letter;
-          margin: 0.72in 0.72in 0.68in;
-        }
+      @page {
+        size: letter;
+        margin: 0.72in 0.72in 0.68in;
+      }
 
       :root {
         --text: #111;
@@ -156,7 +156,7 @@
       <header class="header">
         <h1>Cornell Shakh</h1>
         <div class="contact-line">cornellshakh@proton.me • +420 602 880 898 • Prague, Czech Republic</div>
-        <div class="link-line">https://cornell.sh/ • https://github.com/cornellsh</div>
+        <div class="link-line"><a href="https://cornell.sh">cornell.sh</a> • <a href="https://github.com/cornellsh">github.com/cornellsh</a></div>
       </header>
 
       <section class="section">
@@ -164,36 +164,37 @@
 
         <article class="entry">
           <div class="entry-header">
-            <span>University of Finance and Administration (VŠFS)</span>
-            <span class="entry-location">Prague</span>
+            <span>University of Finance and Administration (VŠFS), Prague</span>
           </div>
           <div class="entry-subheader">
             <span>Bachelor's in Marketing Communication</span>
-            <span class="entry-date">2025 – Present</span>
+            <span class="right entry-date">2025 – Present</span>
           </div>
         </article>
 
         <article class="entry">
           <div class="entry-header">
-            <span>1. KŠPA Kladno</span>
-            <span class="entry-location">Kladno</span>
+            <span>1. KŠPA Kladno, Kladno</span>
           </div>
           <div class="entry-subheader">
             <span>Secondary School Diploma in Information Technology</span>
-            <span class="entry-date">2021 – 2025</span>
+            <span class="right entry-date">2021 – 2025</span>
           </div>
           <ul>
-            <li>Graduated in the Information Technology track.</li>
-            <li>Graduation seminar work: <em>Digitalizace státní správy</em> (Digitalization of Public Administration).</li>
+            <li>Graduated from the Information Technology track.</li>
+            <li>Graduation seminar project: <em>Digitalizace státní správy</em> (Digitalization of Public Administration).</li>
           </ul>
         </article>
       </section>
 
       <section class="section compact">
         <h2 class="section-title">Technical Skills</h2>
-        <p class="skills-row"><strong>Programming Languages:</strong> TypeScript, JavaScript, Python, Go, SQL, C#, C++; HTML/CSS; Shell/Bash</p>
-        <p class="skills-row"><strong>Software/Tools:</strong> React, Next.js, Tailwind CSS, Astro; NestJS, Flask, SQLAlchemy; PostgreSQL, MySQL; Git, Docker, Linux, Make/CMake; LLVM</p>
-        <p class="skills-row"><strong>Languages:</strong> Czech (native), English (C2), Russian (C2)</p>
+        <p class="skills-row"><strong>Languages:</strong> TypeScript, JavaScript, Python, Go, SQL, C++, C#, HTML/CSS, Shell/Bash</p>
+        <p class="skills-row"><strong>Frontend:</strong> React, Next.js, Tailwind CSS, Astro</p>
+        <p class="skills-row"><strong>Backend:</strong> NestJS, Flask, SQLAlchemy</p>
+        <p class="skills-row"><strong>Databases:</strong> PostgreSQL, MySQL</p>
+        <p class="skills-row"><strong>Tools & Systems:</strong> Git, Docker, Linux, Make/CMake, LLVM</p>
+        <p class="skills-row"><strong>Spoken Languages:</strong> Czech (native), English (C2), Russian (C2)</p>
       </section>
 
       <section class="section">
@@ -201,20 +202,26 @@
 
         <article class="entry">
           <div class="entry-header">
-            <span>Full-Stack Engineer • Independent</span>
+            <span>Independent — Remote</span>
             <span class="entry-date">2024 – Present</span>
           </div>
+          <div class="entry-subheader">
+            <span>Full-Stack Engineer</span>
+          </div>
           <ul>
-            <li>Develop production web applications and internal tools with end-to-end ownership across architecture, APIs, data flows, and frontend implementation.</li>
-            <li>Build authentication flows, dashboard interfaces, workflow tooling, and external integrations for day-to-day operations.</li>
+            <li>Develop production web applications and internal tools with end-to-end ownership, from architecture and APIs to data flows and frontend implementation.</li>
+            <li>Build authentication flows, dashboard interfaces, workflow tooling, and external integrations used in day-to-day operations.</li>
             <li>Improve shipped products through debugging, UX refinement, and reliability-focused iteration.</li>
           </ul>
         </article>
 
         <article class="entry">
           <div class="entry-header">
-            <span>Software Developer • Independent</span>
+            <span>Independent — Remote</span>
             <span class="entry-date">2022 – 2024</span>
+          </div>
+          <div class="entry-subheader">
+            <span>Software Developer</span>
           </div>
           <ul>
             <li>Built and sold commercial desktop software in C++ with hardware-based licensing, backend verification, and controlled distribution.</li>
@@ -225,11 +232,14 @@
 
         <article class="entry">
           <div class="entry-header">
-            <span>Freelance Developer • Independent</span>
+            <span>Independent — Remote</span>
             <span class="entry-date">2020 – 2022</span>
           </div>
+          <div class="entry-subheader">
+            <span>Freelance Developer</span>
+          </div>
           <ul>
-            <li>Built websites and web applications for clients from initial scoping through implementation and launch.</li>
+            <li>Built websites and web applications for clients, from initial scoping and implementation through launch.</li>
             <li>Worked directly with clients on requirements, revisions, and project delivery.</li>
           </ul>
         </article>
@@ -241,11 +251,11 @@
         <article class="entry project-entry">
           <div class="entry-header">
             <span>Dska</span>
-            <span>dska.cz</span>
+            <span><a href="https://dska.cz">dska.cz</a></span>
           </div>
           <ul>
-            <li>Built a web product for Czech businesses looking for a more practical alternative to the official data box portal.</li>
-            <li>Implemented the full stack with NestJS, Next.js, Go, and ISDS integration.</li>
+            <li>Built a web product for Czech businesses looking for a more practical alternative to the Czech government's official digital mailbox system for secure, legally recognized communication with public institutions.</li>
+            <li>Implemented the full stack using NestJS, Next.js, Go, and ISDS integration.</li>
           </ul>
         </article>
 
@@ -256,7 +266,7 @@
           </div>
           <ul>
             <li>Developed a full-stack internal admin system for a game development company to manage products, subscriptions, and internal operations.</li>
-            <li>Built it with React, Tailwind CSS, Flask, and SQLAlchemy.</li>
+            <li>Built it using React, Tailwind CSS, Flask, and SQLAlchemy.</li>
           </ul>
         </article>
 
@@ -268,7 +278,7 @@
           <ul>
             <li>Built a native licensing and authentication system for controlled desktop software distribution.</li>
             <li>Developed a Windows client and server-side verification system in C++ with hardware-based authentication and Winsock networking.</li>
-            <li>Applied LLVM-based obfuscation and anti-reverse engineering techniques to harden the client.</li>
+            <li>Applied LLVM-based obfuscation and anti-reverse-engineering techniques to harden the client.</li>
           </ul>
         </article>
 
