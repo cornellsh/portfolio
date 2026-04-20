@@ -139,21 +139,21 @@ const breadcrumbList = {
   </div>
 </BaseLayout>
 
-<script is:inline>
-  (() => {
-    const tocLinks = [...document.querySelectorAll('[data-toc-link]')];
-    if (tocLinks.length === 0) return;
-    const headings = [...document.querySelectorAll('.article-prose h2, .article-prose h3')].filter((h) => h.id);
-    if (headings.length === 0) return;
+<script>
+  const tocLinks = [...document.querySelectorAll<HTMLElement>('[data-toc-link]')];
+  const headings = [...document.querySelectorAll<HTMLElement>('.article-prose h2, .article-prose h3')].filter(
+    (h) => h.id,
+  );
 
-    const setActive = (id) => {
+  if (tocLinks.length > 0 && headings.length > 0) {
+    const setActive = (id: string) => {
       tocLinks.forEach((link) => {
         link.setAttribute('aria-current', link.dataset.target === id ? 'true' : 'false');
       });
     };
 
     if ('IntersectionObserver' in window) {
-      const visible = new Map();
+      const visible = new Map<string, number>();
       const io = new IntersectionObserver(
         (entries) => {
           for (const entry of entries) {
@@ -171,7 +171,7 @@ const breadcrumbList = {
     } else {
       const update = () => {
         const marker = window.scrollY + window.innerHeight * 0.28;
-        let active = null;
+        let active: HTMLElement | null = null;
         for (const h of headings) {
           if (h.offsetTop <= marker) active = h;
         }
@@ -181,5 +181,5 @@ const breadcrumbList = {
       window.addEventListener('scroll', update, { passive: true });
       window.addEventListener('resize', update, { passive: true });
     }
-  })();
+  }
 </script>

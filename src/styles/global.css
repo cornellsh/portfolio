@@ -14,7 +14,7 @@
   --shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
   --hover-bg: rgba(0, 112, 243, 0.08);
   --hover-border: rgba(0, 112, 243, 0.25);
-  --font-sans: 'Public Sans Variable', system-ui, sans-serif;
+  --font-sans: 'Public Sans Variable', 'Manrope', system-ui, sans-serif;
   --font-display: 'Manrope', 'Public Sans Variable', system-ui, sans-serif;
   --text-xl: clamp(3rem, 3.8vw, 4.1rem);
   --text-lg: clamp(1.7rem, 2.1vw, 2.15rem);
