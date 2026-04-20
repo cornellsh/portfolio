@@ -24,7 +24,6 @@ const visibleLinks = project.links.filter((link) => hasActiveHref(link.href));
           rel={isExternalHref(project.websiteHref) ? 'noopener noreferrer' : undefined}
           aria-label={`${project.name} website`}
           draggable="false"
-          ondragstart="return false;"
         >
           <img src={project.image} alt="" width="92" height="92" loading="lazy" decoding="async" draggable="false" />
         </a>

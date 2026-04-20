@@ -1,33 +1,38 @@
 ---
 import LucideIcon from './LucideIcon.astro';
 import type { CollectionEntry } from 'astro:content';
+import { localeMeta, type Locale } from '../data/portfolio';
 
 interface Props {
   post: CollectionEntry<'blog'>;
   compact?: boolean;
+  locale?: Locale;
 }
 
-const { post, compact = false } = Astro.props;
+const { post, compact = false, locale = 'en' } = Astro.props;
 
-const formatter = new Intl.DateTimeFormat('en', {
+const formatter = new Intl.DateTimeFormat(localeMeta[locale].htmlLang, {
   year: 'numeric',
   month: 'short',
   day: 'numeric',
 });
 
 const cardImage = post.data.image ?? '/brand-mark.svg';
+const href = `/blog/${post.id}/`;
 ---
 
 <article class:list={['project-card', 'blog-post-card', compact && 'blog-post-card--compact']}>
-  <a class="project-card__media blog-post-card__media" href={`/blog/${post.id}/`} aria-label={post.data.title}>
+  <a class="project-card__media blog-post-card__media" href={href} aria-hidden="true" tabindex="-1">
     <img src={cardImage} alt="" width="92" height="92" loading="lazy" decoding="async" draggable="false" />
   </a>
   <div class="project-card__content">
     <div class="project-card__header">
-      <p class="experience-item__meta blog-post-card__meta">{formatter.format(post.data.publishedAt)}</p>
+      <p class="experience-item__meta blog-post-card__meta">
+        <time datetime={post.data.publishedAt.toISOString()}>{formatter.format(post.data.publishedAt)}</time>
+      </p>
       <div class="project-card__title-row">
         <h3>
-          <a class="project-card__title-anchor" href={`/blog/${post.id}/`}>
+          <a class="project-card__title-anchor" href={href}>
             <span>{post.data.title}</span>
             <LucideIcon name="ArrowUpRight" />
           </a>

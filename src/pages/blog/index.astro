@@ -1,16 +1,42 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Sidebar from '../../components/Sidebar.astro';
 import BlogPostCard from '../../components/BlogPostCard.astro';
-import { getPortfolioContent } from '../../data/portfolio';
+import { getAllBlogPosts } from '../../data/blog';
+import { getPortfolioContent, siteUrl } from '../../data/portfolio';
 
 const content = getPortfolioContent('en');
-const siteUrl = 'https://cornell.sh';
 const canonicalUrl = `${siteUrl}/blog/`;
-const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-);
+const posts = await getAllBlogPosts();
+
+const blogStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': `${canonicalUrl}#blog`,
+  name: 'Blog',
+  url: canonicalUrl,
+  inLanguage: 'en',
+  publisher: { '@id': `${siteUrl}/#person` },
+  blogPost: posts.map((post) => ({
+    '@type': 'BlogPosting',
+    '@id': `${siteUrl}/blog/${post.id}/#blogposting`,
+    headline: post.data.title,
+    description: post.data.description,
+    datePublished: post.data.publishedAt.toISOString(),
+    dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
+    url: `${siteUrl}/blog/${post.id}/`,
+    author: { '@id': `${siteUrl}/#person` },
+  })),
+};
+
+const breadcrumbList = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: canonicalUrl },
+  ],
+};
 ---
 
 <BaseLayout
@@ -20,9 +46,11 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
   siteName={content.seo.siteName}
   canonicalUrl={canonicalUrl}
   ogLocale="en_US"
+  pageType="blog"
+  extraStructuredData={[blogStructuredData, breadcrumbList]}
 >
   <div class="shell">
-    <main class="page blog-index-layout">
+    <main id="main" class="page blog-index-layout">
       <Sidebar
         profile={content.profile}
         links={[]}
@@ -31,6 +59,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
         copyEmailLabel={content.headings.copyEmail}
         openEmailLabel={content.headings.openEmail}
         utilityItems={[{ href: '/', label: 'Back to portfolio', iconName: 'ArrowLeft' }]}
+        primaryIdentity={false}
       />
 
       <div class="content">

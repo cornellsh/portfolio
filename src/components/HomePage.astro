@@ -14,11 +14,18 @@ interface Props {
 const { locale, content, blogPosts } = Astro.props;
 const splitPeriod = (period: string) => period.split('\u2013').map((part) => part.trim());
 const resumeLink = content.links.find((link) => link.type === 'resume');
+const copyEmailLabel = content.headings.copyEmail;
 ---
 
 <div id="top"></div>
 <div class="shell">
-  <main class="page">
+  <main
+    id="main"
+    class="page"
+    data-copy-label={copyEmailLabel}
+    data-copied-label="Copied"
+    data-copy-failed-label="Copy failed"
+  >
     <Sidebar
       profile={content.profile}
       links={content.links}
@@ -100,116 +107,115 @@ const resumeLink = content.links.find((link) => link.type === 'resume');
 </div>
 
 <script is:inline>
-  const sections = [...document.querySelectorAll('[data-section]')];
-  const sectionLinks = [...document.querySelectorAll('[data-section-link]')];
-  const emailDialog = document.querySelector('[data-email-dialog]');
-  const openEmailDialogButton = document.querySelector('[data-open-email-dialog]');
-  const closeEmailDialogButtons = [...document.querySelectorAll('[data-close-email-dialog]')];
-  const copyEmailButton = document.querySelector('[data-copy-email]');
-  const copyEmailLabel = document.querySelector('[data-copy-email-label]');
-  const emailAddress = document.querySelector('[data-email-address]')?.textContent?.trim() ?? '';
+  (() => {
+    const main = document.querySelector('main[data-copy-label]');
+    const sections = [...document.querySelectorAll('[data-section]')];
+    const sectionLinks = [...document.querySelectorAll('[data-section-link]')];
+    const emailDialog = document.querySelector('[data-email-dialog]');
+    const openEmailDialogButton = document.querySelector('[data-open-email-dialog]');
+    const closeEmailDialogButtons = [...document.querySelectorAll('[data-close-email-dialog]')];
+    const copyEmailButton = document.querySelector('[data-copy-email]');
+    const copyEmailLabelEl = document.querySelector('[data-copy-email-label]');
+    const emailAddress = document.querySelector('[data-email-address]')?.textContent?.trim() ?? '';
+    const labels = {
+      copy: main?.dataset.copyLabel ?? 'Copy',
+      copied: main?.dataset.copiedLabel ?? 'Copied',
+      failed: main?.dataset.copyFailedLabel ?? 'Copy failed',
+    };
 
-  const setActiveLink = (id) => {
-    sectionLinks.forEach((link) => {
-      const isCurrent = link.dataset.target === id;
-      link.setAttribute('aria-current', isCurrent ? 'true' : 'false');
-    });
-  };
-
-  const updateActiveSection = () => {
-    const marker = window.scrollY + window.innerHeight * 0.28;
-    let activeSection = sections[0];
-
-    for (const section of sections) {
-      if (section.offsetTop <= marker) {
-        activeSection = section;
+    const setActiveLink = (id) => {
+      for (const link of sectionLinks) {
+        link.setAttribute('aria-current', link.dataset.target === id ? 'true' : 'false');
       }
-    }
+    };
 
-    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 24;
+    // cache offsets; invalidate on resize
+    let offsets = [];
+    const recomputeOffsets = () => {
+      offsets = sections.map((section) => ({ id: section.id, top: section.offsetTop }));
+    };
 
-    if (nearBottom) {
-      activeSection = sections.at(-1) ?? activeSection;
-    }
+    let ticking = false;
+    const updateActiveSection = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const marker = window.scrollY + window.innerHeight * 0.28;
+        let active = offsets[0];
+        for (const entry of offsets) {
+          if (entry.top <= marker) active = entry;
+        }
+        const nearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24;
+        if (nearBottom) active = offsets.at(-1) ?? active;
+        if (active?.id) setActiveLink(active.id);
+        ticking = false;
+      });
+    };
 
-    if (activeSection?.id) {
-      setActiveLink(activeSection.id);
-    }
-  };
+    recomputeOffsets();
+    updateActiveSection();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    window.addEventListener('resize', () => {
+      recomputeOffsets();
+      updateActiveSection();
+    }, { passive: true });
 
-  const setCopyLabel = (value) => {
-    if (!copyEmailLabel) {
-      return;
-    }
+    let copyResetTimer = 0;
+    const setCopyLabel = (value) => {
+      if (!copyEmailLabelEl) return;
+      copyEmailLabelEl.textContent = value;
+      window.clearTimeout(copyResetTimer);
+      copyResetTimer = window.setTimeout(() => {
+        copyEmailLabelEl.textContent = labels.copy;
+      }, 1800);
+    };
 
-    copyEmailLabel.textContent = value;
-    window.setTimeout(() => {
-      copyEmailLabel.textContent = 'Copy';
-    }, 1800);
-  };
-
-  const copyEmailToClipboard = async () => {
-    if (!emailAddress) {
-      return;
-    }
-
-    try {
-      await navigator.clipboard.writeText(emailAddress);
-      setCopyLabel('Copied');
-    } catch {
-      const textArea = document.createElement('textarea');
-      textArea.value = emailAddress;
-      textArea.setAttribute('readonly', '');
-      textArea.style.position = 'absolute';
-      textArea.style.left = '-9999px';
-      document.body.appendChild(textArea);
-      textArea.select();
-
+    const copyEmailToClipboard = async () => {
+      if (!emailAddress) return;
       try {
-        document.execCommand('copy');
-        setCopyLabel('Copied');
+        await navigator.clipboard.writeText(emailAddress);
+        setCopyLabel(labels.copied);
       } catch {
-        setCopyLabel('Copy failed');
-      } finally {
-        textArea.remove();
+        const textArea = document.createElement('textarea');
+        textArea.value = emailAddress;
+        textArea.setAttribute('readonly', '');
+        textArea.style.position = 'absolute';
+        textArea.style.left = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+          document.execCommand('copy');
+          setCopyLabel(labels.copied);
+        } catch {
+          setCopyLabel(labels.failed);
+        } finally {
+          textArea.remove();
+        }
       }
-    }
-  };
+    };
 
-  updateActiveSection();
-  window.addEventListener('scroll', updateActiveSection, { passive: true });
-  window.addEventListener('resize', updateActiveSection);
-
-  openEmailDialogButton?.addEventListener('click', () => {
-    if (!emailDialog || typeof emailDialog.showModal !== 'function') {
-      if (emailAddress) {
-        window.location.href = `mailto:${emailAddress}`;
+    openEmailDialogButton?.addEventListener('click', () => {
+      if (!emailDialog || typeof emailDialog.showModal !== 'function') {
+        if (emailAddress) window.location.href = `mailto:${emailAddress}`;
+        return;
       }
-
-      return;
-    }
-
-    emailDialog.showModal();
-  });
-
-  closeEmailDialogButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      emailDialog?.close();
+      emailDialog.showModal();
     });
-  });
 
-  copyEmailButton?.addEventListener('click', copyEmailToClipboard);
+    closeEmailDialogButtons.forEach((button) => {
+      button.addEventListener('click', () => emailDialog?.close());
+    });
 
-  emailDialog?.addEventListener('click', (event) => {
-    const dialogBounds = emailDialog.getBoundingClientRect();
-    const isBackdropClick =
-      event.clientX < dialogBounds.left ||
-      event.clientX > dialogBounds.right ||
-      event.clientY < dialogBounds.top ||
-      event.clientY > dialogBounds.bottom;
+    copyEmailButton?.addEventListener('click', copyEmailToClipboard);
 
-    if (isBackdropClick) {
-      emailDialog.close();
-    }
-  });
+    emailDialog?.addEventListener('click', (event) => {
+      const bounds = emailDialog.getBoundingClientRect();
+      const isBackdropClick =
+        event.clientX < bounds.left ||
+        event.clientX > bounds.right ||
+        event.clientY < bounds.top ||
+        event.clientY > bounds.bottom;
+      if (isBackdropClick) emailDialog.close();
+    });
+  })();
 </script>

@@ -1,6 +1,6 @@
 ---
 import Analytics from '@vercel/analytics/astro';
-import '@fontsource-variable/public-sans';
+import '@fontsource-variable/public-sans/wght.css';
 import '@fontsource/manrope/latin-500.css';
 import '@fontsource/manrope/latin-600.css';
 import '@fontsource/manrope/latin-ext-500.css';
@@ -8,6 +8,9 @@ import '@fontsource/manrope/latin-ext-600.css';
 import '@fontsource/manrope/cyrillic-500.css';
 import '@fontsource/manrope/cyrillic-600.css';
 import '../styles/global.css';
+import { siteUrl } from '../data/portfolio';
+
+type PageType = 'website' | 'article' | 'blog' | 'profile';
 
 interface Props {
   lang?: string;
@@ -16,7 +19,7 @@ interface Props {
   siteName?: string;
   canonicalUrl?: string;
   ogLocale?: string;
-  pageType?: 'website' | 'article';
+  pageType?: PageType;
   articleMetadata?: {
     publishedTime: string;
     modifiedTime?: string;
@@ -28,6 +31,7 @@ interface Props {
     hrefLang: string;
     href: string;
   }>;
+  ogAlternateLocales?: string[];
 }
 
 const {
@@ -35,61 +39,86 @@ const {
   title,
   description,
   siteName = 'Cornell Shakh',
-  canonicalUrl = 'https://cornell.sh',
+  canonicalUrl = siteUrl,
   ogLocale = 'en_US',
   pageType = 'website',
   articleMetadata,
   extraStructuredData = [],
   socialImage,
   alternateLinks = [],
+  ogAlternateLocales = [],
 } = Astro.props;
-const siteUrl = 'https://cornell.sh';
 const socialImageUrl = socialImage ? `${siteUrl}${socialImage}` : `${siteUrl}/og-image.png`;
 const socialImageAlt = 'Cornell Shakh social preview card';
 const pageTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
-const ogAlternateLocales = [...new Set(alternateLinks.map((link) => link.hrefLang !== lang && link.hrefLang))]
-  .filter(Boolean)
-  .map((hrefLang) => (hrefLang === 'uk' ? 'uk_UA' : hrefLang === 'cs' ? 'cs_CZ' : hrefLang === 'ru' ? 'ru_RU' : 'en_US'));
-const structuredData = [
-  {
-    '@context': 'https://schema.org',
-    '@type': pageType === 'article' ? 'WebPage' : 'ProfilePage',
-    name: pageTitle,
-    url: canonicalUrl,
-    description,
-    inLanguage: lang,
-    isPartOf: {
+
+const schemaType =
+  pageType === 'article'
+    ? 'Article'
+    : pageType === 'blog'
+    ? 'CollectionPage'
+    : pageType === 'profile'
+    ? 'ProfilePage'
+    : 'WebPage';
+
+const webPageNode: Record<string, unknown> = {
+  '@type': schemaType,
+  '@id': `${canonicalUrl}#webpage`,
+  name: pageTitle,
+  url: canonicalUrl,
+  description,
+  inLanguage: lang,
+  isPartOf: { '@id': `${siteUrl}/#website` },
+  primaryImageOfPage: { '@id': `${siteUrl}/#primaryimage` },
+};
+
+if (pageType === 'article' && articleMetadata) {
+  webPageNode.datePublished = articleMetadata.publishedTime;
+  if (articleMetadata.modifiedTime) webPageNode.dateModified = articleMetadata.modifiedTime;
+  webPageNode.author = { '@id': `${siteUrl}/#person` };
+  webPageNode.mainEntityOfPage = canonicalUrl;
+}
+
+if (pageType !== 'article') {
+  webPageNode.about = { '@id': `${siteUrl}/#person` };
+}
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    webPageNode,
+    {
       '@type': 'WebSite',
-      name: siteName,
+      '@id': `${siteUrl}/#website`,
       url: siteUrl,
+      name: siteName,
+      description,
+      inLanguage: lang,
+      publisher: { '@id': `${siteUrl}/#person` },
     },
-    mainEntity: {
+    {
+      '@type': 'ImageObject',
+      '@id': `${siteUrl}/#primaryimage`,
+      url: socialImageUrl,
+      width: 1200,
+      height: 630,
+      caption: socialImageAlt,
+      inLanguage: lang,
+    },
+    {
       '@type': 'Person',
+      '@id': `${siteUrl}/#person`,
       name: 'Cornell Shakh',
       url: siteUrl,
+      image: { '@id': `${siteUrl}/#primaryimage` },
+      email: 'mailto:cornellshakh@proton.me',
+      jobTitle: 'Full-Stack Engineer',
+      description,
+      sameAs: ['https://github.com/cornellsh'],
     },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Cornell Shakh',
-    url: siteUrl,
-    image: socialImageUrl,
-    email: 'mailto:cornellshakh@proton.me',
-    jobTitle: 'Full-Stack Engineer',
-    description,
-    sameAs: ['https://github.com/cornellsh'],
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: siteName,
-    url: siteUrl,
-    description,
-    inLanguage: lang,
-  },
-  ...extraStructuredData,
-];
+    ...extraStructuredData,
+  ],
+};
 ---
 
 <!doctype html>
@@ -98,10 +127,11 @@ const structuredData = [
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="preconnect" href="https://va.vercel-scripts.com" crossorigin />
+    <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="alternate" type="text/plain" href="/llms.txt" title="LLMs" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="canonical" href={canonicalUrl} />
     {alternateLinks.length > 0 ? <link rel="alternate" hreflang="x-default" href={`${siteUrl}/`} /> : null}
@@ -139,7 +169,8 @@ const structuredData = [
     <title>{pageTitle}</title>
   </head>
   <body>
-    <Analytics />
+    <a class="skip-link" href="#main">Skip to content</a>
     <slot />
+    <Analytics />
   </body>
 </html>

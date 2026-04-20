@@ -30,6 +30,8 @@ interface Props {
   navLabel?: string;
   blogPosts?: CollectionEntry<'blog'>[];
   utilityItems?: UtilityItem[];
+  /** If false, renders the profile name as a non-h1 element (for secondary pages). */
+  primaryIdentity?: boolean;
 }
 
 const {
@@ -44,6 +46,7 @@ const {
   navLabel = 'Section index',
   blogPosts = [],
   utilityItems = [],
+  primaryIdentity = true,
 } = Astro.props;
 const emailLink = links.find((link) => link.type === 'email');
 const isExternalHref = (href: string) => href.startsWith('http://') || href.startsWith('https://');
@@ -56,7 +59,7 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
 <aside class="sidebar" aria-label="Profile and site navigation">
   <div class="sidebar__intro">
     <div class="sidebar__identity">
-      <h1>{profile.name}</h1>
+      {primaryIdentity ? <h1>{profile.name}</h1> : <p class="sidebar__identity-name">{profile.name}</p>}
       <img
         class="sidebar__brand-mark"
         src="/brand-mark.svg"
@@ -65,12 +68,11 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
         width="45"
         height="45"
         loading="eager"
-        fetchpriority="high"
         decoding="async"
         draggable="false"
       />
     </div>
-    <h2 class="sidebar__role">{profile.role}</h2>
+    {primaryIdentity ? <h2 class="sidebar__role">{profile.role}</h2> : <p class="sidebar__role">{profile.role}</p>}
     <p class="sidebar__summary">{profile.summary}</p>
   </div>
 

@@ -71,7 +71,7 @@ const englishContent: PortfolioContent = {
   seo: {
     title: 'Cornell Shakh | Full-Stack Engineer',
     description:
-      'Full-stack engineer building web tools, internal systems, and AI-powered software with a strong focus on modern practices, current tooling, and real-world product work.',
+      'Full-stack engineer building web tools, internal systems, and AI-powered software with modern practices and real-world product experience.',
     siteName: 'Cornell Shakh',
   },
   profile: {
@@ -173,7 +173,7 @@ const czechContent: PortfolioContent = {
   seo: {
     title: 'Cornell Shakh | Full-Stack Vývojář',
     description:
-      'Full-stack vývojář stavějící webové nástroje, interní systémy a AI software s důrazem na moderní postupy, aktuální nástroje a reálnou práci na produktech.',
+      'Full-stack vývojář stavějící webové nástroje, interní systémy a AI software s moderními postupy a reálnou praxí z produktové práce.',
     siteName: 'Cornell Shakh',
   },
   profile: {
@@ -275,7 +275,7 @@ const ukrainianContent: PortfolioContent = {
   seo: {
     title: 'Cornell Shakh | Full-Stack Розробник',
     description:
-      'Full-stack розробник, який створює веб-інструменти, внутрішні системи та AI-продукти з сильним фокусом на сучасні підходи, актуальні інструменти та реальну практику в індустрії.',
+      'Full-stack розробник, який створює веб-інструменти, внутрішні системи та AI-продукти з фокусом на сучасні підходи та реальну практику в індустрії.',
     siteName: 'Cornell Shakh',
   },
   profile: {
@@ -377,7 +377,7 @@ const russianContent: PortfolioContent = {
   seo: {
     title: 'Cornell Shakh | Full-Stack Разработчик',
     description:
-      'Full-stack разработчик, создающий веб-инструменты, внутренние системы и AI-продукты с сильным фокусом на современные подходы, актуальные инструменты и реальную практику в индустрии.',
+      'Full-stack разработчик, создающий веб-инструменты, внутренние системы и AI-продукты с фокусом на современные подходы и реальную практику в индустрии.',
     siteName: 'Cornell Shakh',
   },
   profile: {
@@ -492,9 +492,6 @@ export const languageOptions = [
 ];
 
 export function getLocalePath(locale: Locale): string {
-  if (locale === defaultLocale) {
-    return '/';
-  }
   return localeMeta[locale].path;
 }
 
@@ -508,4 +505,19 @@ export function getHtmlLang(locale: Locale): string {
 
 export function getOgLocale(locale: Locale): string {
   return localeMeta[locale].ogLocale;
+}
+
+export const siteUrl = 'https://cornell.sh';
+
+export function getAlternateLinks(): Array<{ hrefLang: string; href: string }> {
+  return locales.map((locale) => ({
+    hrefLang: localeMeta[locale].hrefLang,
+    href: `${siteUrl}${getLocalePath(locale)}`,
+  }));
+}
+
+export function getOgAlternateLocales(currentLocale: Locale): string[] {
+  return locales
+    .filter((locale) => locale !== currentLocale)
+    .map((locale) => localeMeta[locale].ogLocale);
 }

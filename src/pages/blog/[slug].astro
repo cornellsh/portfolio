@@ -1,8 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Sidebar from '../../components/Sidebar.astro';
 import LucideIcon from '../../components/LucideIcon.astro';
-import { getPortfolioContent, getLocalePath, languageOptions } from '../../data/portfolio';
+import { getPortfolioContent, siteUrl } from '../../data/portfolio';
 
 export const getStaticPaths = async () => {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -17,7 +18,6 @@ const { post } = Astro.props;
 const { Content, headings } = await render(post);
 const toc = headings.filter((h) => h.depth >= 2 && h.depth <= 3);
 const content = getPortfolioContent('en');
-const siteUrl = 'https://cornell.sh';
 const canonicalUrl = `${siteUrl}/blog/${post.id}/`;
 const formatter = new Intl.DateTimeFormat('en', {
   year: 'numeric',
@@ -31,21 +31,30 @@ const articleMetadata = {
   section: 'Blog',
 };
 
-const structuredData = {
+const blogPosting = {
   '@context': 'https://schema.org',
   '@type': 'BlogPosting',
+  '@id': `${canonicalUrl}#blogposting`,
   headline: post.data.title,
   description: post.data.description,
-  author: {
-    '@type': 'Person',
-    name: 'Cornell Shakh',
-    url: siteUrl,
-  },
+  author: { '@id': `${siteUrl}/#person` },
+  publisher: { '@id': `${siteUrl}/#person` },
   datePublished: post.data.publishedAt.toISOString(),
   dateModified: (post.data.updatedAt ?? post.data.publishedAt).toISOString(),
   mainEntityOfPage: canonicalUrl,
   url: canonicalUrl,
   image: post.data.ogImage ? `${siteUrl}${post.data.ogImage}` : `${siteUrl}/og-image.png`,
+  inLanguage: 'en',
+};
+
+const breadcrumbList = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+    { '@type': 'ListItem', position: 2, name: 'Blog', item: `${siteUrl}/blog/` },
+    { '@type': 'ListItem', position: 3, name: post.data.title, item: canonicalUrl },
+  ],
 };
 ---
 
@@ -58,12 +67,12 @@ const structuredData = {
   ogLocale="en_US"
   pageType="article"
   articleMetadata={articleMetadata}
-  extraStructuredData={[structuredData]}
+  extraStructuredData={[blogPosting, breadcrumbList]}
   socialImage={post.data.ogImage}
 >
   <div id="top"></div>
   <div class="shell blog-article-shell">
-    <main class="page blog-article-layout">
+    <main id="main" class="page blog-article-layout">
       {toc.length > 0 && (
         <nav class="article-toc" aria-label="Table of contents">
           <div class="article-toc__container">
@@ -88,51 +97,16 @@ const structuredData = {
       <div class="content blog-article-content">
         <article class="content-section article-page">
           <div class="blog-author-block">
-            <div class="sidebar__intro">
-              <div class="sidebar__identity">
-                <h1>{content.profile.name}</h1>
-                <img
-                  class="sidebar__brand-mark"
-                  src="/brand-mark.svg"
-                  alt=""
-                  width="45"
-                  height="45"
-                  loading="lazy"
-                  decoding="async"
-                  draggable="false"
-                />
-              </div>
-              <h2 class="sidebar__role">{content.profile.role}</h2>
-              <p class="sidebar__summary">{content.profile.summary}</p>
-            </div>
-
-            <div class="sidebar__utility">
-              <ul class="sidebar__links" aria-label="External links">
-                <li>
-                  <a href="/blog/" class="sidebar__utility-link sidebar__utility-link--back">
-                    <span class="sidebar__link-icon" aria-hidden="true">
-                      <LucideIcon name="ArrowLeft" />
-                    </span>
-                    <span class="sidebar__link-label">Back to blog</span>
-                  </a>
-                </li>
-              </ul>
-
-              <section class="sidebar__language" aria-labelledby="sidebar-language-label">
-                <p class="sidebar__language-label" id="sidebar-language-label">{content.headings.language}</p>
-                <div class="sidebar__language-box">
-                  {languageOptions.map((option) => (
-                      <a
-                        href={getLocalePath(option.value)}
-                        class:list={['sidebar__language-option', option.value === 'en' && 'is-selected']}
-                        aria-current={option.value === 'en' ? 'page' : undefined}
-                      >
-                      <span>{option.shortLabel}</span>
-                    </a>
-                  ))}
-                </div>
-              </section>
-            </div>
+            <Sidebar
+              profile={content.profile}
+              links={[]}
+              languageLabel={content.headings.language}
+              currentLocale="en"
+              copyEmailLabel={content.headings.copyEmail}
+              openEmailLabel={content.headings.openEmail}
+              utilityItems={[{ href: '/blog/', label: 'Back to blog', iconName: 'ArrowLeft' }]}
+              primaryIdentity={false}
+            />
           </div>
 
           <header class="article-header">
@@ -166,34 +140,46 @@ const structuredData = {
 </BaseLayout>
 
 <script is:inline>
-  const headings = [...document.querySelectorAll('.article-prose h2, .article-prose h3')];
-  const tocLinks = [...document.querySelectorAll('[data-toc-link]')];
+  (() => {
+    const tocLinks = [...document.querySelectorAll('[data-toc-link]')];
+    if (tocLinks.length === 0) return;
+    const headings = [...document.querySelectorAll('.article-prose h2, .article-prose h3')].filter((h) => h.id);
+    if (headings.length === 0) return;
 
-  const setActiveLink = (id) => {
-    tocLinks.forEach((link) => {
-      const isCurrent = link.dataset.target === id;
-      link.setAttribute('aria-current', isCurrent ? 'true' : 'false');
-    });
-  };
+    const setActive = (id) => {
+      tocLinks.forEach((link) => {
+        link.setAttribute('aria-current', link.dataset.target === id ? 'true' : 'false');
+      });
+    };
 
-  const updateActiveHeading = () => {
-    const marker = window.scrollY + window.innerHeight * 0.28;
-    let activeHeading = null;
-
-    for (const heading of headings) {
-      if (heading.offsetTop <= marker) {
-        activeHeading = heading;
-      }
+    if ('IntersectionObserver' in window) {
+      const visible = new Map();
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) visible.set(entry.target.id, entry.intersectionRatio);
+            else visible.delete(entry.target.id);
+          }
+          if (visible.size === 0) return;
+          // pick the top-most currently intersecting heading
+          const firstVisible = headings.find((h) => visible.has(h.id));
+          if (firstVisible) setActive(firstVisible.id);
+        },
+        { rootMargin: '-20% 0px -70% 0px', threshold: [0, 1] },
+      );
+      headings.forEach((h) => io.observe(h));
+    } else {
+      const update = () => {
+        const marker = window.scrollY + window.innerHeight * 0.28;
+        let active = null;
+        for (const h of headings) {
+          if (h.offsetTop <= marker) active = h;
+        }
+        if (active) setActive(active.id);
+      };
+      update();
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update, { passive: true });
     }
-
-    if (activeHeading?.id) {
-      setActiveLink(activeHeading.id);
-    } else if (window.scrollY < 100) {
-      setActiveLink(null);
-    }
-  };
-
-  updateActiveHeading();
-  window.addEventListener('scroll', updateActiveHeading, { passive: true });
-  window.addEventListener('resize', updateActiveHeading);
+  })();
 </script>

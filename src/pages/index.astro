@@ -1,28 +1,22 @@
 ---
-import { getCollection } from 'astro:content';
 import HomePage from '../components/HomePage.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { getRecentBlogPosts } from '../data/blog';
 import {
   defaultLocale,
+  getAlternateLinks,
   getHtmlLang,
   getLocalePath,
+  getOgAlternateLocales,
   getOgLocale,
   getPortfolioContent,
-  localeMeta,
-  locales,
+  siteUrl,
 } from '../data/portfolio';
 
 const locale = defaultLocale;
 const content = getPortfolioContent(locale);
-const blogPosts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
-  .slice(0, 3);
-const siteUrl = 'https://cornell.sh';
+const blogPosts = await getRecentBlogPosts(3);
 const canonicalUrl = `${siteUrl}${getLocalePath(locale)}`;
-const alternateLinks = locales.map((item) => ({
-  hrefLang: localeMeta[item].hrefLang,
-  href: `${siteUrl}${getLocalePath(item)}`,
-}));
 ---
 
 <BaseLayout
@@ -32,7 +26,9 @@ const alternateLinks = locales.map((item) => ({
   siteName={content.seo.siteName}
   canonicalUrl={canonicalUrl}
   ogLocale={getOgLocale(locale)}
-  alternateLinks={alternateLinks}
+  pageType="profile"
+  alternateLinks={getAlternateLinks()}
+  ogAlternateLocales={getOgAlternateLocales(locale)}
 >
   <HomePage locale={locale} content={content} blogPosts={blogPosts} />
 </BaseLayout>

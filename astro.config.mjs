@@ -6,7 +6,19 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://cornell.sh',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      i18n: {
+        defaultLocale: 'en',
+        locales: {
+          en: 'en',
+          cs: 'cs',
+          ua: 'uk',
+          ru: 'ru',
+        },
+      },
+    }),
+  ],
   prefetch: {
     prefetchAll: false,
     defaultStrategy: 'viewport',
