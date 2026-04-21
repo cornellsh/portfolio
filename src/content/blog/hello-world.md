@@ -2,8 +2,8 @@
 title: "Typography and media reference"
 description: "Every element the blog renders — prose, lists, code, quotes, images, video — in one post, so the design has one place to fail first."
 publishedAt: 2026-04-21
-draft: false
-featured: true
+draft: true
+featured: false
 ---
 
 This is the reference post. Every Markdown feature the blog supports — prose, lists, code, quotes, images, native video, and iframe embeds — lives here so I can see them all in one place and catch regressions when I change the styles.

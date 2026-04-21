@@ -68,11 +68,35 @@ const breadcrumbList = {
             <h1 class="section-heading">Blog.</h1>
           </div>
 
-          <div class="blog-post-list">
-            {posts.map((post) => <BlogPostCard post={post} />)}
-          </div>
+          {posts.length > 0 ? (
+            <div class="blog-post-list">
+              {posts.map((post) => <BlogPostCard post={post} />)}
+            </div>
+          ) : (
+            <p class="blog-empty">
+              Nothing published yet. The feed is live at
+              {' '}<a href="/rss.xml">/rss.xml</a> if you want to follow along.
+            </p>
+          )}
         </section>
       </div>
     </main>
   </div>
 </BaseLayout>
+
+<style>
+  .blog-empty {
+    margin: 0;
+    padding: 28px 0 0;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .blog-empty a {
+    color: var(--text);
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 112, 243, 0.4);
+    text-underline-offset: 2px;
+  }
+</style>
