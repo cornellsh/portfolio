@@ -1040,8 +1040,7 @@ select {
     bottom: -25px;
     width: 1px;
     margin-left: -0.5px; /* Center line on circle center (12px item-rel) */
-    background-image: linear-gradient(to bottom, var(--border-strong) 50%, transparent 50%);
-    background-size: 1px 8px; /* Dashed effect with 4px segments */
+    background-color: var(--border-strong);
     z-index: 1;
     transition: opacity var(--transition);
   }
@@ -1080,8 +1079,8 @@ select {
 
   .experience-item {
     display: grid;
-    grid-template-columns: 160px minmax(0, 1fr);
-    column-gap: 40px;
+    grid-template-columns: 140px minmax(0, 1fr);
+    column-gap: 20px;
     padding: 24px;
     margin: -24px;
     border: 1px solid transparent;
@@ -1093,7 +1092,7 @@ select {
   }
 
   .experience-item__meta {
-    padding-left: 0;
+    padding-left: 12px;
   }
 }
 
