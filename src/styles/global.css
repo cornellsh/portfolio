@@ -33,7 +33,7 @@
 html {
   background:
     linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
-  overflow-x: clip;
+  overflow-x: hidden;
 }
 
 body {
@@ -41,7 +41,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   max-width: 100%;
-  overflow-x: clip;
+  overflow-x: hidden;
   font-family: var(--font-sans);
   color: var(--text);
 }
