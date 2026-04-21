@@ -877,7 +877,8 @@ select {
 .article-prose .figure--plain video {
   display: inline-block;
   width: auto;
-  max-width: 100%;
+  max-width: min(100%, 160px);
+  height: auto;
   border: 0;
   background: transparent;
   border-radius: 0;
