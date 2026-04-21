@@ -33,12 +33,15 @@
 html {
   background:
     linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  overflow-x: clip;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: clip;
   font-family: var(--font-sans);
   color: var(--text);
 }
@@ -1402,7 +1405,7 @@ select {
 
 @media (max-width: 980px) {
   .page {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 32px;
   }
 
