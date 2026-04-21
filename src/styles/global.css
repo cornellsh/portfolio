@@ -789,6 +789,10 @@ select {
   margin-top: 0.3rem;
 }
 
+.article-prose p:has(+ :is(ul, ol)) {
+  margin-bottom: 0.35rem;
+}
+
 .article-prose :where(ul, ol) + p,
 .article-prose blockquote + p,
 .article-prose pre + p {
