@@ -93,8 +93,4 @@ YouTube and other providers embed as `<iframe>` with a 16:9 aspect ratio:
   <figcaption>Iframe figure. <code>youtube-nocookie.com</code> avoids the tracking cookie until the viewer presses play.</figcaption>
 </figure>
 
-## Horizontal rule
 
----
-
-That's the whole set. If something new lands in a future post — audio players, interactive embeds, math — it gets added here first.
