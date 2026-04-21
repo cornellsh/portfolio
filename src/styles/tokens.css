@@ -1,0 +1,74 @@
+/* Design tokens, resets, and base element styles.
+ * Imported first so every component can rely on these custom properties
+ * and base-element defaults. Keep this file small — no component styles. */
+
+:root {
+  color-scheme: light;
+  --bg: #fafafa;
+  --surface: rgba(250, 250, 250, 0.88);
+  --surface-strong: #f5f5f5;
+  --text: #0f1115;
+  --text-muted: #54575c;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.18);
+  --accent: #0070f3;
+  --accent-gradient-button: linear-gradient(0deg, #1b73ee 0%, #2e8eff 100%);
+  --accent-gradient-pill: linear-gradient(0deg, #2278ef 0%, #3a95ff 100%);
+  --accent-soft: rgba(0, 112, 243, 0.1);
+  --shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
+  --hover-bg: rgba(0, 112, 243, 0.08);
+  --hover-border: rgba(0, 112, 243, 0.25);
+  --font-sans: 'Public Sans Variable', 'Manrope', system-ui, sans-serif;
+  --font-display: 'Manrope', 'Public Sans Variable', system-ui, sans-serif;
+  --text-xl: clamp(3rem, 3.8vw, 4.1rem);
+  --text-lg: clamp(1.7rem, 2.1vw, 2.15rem);
+  --page-width: 1280px;
+  --page-gutter: 128px;
+  --radius-lg: 28px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --transition: 180ms ease-out;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background:
+    linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  overflow-x: clip;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: clip;
+  font-family: var(--font-sans);
+  color: var(--text);
+}
+
+::selection {
+  background: rgba(0, 112, 243, 0.25);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: rgba(0, 112, 243, 0.1);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  -webkit-tap-highlight-color: rgba(0, 112, 243, 0.1);
+}
