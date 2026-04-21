@@ -71,47 +71,24 @@ const breadcrumbList = {
   socialImage={post.data.ogImage}
 >
   <div id="top"></div>
-  <div class="shell blog-article-shell">
-    <main id="main" class="page blog-article-layout">
-      {toc.length > 0 && (
-        <nav class="article-toc" aria-label="Table of contents">
-          <div class="article-toc__container">
-            <p class="article-toc__title">Heading Navigator</p>
-            <ul class="article-toc__list">
-              {toc.map((heading) => (
-                <li class={`article-toc__item article-toc__item--h${heading.depth}`}>
-                  <a
-                    href={`#${heading.slug}`}
-                    class="article-toc__link"
-                    data-toc-link
-                    data-target={heading.slug}
-                  >
-                    {heading.text}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </nav>
-      )}
-      <div class="content blog-article-content">
-        <article class="content-section article-page">
-          <div class="blog-author-block">
-            <Sidebar
-              profile={content.profile}
-              links={[]}
-              languageLabel={content.headings.language}
-              currentLocale="en"
-              copyEmailLabel={content.headings.copyEmail}
-              openEmailLabel={content.headings.openEmail}
-              utilityItems={[{ href: '/blog/', label: 'Back to blog', iconName: 'ArrowLeft' }]}
-              primaryIdentity={false}
-            />
-          </div>
+  <div class="shell">
+    <main id="main" class="page">
+      <Sidebar
+        profile={content.profile}
+        links={content.links}
+        languageLabel={content.headings.language}
+        currentLocale="en"
+        copyEmailLabel={content.headings.copyEmail}
+        openEmailLabel={content.headings.openEmail}
+        utilityItems={[{ href: '/blog/', label: 'Back to blog', iconName: 'ArrowLeft' }]}
+        primaryIdentity={false}
+      />
 
+      <div class="content">
+        <article class="content-section article-page">
           <header class="article-header">
             <p class="article-meta">
-              <span>{formatter.format(post.data.publishedAt)}</span>
+              <time datetime={post.data.publishedAt.toISOString()}>{formatter.format(post.data.publishedAt)}</time>
               {post.data.updatedAt ? (
                 <>
                   <span class="article-meta__separator" aria-hidden="true">•</span>
@@ -123,11 +100,31 @@ const breadcrumbList = {
             <p class="article-dek">{post.data.description}</p>
           </header>
 
+          {toc.length > 0 && (
+            <nav class="article-toc" aria-label="In this article">
+              <p class="article-toc__title">In this article</p>
+              <ul class="article-toc__list">
+                {toc.map((heading) => (
+                  <li class={`article-toc__item article-toc__item--h${heading.depth}`}>
+                    <a
+                      href={`#${heading.slug}`}
+                      class="article-toc__link"
+                      data-toc-link
+                      data-target={heading.slug}
+                    >
+                      {heading.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+
           <div class="article-prose">
             <Content />
           </div>
 
-          <div class="section-actions section-actions--start">
+          <div class="section-actions">
             <a class="text-button" href="#top">
               <LucideIcon name="ArrowUp" />
               <span>{content.headings.backToTop}</span>

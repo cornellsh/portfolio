@@ -98,8 +98,7 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
 
   <div class="sidebar__utility">
     <ul class="sidebar__links" aria-label="External links">
-      {utilityItems.length > 0
-        ? utilityItems.map((item) => (
+      {utilityItems.map((item) => (
         <li>
           <a href={item.href} class:list={['sidebar__utility-link', item.iconName === 'ArrowLeft' && 'sidebar__utility-link--back']}>
             <span class="sidebar__link-icon" aria-hidden="true">
@@ -108,8 +107,8 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
             <span class="sidebar__link-label">{item.label}</span>
           </a>
         </li>
-          ))
-        : visibleLinks.map((link) => (
+      ))}
+      {visibleLinks.map((link) => (
         <li>
           {link.type === 'email' ? (
             <button
@@ -133,7 +132,7 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
             </a>
           )}
         </li>
-          ))}
+      ))}
       {blogPosts.length > 0 && utilityItems.length === 0 ? (
         <li>
           <a href="/blog/">
