@@ -64,3 +64,38 @@ export function getOgAlternateLocales(currentLocale: Locale): string[] {
     .filter((locale) => locale !== currentLocale)
     .map((locale) => localeMeta[locale].ogLocale);
 }
+
+const localeSet = new Set<string>(locales);
+
+/**
+ * Type guard for locale params from Astro's dynamic routes. Use this to
+ * validate `Astro.params.locale` before passing it to other helpers — the
+ * default `as Locale` cast would silently accept garbage values like
+ * `/fr/` and crash later at `getPortfolioContent(locale)`.
+ */
+export function isLocale(value: unknown): value is Locale {
+  return typeof value === 'string' && localeSet.has(value);
+}
+
+/**
+ * Build the full set of props the home page passes into BaseLayout for a
+ * given locale. Exists so the static `index.astro` and the dynamic
+ * `[locale]/index.astro` can stay one-liners and never drift apart on
+ * SEO metadata.
+ */
+export function getHomePageMeta(locale: Locale) {
+  const content = getPortfolioContent(locale);
+  const canonicalUrl = `${siteUrl}${getLocalePath(locale)}`;
+  return {
+    locale,
+    content,
+    canonicalUrl,
+    lang: getHtmlLang(locale),
+    title: content.seo.title,
+    description: content.seo.description,
+    siteName: content.seo.siteName,
+    ogLocale: getOgLocale(locale),
+    alternateLinks: getAlternateLinks(),
+    ogAlternateLocales: getOgAlternateLocales(locale),
+  };
+}

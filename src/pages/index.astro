@@ -2,33 +2,22 @@
 import HomePage from '../components/HomePage.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getRecentBlogPosts } from '../data/blog';
-import {
-  defaultLocale,
-  getAlternateLinks,
-  getHtmlLang,
-  getLocalePath,
-  getOgAlternateLocales,
-  getOgLocale,
-  getPortfolioContent,
-  siteUrl,
-} from '../data/portfolio';
+import { defaultLocale, getHomePageMeta } from '../data/portfolio';
 
-const locale = defaultLocale;
-const content = getPortfolioContent(locale);
+const meta = getHomePageMeta(defaultLocale);
 const blogPosts = await getRecentBlogPosts(3);
-const canonicalUrl = `${siteUrl}${getLocalePath(locale)}`;
 ---
 
 <BaseLayout
-  lang={getHtmlLang(locale)}
-  title={content.seo.title}
-  description={content.seo.description}
-  siteName={content.seo.siteName}
-  canonicalUrl={canonicalUrl}
-  ogLocale={getOgLocale(locale)}
+  lang={meta.lang}
+  title={meta.title}
+  description={meta.description}
+  siteName={meta.siteName}
+  canonicalUrl={meta.canonicalUrl}
+  ogLocale={meta.ogLocale}
   pageType="profile"
-  alternateLinks={getAlternateLinks()}
-  ogAlternateLocales={getOgAlternateLocales(locale)}
+  alternateLinks={meta.alternateLinks}
+  ogAlternateLocales={meta.ogAlternateLocales}
 >
-  <HomePage locale={locale} content={content} blogPosts={blogPosts} />
+  <HomePage locale={meta.locale} content={meta.content} blogPosts={blogPosts} />
 </BaseLayout>
