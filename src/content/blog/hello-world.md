@@ -84,28 +84,14 @@ YouTube and other providers embed as `<iframe>` with a 16:9 aspect ratio:
 
 <figure>
   <iframe
-    src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
-    title="YouTube embed"
+    src="https://www.youtube-nocookie.com/embed/eRsGyueVLvQ"
+    title="Sintel — Blender Foundation open movie"
     loading="lazy"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen
   ></iframe>
   <figcaption>Iframe figure. <code>youtube-nocookie.com</code> avoids the tracking cookie until the viewer presses play.</figcaption>
 </figure>
-
-The source markup, for reference:
-
-```html
-<figure>
-  <video controls muted playsinline preload="metadata" poster="/poster.jpg">
-    <source src="/clips/demo.mp4" type="video/mp4" />
-  </video>
-</figure>
-
-<figure>
-  <iframe src="https://www.youtube-nocookie.com/embed/ID" loading="lazy" allowfullscreen></iframe>
-</figure>
-```
 
 ## Horizontal rule
 
