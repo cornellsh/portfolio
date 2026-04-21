@@ -530,13 +530,6 @@ select {
   padding-top: 34px;
 }
 
-@media (min-width: 981px) {
-  .blog-index-layout .sidebar__utility {
-    margin-top: 48px;
-    padding-top: 0;
-  }
-}
-
 .article-toc {
   margin: 0 0 56px;
   padding: 18px 0 0;
@@ -613,15 +606,6 @@ select {
   max-width: 24ch;
   text-wrap: pretty;
   overflow-wrap: break-word;
-}
-
-.article-dek {
-  max-width: 60ch;
-  margin-top: 16px;
-  color: var(--text);
-  font-size: 1.03rem;
-  line-height: 1.72;
-  text-wrap: pretty;
 }
 
 .article-page {
@@ -1522,12 +1506,6 @@ select {
 
   .article-header {
     margin-bottom: 30px;
-  }
-
-  .article-dek {
-    margin-top: 12px;
-    font-size: 0.98rem;
-    line-height: 1.64;
   }
 
   .project-card,
