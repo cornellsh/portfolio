@@ -1,11 +1,23 @@
 ---
 import Analytics from '@vercel/analytics/astro';
+// Public Sans Variable ships latin/latin-ext/vietnamese as separate woff2 files
+// gated by unicode-range, so each subset is only fetched when needed.
 import '@fontsource-variable/public-sans/wght.css';
+
+// Manrope is the display face. Weights actually used by the design: 500, 600, 700
+// (the .article-prose h3 rule asks for 650 — browser snaps to 700 from the loaded set).
+// Subsets follow our four locales: latin (all), latin-ext (cs), cyrillic (ua/ru).
+// We intentionally inline ALL weight/subset @font-face declarations site-wide because:
+//   1. Each block is ~280 bytes; splitting per locale saves <1 KB gzipped per page
+//      while doubling layout complexity.
+//   2. The unicode-range descriptor already prevents the browser from downloading
+//      a woff2 it doesn't need — only the per-locale preloads below matter for LCP.
 import '@fontsource/manrope/latin-500.css';
 import '@fontsource/manrope/latin-600.css';
+import '@fontsource/manrope/latin-700.css';
 import '@fontsource/manrope/latin-ext-500.css';
 import '@fontsource/manrope/latin-ext-600.css';
-import '@fontsource/manrope/cyrillic-400.css';
+import '@fontsource/manrope/latin-ext-700.css';
 import '@fontsource/manrope/cyrillic-500.css';
 import '@fontsource/manrope/cyrillic-600.css';
 import '@fontsource/manrope/cyrillic-700.css';
