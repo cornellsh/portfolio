@@ -600,6 +600,26 @@ select {
   margin-bottom: 36px;
 }
 
+.article-meta {
+  margin: 0 0 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34em;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+
+.article-meta__separator {
+  display: inline-block;
+  margin: 0 0.1em;
+  font-size: 0.9em;
+  line-height: 1;
+}
+
 .article-title {
   font-size: clamp(2.35rem, 3vw, 3.1rem);
   line-height: 1.03;
