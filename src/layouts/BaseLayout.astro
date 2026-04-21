@@ -12,6 +12,14 @@ import '@fontsource/manrope/cyrillic-700.css';
 import '../styles/global.css';
 import { siteUrl } from '../data/portfolio';
 
+// Font preload URLs — Vite resolves these to hashed /_astro/*.woff2 paths at build time.
+// We preload only the subsets required to render the above-the-fold LCP text.
+import publicSansLatin from '@fontsource-variable/public-sans/files/public-sans-latin-wght-normal.woff2?url';
+import publicSansLatinExt from '@fontsource-variable/public-sans/files/public-sans-latin-ext-wght-normal.woff2?url';
+import manropeLatin600 from '@fontsource/manrope/files/manrope-latin-600-normal.woff2?url';
+import manropeLatinExt600 from '@fontsource/manrope/files/manrope-latin-ext-600-normal.woff2?url';
+import manropeCyrillic600 from '@fontsource/manrope/files/manrope-cyrillic-600-normal.woff2?url';
+
 type PageType = 'website' | 'article' | 'blog' | 'profile';
 
 interface Props {
@@ -53,6 +61,21 @@ const {
 const socialImageUrl = socialImage ? `${siteUrl}${socialImage}` : `${siteUrl}/og-image.png`;
 const socialImageAlt = 'Cornell Shakh social preview card';
 const pageTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
+
+// Pick font subsets to preload based on the rendered language.
+// - Latin (default): Public Sans body + Manrope 600 display
+// - Czech (cs): add latin-ext
+// - Ukrainian (uk) / Russian (ru): swap latin-ext for cyrillic on Manrope
+const langPrefix = lang.toLowerCase().slice(0, 2);
+const usesCyrillic = langPrefix === 'uk' || langPrefix === 'ru';
+const usesLatinExt = langPrefix === 'cs';
+const fontPreloads = [
+  publicSansLatin,
+  manropeLatin600,
+  usesLatinExt ? publicSansLatinExt : null,
+  usesLatinExt ? manropeLatinExt600 : null,
+  usesCyrillic ? manropeCyrillic600 : null,
+].filter((href): href is string => Boolean(href));
 
 const schemaType =
   pageType === 'article'
@@ -130,6 +153,9 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://va.vercel-scripts.com" crossorigin />
+    {fontPreloads.map((href) => (
+      <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
+    ))}
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="manifest" href="/site.webmanifest" />
