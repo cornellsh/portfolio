@@ -1035,11 +1035,11 @@ select {
   .experience-item::after {
     content: "";
     position: absolute;
-    left: 12px;
+    left: 30px;
     top: 45px;
     bottom: -25px;
     width: 1px;
-    margin-left: -0.5px; /* Center line on circle center (12px item-rel) */
+    margin-left: -0.5px; /* Center line on circle center (30px item-rel) */
     background-color: var(--border-strong);
     z-index: 1;
     transition: opacity var(--transition);
@@ -1057,10 +1057,10 @@ select {
   .experience-item::before {
     content: "";
     position: absolute;
-    /* 12px from item border places circle center symmetrically between
-       card's visual left edge (at -24px due to negative margin) and the
-       content-left edge (at 0). Gives equal 7px gap on both sides. */
-    left: 12px;
+    /* 30px from item border → circle center sits 6px right of content-left,
+       so the whole circle (radius 5) lies to the right of the section-header's
+       border-bottom start (x=0), instead of straddling it. */
+    left: 30px;
     top: 33px;
     width: 10px;
     height: 10px;
@@ -1077,22 +1077,8 @@ select {
     transform: translate(-50%, -50%) scale(1.15);
   }
 
-  .experience-item {
-    display: grid;
-    grid-template-columns: 140px minmax(0, 1fr);
-    column-gap: 20px;
-    padding: 24px;
-    margin: -24px;
-    border: 1px solid transparent;
-    border-radius: var(--radius-md);
-    transition:
-      background-color var(--transition),
-      border-color var(--transition);
-    position: relative;
-  }
-
   .experience-item__meta {
-    padding-left: 12px;
+    padding-left: 26px;
   }
 }
 
@@ -1102,7 +1088,7 @@ select {
   gap: 0.34em;
   align-self: start;
   color: var(--text-muted);
-  padding: 2px 0 0 0;
+  padding-top: 2px;
   font-size: 0.76rem;
   font-weight: 600;
   line-height: 1.35;
