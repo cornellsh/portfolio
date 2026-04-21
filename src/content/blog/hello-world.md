@@ -6,7 +6,7 @@ draft: false
 featured: true
 ---
 
-This is the reference post. Every Markdown feature the blog supports lives here so I can see them all in one place and catch regressions when I change the styles.
+This is the reference post. Every Markdown feature the blog supports — prose, lists, code, quotes, images, native video, and iframe embeds — lives here so I can see them all in one place and catch regressions when I change the styles.
 
 ## Body
 
@@ -71,14 +71,39 @@ A plain figure, no chrome — for marks and logos that carry their own framing:
 
 ## Video
 
-HTML5 `<video>` is supported — same sizing, border, and rounding as images. When there's a real clip to embed, the markup looks like this:
+HTML5 `<video>` renders inline with the same border, radius, and column width as images:
+
+<figure>
+  <video controls muted playsinline preload="metadata" poster="https://peach.blender.org/wp-content/uploads/title_anouncement.jpg?x11217" width="1280" height="720">
+    <source src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4" type="video/mp4" />
+  </video>
+  <figcaption>Short clip, self-hosted <code>&lt;video&gt;</code> element. Controls, muted autoplay-friendly, lazy metadata fetch.</figcaption>
+</figure>
+
+YouTube and other providers embed as `<iframe>` with a 16:9 aspect ratio:
+
+<figure>
+  <iframe
+    src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ"
+    title="YouTube embed"
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen
+  ></iframe>
+  <figcaption>Iframe figure. <code>youtube-nocookie.com</code> avoids the tracking cookie until the viewer presses play.</figcaption>
+</figure>
+
+The source markup, for reference:
 
 ```html
 <figure>
   <video controls muted playsinline preload="metadata" poster="/poster.jpg">
     <source src="/clips/demo.mp4" type="video/mp4" />
   </video>
-  <figcaption>Short clips render inline; longer ones get their own post.</figcaption>
+</figure>
+
+<figure>
+  <iframe src="https://www.youtube-nocookie.com/embed/ID" loading="lazy" allowfullscreen></iframe>
 </figure>
 ```
 
