@@ -532,9 +532,8 @@ select {
 
 .article-toc {
   margin: 0 0 56px;
-  padding: 18px 0 0;
+  padding: 0;
   max-width: 68ch;
-  border-top: 1px solid var(--border);
 }
 
 .article-toc__list {
@@ -595,7 +594,10 @@ select {
 }
 
 .article-header {
-  margin-bottom: 36px;
+  position: relative;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
 }
 
 .article-meta {
