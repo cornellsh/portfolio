@@ -149,6 +149,10 @@ const breadcrumbList = {
       });
     };
 
+    // Prime the first heading as active so there's always a visible indicator,
+    // including before the reader scrolls past the first heading.
+    setActive(headings[0].id);
+
     if ('IntersectionObserver' in window) {
       const visible = new Map<string, number>();
       const io = new IntersectionObserver(
@@ -157,7 +161,11 @@ const breadcrumbList = {
             if (entry.isIntersecting) visible.set(entry.target.id, entry.intersectionRatio);
             else visible.delete(entry.target.id);
           }
-          if (visible.size === 0) return;
+          if (visible.size === 0) {
+            // Above the first heading → keep the first item highlighted.
+            if (window.scrollY < headings[0].offsetTop) setActive(headings[0].id);
+            return;
+          }
           // pick the top-most currently intersecting heading
           const firstVisible = headings.find((h) => visible.has(h.id));
           if (firstVisible) setActive(firstVisible.id);
