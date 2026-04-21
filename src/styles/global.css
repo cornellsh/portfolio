@@ -1312,7 +1312,7 @@ select {
 
   .sidebar__utility {
     margin-top: 0;
-    padding-top: 34px;
+    padding-top: 14px;
     gap: 16px;
     display: flex;
     flex-direction: column;
@@ -1406,7 +1406,7 @@ select {
   }
 
   .sidebar__utility {
-    padding-top: 28px;
+    padding-top: 12px;
   }
 
   .email-dialog[open] {
