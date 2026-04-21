@@ -635,6 +635,10 @@ select {
   text-wrap: pretty;
 }
 
+.article-page {
+  max-width: 68ch;
+}
+
 .article-prose {
   max-width: 68ch;
   color: var(--text);
@@ -656,14 +660,14 @@ select {
 .article-prose blockquote,
 .article-prose pre {
   margin: 0 0 1.25rem;
-  font-size: 1.01rem;
-  line-height: 1.74;
+  font-size: clamp(0.98rem, 0.94rem + 0.18vw, 1.05rem);
+  line-height: 1.72;
 }
 
 .article-prose > p:first-child {
   color: var(--text);
-  font-size: 1.06rem;
-  line-height: 1.76;
+  font-size: clamp(1.02rem, 0.97rem + 0.22vw, 1.1rem);
+  line-height: 1.74;
 }
 
 .article-prose p {
@@ -681,13 +685,13 @@ select {
 }
 
 .article-prose h2 {
-  font-size: 1.68rem;
+  font-size: clamp(1.35rem, 1.05rem + 1.2vw, 1.72rem);
   font-weight: 700;
   max-width: 24ch;
 }
 
 .article-prose h3 {
-  font-size: 1.24rem;
+  font-size: clamp(1.1rem, 0.96rem + 0.55vw, 1.28rem);
   font-weight: 650;
   max-width: 34ch;
 }
@@ -1373,10 +1377,6 @@ select {
     max-width: none;
     padding: 0;
   }
-
-  .article-prose {
-    max-width: none;
-  }
 }
 
 @media (max-width: 720px) {
@@ -1533,28 +1533,6 @@ select {
 
   .article-header {
     margin-bottom: 30px;
-  }
-
-  .article-prose p,
-  .article-prose ul,
-  .article-prose ol,
-  .article-prose blockquote,
-  .article-prose pre {
-    font-size: 1rem;
-    line-height: 1.68;
-  }
-
-  .article-prose > p:first-child {
-    font-size: 1.01rem;
-    line-height: 1.7;
-  }
-
-  .article-prose h2 {
-    font-size: 1.3rem;
-  }
-
-  .article-prose h3 {
-    font-size: 1.08rem;
   }
 
   .article-dek {
