@@ -23,8 +23,8 @@
       "purpose": "any"
     }
   ],
-  "theme_color": "#edf1f4",
-  "background_color": "#edf1f4",
+  "theme_color": "#fafafa",
+  "background_color": "#fafafa",
   "display": "standalone",
   "lang": "en"
 }
