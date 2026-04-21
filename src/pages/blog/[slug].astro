@@ -97,12 +97,10 @@ const breadcrumbList = {
               ) : null}
             </p>
             <h1 class="section-heading article-title">{post.data.title}</h1>
-            <p class="article-dek">{post.data.description}</p>
           </header>
 
           {toc.length > 0 && (
             <nav class="article-toc" aria-label="Contents">
-              <p class="article-toc__title">Contents</p>
               <ul class="article-toc__list">
                 {toc.map((heading) => (
                   <li class={`article-toc__item article-toc__item--h${heading.depth}`}>
