@@ -1193,11 +1193,12 @@ select {
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    transition: transform var(--transition), background-color var(--transition);
+    transition: transform var(--transition), background-color var(--transition), border-color var(--transition);
   }
 
   .experience-item:hover::before {
-    background-color: var(--accent);
+    background-color: #374151;
+    border-color: #374151;
     transform: translate(-50%, -50%) scale(1.15);
   }
 
