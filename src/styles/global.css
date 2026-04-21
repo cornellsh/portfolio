@@ -1190,14 +1190,14 @@ select {
 
 .experience-item h3 {
   font-size: 1.26rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .experience-item__separator {
   display: inline-block;
   margin: 0 0.28em;
   font-size: 1.02em;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1;
   transform: translateY(-0.02em);
 }
