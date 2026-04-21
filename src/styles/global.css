@@ -1108,6 +1108,10 @@ select {
   .experience-item__meta {
     padding-left: 26px;
   }
+
+  .blog-post-card__meta {
+    padding-left: 0;
+  }
 }
 
 .experience-item__meta {
