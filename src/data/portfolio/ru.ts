@@ -33,7 +33,7 @@ export const russianContent: PortfolioContent = {
     language: 'Язык',
     resumeCta: 'Открыть резюме',
     backToTop: 'Наверх',
-    copyEmail: 'Скопировать email',
+    copyEmail: 'Скопировать',
     openEmail: 'Открыть почтовое приложение',
   },
   projects: [
@@ -78,7 +78,7 @@ export const russianContent: PortfolioContent = {
     {
       role: 'Full-Stack Product Engineer',
       organization: 'Independent',
-      period: '2024\u00A0\u2013\u00A0настоящее время',
+      period: '2024\u00A0\u2013\u00A0Настоящее время',
       summary:
         'Проектирую, создаю и довожу до релиза full-stack продукты: от архитектуры и реализации до дальнейших итераций после запуска.',
       stack: ['TypeScript', 'React', 'Python', 'Внутренние системы'],

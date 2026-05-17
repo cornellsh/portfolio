@@ -63,8 +63,8 @@ const copyEmailLabel = content.headings.copyEmail;
             <article class="experience-item">
               <p class="experience-item__meta">
                 <span>{splitPeriod(item.period)[0]}</span>
-                <span class="experience-item__meta-separator" aria-hidden="true">–</span>
-                <span>{splitPeriod(item.period)[1]}</span>
+                <span class="experience-item__meta-separator" aria-hidden="true"></span>
+                <span class="experience-item__meta-end">{splitPeriod(item.period)[1]}</span>
               </p>
               <div class="experience-item__content">
                 <h3>
@@ -167,9 +167,13 @@ const copyEmailLabel = content.headings.copyEmail;
   const setCopyLabel = (value: string) => {
     if (!copyEmailLabelEl) return;
     copyEmailLabelEl.textContent = value;
+    if (value === labels.copied) {
+      copyEmailButton?.classList.add('is-copied');
+    }
     window.clearTimeout(copyResetTimer);
     copyResetTimer = window.setTimeout(() => {
       copyEmailLabelEl.textContent = labels.copy;
+      copyEmailButton?.classList.remove('is-copied');
     }, 1800);
   };
 
@@ -197,11 +201,15 @@ const copyEmailLabel = content.headings.copyEmail;
     }
   };
 
+  const lockScroll = () => document.documentElement.classList.add('has-dialog-open');
+  const unlockScroll = () => document.documentElement.classList.remove('has-dialog-open');
+
   openEmailDialogButton?.addEventListener('click', () => {
     if (!emailDialog || typeof emailDialog.showModal !== 'function') {
       if (emailAddress) window.location.href = `mailto:${emailAddress}`;
       return;
     }
+    lockScroll();
     emailDialog.showModal();
   });
 
@@ -211,6 +219,7 @@ const copyEmailLabel = content.headings.copyEmail;
 
   copyEmailButton?.addEventListener('click', copyEmailToClipboard);
 
+  // Close on backdrop click
   emailDialog?.addEventListener('click', (event) => {
     const bounds = emailDialog.getBoundingClientRect();
     const isBackdropClick =
@@ -220,4 +229,51 @@ const copyEmailLabel = content.headings.copyEmail;
       event.clientY > bounds.bottom;
     if (isBackdropClick) emailDialog.close();
   });
+
+  // Unlock scroll when dialog closes (any method: Escape, close button, backdrop)
+  emailDialog?.addEventListener('close', () => {
+    unlockScroll();
+  });
+
+  // ── Scroll-reveal for cards and items ──────────────────────────
+  const revealTargets = document.querySelectorAll<HTMLElement>(
+    '.experience-item, .project-card',
+  );
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion && revealTargets.length > 0) {
+    // Group by parent list so stagger resets per section
+    const groups = new Map<Element | null, HTMLElement[]>();
+    revealTargets.forEach((el) => {
+      const parent = el.parentElement;
+      if (!groups.has(parent)) groups.set(parent, []);
+      groups.get(parent)!.push(el);
+    });
+
+    groups.forEach((items) => {
+      items.forEach((el, i) => {
+        el.classList.add('reveal');
+        el.style.transitionDelay = `${i * 60}ms`;
+      });
+    });
+
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+            // Clear stagger delay after reveal + transition completes
+            const delay = parseFloat(el.style.transitionDelay) || 0;
+            setTimeout(() => { el.style.transitionDelay = ''; }, delay + 450);
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' },
+    );
+
+    revealTargets.forEach((el) => revealObserver.observe(el));
+  }
 </script>

@@ -38,6 +38,7 @@ html {
   background:
     linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
   overflow-x: clip;
+  scroll-behavior: smooth;
 }
 
 body {

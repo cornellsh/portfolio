@@ -33,7 +33,7 @@ export const englishContent: PortfolioContent = {
     language: 'Language',
     resumeCta: 'View résumé',
     backToTop: 'Back to top',
-    copyEmail: 'Copy email',
+    copyEmail: 'Copy',
     openEmail: 'Open email app',
   },
   projects: [

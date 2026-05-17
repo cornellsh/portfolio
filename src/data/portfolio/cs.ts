@@ -33,7 +33,7 @@ export const czechContent: PortfolioContent = {
     language: 'Jazyk',
     resumeCta: 'Zobrazit životopis',
     backToTop: 'Zpět nahoru',
-    copyEmail: 'Kopírovat e-mail',
+    copyEmail: 'Kopírovat',
     openEmail: 'Otevřít e-mailovou aplikaci',
   },
   projects: [
@@ -78,7 +78,7 @@ export const czechContent: PortfolioContent = {
     {
       role: 'Full-Stack Product Engineer',
       organization: 'Independent',
-      period: '2024\u00A0\u2013\u00A0současnost',
+      period: '2024\u00A0\u2013\u00A0Současnost',
       summary:
         'Navrhuji, stavím a dodávám full-stack produkty od architektury a implementace až po další iterace po vydání.',
       stack: ['TypeScript', 'React', 'Python', 'Interní systémy'],

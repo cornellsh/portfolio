@@ -1,6 +1,45 @@
 /* Design tokens, resets, and base element rules live in ./tokens.css.
  * Component and layout styles live here until they're extracted. */
 
+/* ── Entrance choreography ─────────────────────────────────────── */
+
+@keyframes copy-flash {
+  0% { background-color: transparent; }
+  20% { background-color: rgba(0, 112, 243, 0.08); }
+  100% { background-color: transparent; }
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(4px);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* ── Scroll lock when dialog open ──────────────────────────────── */
+
+html.has-dialog-open,
+html.has-dialog-open body {
+  overflow: hidden;
+}
+
+/* ── Scroll reveal ─────────────────────────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transition: opacity 500ms ease-out;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+}
+
 .content-section p a {
   text-decoration: underline;
   text-decoration-thickness: 1px;
@@ -86,6 +125,11 @@
   flex: 0 0 calc(3rem - 2px);
   user-select: none;
   -webkit-user-drag: none;
+  transition: transform 280ms ease-out;
+}
+
+.sidebar__identity:hover .sidebar__brand-mark {
+  transform: rotate(-6deg) scale(1.06);
 }
 
 .sidebar__role {
@@ -116,8 +160,8 @@
 }
 
 .experience-item__meta {
-  font-size: 0.68rem;
-  letter-spacing: 0.01em;
+  font-size: 0.78rem;
+  letter-spacing: 0.005em;
 }
 
 .sidebar__links,
@@ -233,32 +277,109 @@
   color: var(--text);
 }
 
+/* ── Email dialog ───────────────────────────────────────────────── */
+
 .email-dialog {
-  width: min(100% - 32px, 22rem);
+  max-width: min(calc(100% - 32px), 22rem);
+  width: 22rem;
+  margin: auto;
   padding: 0;
   border: 0;
   outline: 0;
   border-radius: 18px;
   background: #fff;
-  box-shadow: 0 18px 40px rgba(15, 17, 21, 0.1);
-  overflow: hidden;
+  box-shadow:
+    0 24px 48px rgba(15, 17, 21, 0.12),
+    0 2px 8px rgba(15, 17, 21, 0.06);
+  overflow: visible;
   color: var(--text);
-}
-
-.email-dialog::backdrop {
-  background: rgba(15, 17, 21, 0.22);
-  backdrop-filter: blur(6px);
 }
 
 .email-dialog[open] {
   display: grid;
-  gap: 12px;
-  padding: 14px;
-  justify-items: center;
+  gap: 0;
+  padding: 20px;
   position: relative;
+  animation: dialog-in 240ms ease-out both;
 }
 
-.email-dialog__close,
+.email-dialog::backdrop {
+  background: rgba(15, 17, 21, 0.28);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: backdrop-in 200ms ease-out both;
+}
+
+/* ── Close button ──────────────────────────────────────────────── */
+
+.email-dialog__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  border-radius: 8px;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--transition),
+    color var(--transition);
+}
+
+.email-dialog__close span {
+  display: inline-block;
+  font-size: 1.6rem;
+  line-height: 1;
+  transform: rotate(45deg);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.email-dialog__close:hover,
+.email-dialog__close:focus-visible {
+  background: rgba(15, 17, 21, 0.06);
+  color: var(--text);
+}
+
+.email-dialog__close:active {
+  background: rgba(15, 17, 21, 0.1);
+}
+
+/* ── Address row ───────────────────────────────────────────────── */
+
+.email-dialog__address-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 10px 10px 10px 14px;
+  margin-top: 28px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #f7f7f8;
+}
+
+.email-dialog__address {
+  flex: 1;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* ── Shared button base ────────────────────────────────────────── */
+
 .email-dialog__copy,
 .email-dialog__action {
   border: 1px solid var(--border);
@@ -271,110 +392,38 @@
   transition:
     border-color var(--transition),
     background-color var(--transition),
-    color var(--transition);
+    color var(--transition),
+    filter var(--transition);
 }
 
-.email-dialog__close {
-  justify-self: end;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--text-muted);
-  border-radius: 999px;
-  cursor: pointer;
-  margin: 0;
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.email-dialog__close span {
-  display: inline-block;
-  font-size: 1.7rem;
-  line-height: 1;
-  transform: rotate(45deg);
-  user-select: none;
-  -webkit-user-select: none;
-}
-
-.email-dialog__address-row {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  padding: 8px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: #f7f7f8;
-}
-
-.email-dialog__address {
-  flex: 1;
-  overflow-wrap: anywhere;
-  color: var(--text);
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
+/* ── Copy button ───────────────────────────────────────────────── */
 
 .email-dialog__copy {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  min-width: 5rem;
-  min-height: 2.25rem;
-  padding: 0 0.75rem;
-  border-radius: 10px;
+  gap: 0.35rem;
+  min-width: 4.8rem;
+  height: 2.1rem;
+  padding: 0 0.7rem;
+  border-radius: 9px;
   overflow: hidden;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
 }
 
 .email-dialog__copy svg {
-  width: 0.9rem;
-  height: 0.9rem;
-  flex: 0 0 0.9rem;
+  width: 0.82rem;
+  height: 0.82rem;
+  flex: 0 0 0.82rem;
 }
 
-.email-dialog__actions {
-  display: flex;
-  width: 100%;
-}
-
-.email-dialog__action {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: 2.5rem;
-  padding: 0 0.9rem;
-  border-radius: 10px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    border-color var(--transition),
-    color var(--transition),
-    filter var(--transition);
-}
-
-.email-dialog__action--primary {
-  border-color: transparent;
-  background: var(--accent-gradient-button);
-  background-clip: padding-box;
-  color: #fff;
-}
-
-.email-dialog__close:hover,
-.email-dialog__close:focus-visible,
 .email-dialog__copy:hover,
 .email-dialog__copy:focus-visible {
+  border-color: #d7d9dd;
+  background: #f3f4f6;
   color: var(--text);
 }
 
@@ -384,14 +433,38 @@
   color: var(--text);
 }
 
-.email-dialog__close:active {
-  background: rgba(15, 17, 21, 0.06);
+.email-dialog__copy.is-copied {
+  animation: copy-flash 600ms ease-out;
+  color: var(--accent);
 }
 
-.email-dialog__copy:hover,
-.email-dialog__copy:focus-visible {
-  border-color: #d7d9dd;
-  background: #f3f4f6;
+/* ── Primary action ────────────────────────────────────────────── */
+
+.email-dialog__actions {
+  display: flex;
+  width: 100%;
+  margin-top: 12px;
+}
+
+.email-dialog__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 2.75rem;
+  padding: 0 0.9rem;
+  border-radius: 12px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.email-dialog__action--primary {
+  border-color: transparent;
+  background: var(--accent-gradient-button);
+  background-clip: padding-box;
+  color: #fff;
 }
 
 .email-dialog__action--primary:hover,
@@ -399,11 +472,6 @@
   border-color: transparent;
   color: #fff;
   filter: brightness(1.11) saturate(1.1);
-}
-
-.email-dialog__copy:hover,
-.email-dialog__copy:focus-visible {
-  color: var(--text);
 }
 
 .sidebar__nav {
@@ -431,14 +499,15 @@
 
 .sidebar__nav a::before {
   content: '';
-  width: 4px;
-  height: 4px;
-  min-width: 4px;
-  min-height: 4px;
-  flex: 0 0 4px;
+  width: 5px;
+  height: 5px;
+  min-width: 5px;
+  min-height: 5px;
+  flex: 0 0 5px;
+  border-radius: 50%;
   background: var(--accent);
   opacity: 0;
-  transition: none;
+  transition: opacity var(--transition);
 }
 
 .sidebar__nav a[aria-current='true'] {
@@ -933,7 +1002,7 @@
 }
 
 .content-section {
-  padding: 84px 0;
+  padding: 64px 0;
   border-top: 1px solid var(--border);
   scroll-margin-top: 72px;
 }
@@ -955,28 +1024,45 @@
 
 .section-header {
   position: relative;
-  margin-bottom: 28px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border);
-  transition: border-color var(--transition);
+  margin-bottom: 24px;
+  padding-bottom: 18px;
   z-index: 10;
 }
 
-#experience .section-header,
-#projects .section-header {
-  transition: border-color var(--transition);
+.section-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-strong) 0%, transparent 80%);
+  opacity: 1;
+  transition: opacity var(--transition);
 }
 
-#experience:has(.experience-item:first-of-type:hover) .section-header,
-#projects:has(.project-card:first-of-type:hover) .section-header,
-.blog-index-section:has(.blog-post-card:first-of-type:hover) .section-header {
-  border-color: transparent;
+#experience:has(.experience-item:first-of-type:hover) .section-header::after,
+#projects:has(.project-card:first-of-type:hover) .section-header::after,
+.blog-index-section:has(.blog-post-card:first-of-type:hover) .section-header::after {
+  opacity: 0;
 }
 
 .section-actions {
-  margin-top: 40px;
+  position: relative;
+  margin-top: 48px;
+  padding-top: 24px;
   display: flex;
   justify-content: center;
+}
+
+.section-actions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--border-strong) 50%, transparent 100%);
 }
 
 .text-button {
@@ -1013,6 +1099,8 @@
   transform: translateY(-1px);
 }
 
+
+
 .section-heading {
   margin: 0;
   font-size: clamp(2.05rem, 2.35vw, 2.45rem);
@@ -1033,21 +1121,25 @@
   text-wrap: pretty;
 }
 
-/* reserved for potential future emphasis */
+.intro-text:first-of-type {
+  font-size: 1.24rem;
+  color: var(--text);
+}
 
 .intro-text + .intro-text {
   margin-top: 1em;
+  color: var(--text-muted);
 }
 
 .intro-section {
-  padding-bottom: 96px;
+  padding-bottom: 72px;
 }
 
 .project-list,
 .blog-post-list,
 .experience-list {
   display: grid;
-  gap: 52px;
+  gap: 48px;
   position: relative;
 }
 
@@ -1055,16 +1147,26 @@
 .blog-post-card,
 .experience-item {
   display: grid;
-  grid-template-columns: 120px minmax(0, 1fr);
-  column-gap: 32px;
   padding: 24px;
   margin: -24px;
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   transition:
     background-color var(--transition),
-    border-color var(--transition);
+    border-color var(--transition),
+    box-shadow var(--transition);
   position: relative;
+}
+
+.project-card,
+.blog-post-card {
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 56px;
+}
+
+.experience-item {
+  grid-template-columns: 140px minmax(0, 1fr);
+  column-gap: 28px;
 }
 
 .project-card:not(:has(.project-card__media)),
@@ -1079,8 +1181,10 @@
 .blog-post-card:has(a:focus-visible),
 .experience-item:hover,
 .experience-item:has(a:focus-visible) {
-  background-color: #f4f4f5;
+  background-color: #f3f3f5;
   border-color: #e5e7eb;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+  z-index: 1;
 }
 
 @media (min-width: 981px) {
@@ -1092,11 +1196,19 @@
     content: "";
     position: absolute;
     left: 30px;
-    top: 45px;
-    bottom: -25px;
+    top: 46px;
+    bottom: -38px;
     width: 1px;
-    margin-left: -0.5px; /* Center line on circle center (30px item-rel) */
-    background-color: var(--border-strong);
+    margin-left: -0.5px;
+    background: linear-gradient(
+      to bottom,
+      var(--accent) 0,
+      rgba(0, 112, 243, 0.3) 24px,
+      rgba(0, 0, 0, 0.22) 52px,
+      rgba(0, 0, 0, 0.14) 50%,
+      rgba(0, 0, 0, 0.06) 80%,
+      transparent 100%
+    );
     z-index: 1;
     transition: opacity var(--transition);
   }
@@ -1113,29 +1225,51 @@
   .experience-item::before {
     content: "";
     position: absolute;
-    /* 30px from item border → circle center sits 6px right of content-left,
-       so the whole circle (radius 5) lies to the right of the section-header's
-       border-bottom start (x=0), instead of straddling it. */
     left: 30px;
-    top: 33px;
-    width: 10px;
-    height: 10px;
+    top: 38px;
+    width: 8px;
+    height: 8px;
     background-color: var(--bg);
-    border: 2px solid var(--accent);
+    border: 1.5px solid var(--accent);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 10;
-    transition: transform var(--transition), background-color var(--transition);
+    transition:
+      transform var(--transition),
+      background-color var(--transition),
+      border-color var(--transition),
+      box-shadow var(--transition);
+  }
+
+  /* Timeline gradient: each item progressively lighter */
+  .experience-item:nth-child(1)::before { border-color: var(--accent); }
+  .experience-item:nth-child(2)::before { border-color: rgba(0, 112, 243, 0.65); }
+  .experience-item:nth-child(3)::before { border-color: rgba(0, 50, 120, 0.3); }
+  .experience-item:nth-child(4)::before { border-color: rgba(0, 0, 0, 0.18); }
+
+  /* Line segments: each picks up where the previous left off */
+  .experience-item:nth-child(1)::after {
+    background: linear-gradient(to bottom, var(--accent) 0, rgba(0,112,243,0.4) 50%, rgba(0,112,243,0.25) 100%);
+  }
+  .experience-item:nth-child(2)::after {
+    background: linear-gradient(to bottom, rgba(0,112,243,0.25) 0, rgba(0,0,0,0.1) 40%, rgba(0,0,0,0.04) 70%, transparent 100%);
+  }
+  .experience-item:nth-child(3)::after {
+    background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0, rgba(0,0,0,0.04) 50%, transparent 100%);
   }
 
   .experience-item:hover::before {
+    border-color: var(--accent);
     background-color: var(--accent);
-    transform: translate(-50%, -50%) scale(1.15);
+    transform: translate(-50%, -50%) scale(1.2);
+    box-shadow: 0 0 0 3px var(--accent-soft);
   }
 
   .experience-item__meta {
     padding-left: 26px;
   }
+
+
 
   .blog-post-card__meta {
     padding-left: 0;
@@ -1143,21 +1277,47 @@
 }
 
 .experience-item__meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.34em;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.18em 0.32em;
   align-self: start;
-  color: var(--text-muted);
-  padding-top: 2px;
-  font-size: 0.76rem;
+  color: var(--text);
+  padding-top: 6px;
+  font-size: 0.75rem;
+  font-weight: 550;
+  line-height: 1.4;
+  letter-spacing: 0.025em;
+  font-variant-numeric: tabular-nums;
+  transition: color var(--transition);
+}
+
+.experience-item__meta-separator {
+  display: inline-block;
+  position: relative;
+  width: 10px;
+  height: 2px;
+  margin: 0 1px;
+  vertical-align: baseline;
+  bottom: 0.35em;
+  background: var(--text-muted);
+  opacity: 0.5;
+  border-radius: 1px;
+}
+
+.experience-item__meta-end {
   font-weight: 600;
-  line-height: 1.35;
-  text-transform: uppercase;
+}
+
+.project-card:hover .badge-list li,
+.experience-item:hover .badge-list li {
+  background: var(--text);
+  color: #fff;
 }
 
 .experience-item__content {
   display: grid;
-  row-gap: 6px;
+  row-gap: 8px;
 }
 
 .experience-item p {
@@ -1168,24 +1328,34 @@
 
 .project-card__media {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: center;
+  width: clamp(48px, 6vw, 78px);
+  height: clamp(48px, 6vw, 78px);
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
   user-select: none;
   -webkit-user-drag: none;
+  position: relative;
 }
 
 .project-card__media img {
-  max-width: 92px;
-  max-height: 92px;
+  max-width: 100%;
+  max-height: 100%;
   width: auto;
   height: auto;
   border-radius: 0;
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
+  opacity: 0.7;
+  transition: opacity 280ms ease-out;
+}
+
+.project-card:hover .project-card__media img,
+.project-card:has(a:focus-visible) .project-card__media img {
+  opacity: 1;
 }
 
 .project-card__content {
@@ -1202,7 +1372,7 @@
 }
 
 .project-card__header {
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 }
 
 .project-card h3,
@@ -1223,11 +1393,13 @@
 
 .experience-item__separator {
   display: inline-block;
-  margin: 0 0.28em;
-  font-size: 1.02em;
-  font-weight: 500;
+  margin: 0 0.32em;
+  font-size: 0.72em;
+  font-weight: 400;
   line-height: 1;
-  transform: translateY(-0.02em);
+  color: var(--text-muted);
+  opacity: 0.6;
+  transform: translateY(-0.06em);
 }
 
 .project-card__title-anchor {
@@ -1249,6 +1421,8 @@
 .project-card__title-anchor:focus-visible svg {
   transform: translate(1px, -1px);
 }
+
+
 
 .project-card__title-anchor svg,
 .project-card__secondary-link svg {
@@ -1325,16 +1499,21 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4rem 0.65rem;
-  border: 1.5px solid transparent;
+  padding: 0.38rem 0.62rem;
+  border: 1px solid transparent;
   border-radius: 999px;
-  background: #374151;
+  background: #3d4148;
   color: #fff;
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: 0.73rem;
+  font-weight: 550;
   line-height: 1;
-  letter-spacing: 0.015em;
+  letter-spacing: 0.01em;
+  text-indent: 0.01em;
   white-space: nowrap;
+  transition:
+    background-color var(--transition),
+    border-color var(--transition),
+    color var(--transition);
 }
 
 @media (max-width: 980px) {
@@ -1460,10 +1639,17 @@
     padding-top: 2px;
   }
 
+  .email-dialog {
+    max-width: min(calc(100% - 32px), 20rem);
+  }
+
   .email-dialog[open] {
-    width: min(100% - 32px, 20rem);
     padding: 16px;
-    gap: 10px;
+  }
+
+  .email-dialog__close {
+    top: 8px;
+    right: 8px;
   }
 
   .email-dialog__address-row {
@@ -1471,6 +1657,7 @@
     align-items: stretch;
     gap: 8px;
     padding: 10px;
+    margin-top: 24px;
     border-radius: 10px;
   }
 
@@ -1478,24 +1665,19 @@
     font-size: 0.88rem;
   }
 
-  .email-dialog__copy,
-  .email-dialog__action {
-    width: 100%;
-    min-height: 2.2rem;
-    font-size: 0.9rem;
-  }
-
   .email-dialog__copy {
-    padding: 0 0.6rem;
+    width: 100%;
+    height: 2.1rem;
+    font-size: 0.86rem;
   }
 
   .email-dialog__actions {
-    flex-direction: column;
-    gap: 6px;
+    margin-top: 8px;
   }
 
   .email-dialog__action {
-    padding: 0 0.8rem;
+    height: 2.5rem;
+    font-size: 0.9rem;
   }
 
   .sidebar__language-label {
@@ -1544,11 +1726,12 @@
   }
 
   .intro-section {
-    padding-bottom: 64px;
+    padding-bottom: 56px;
   }
 
   .section-actions {
     margin-top: 32px;
+    padding-top: 20px;
   }
 
   .project-card__header {
@@ -1635,73 +1818,56 @@
     border-radius: 10px;
   }
 
-  .project-card__media img {
-    max-width: 72px;
-    max-height: 72px;
+  .project-card__media {
+    width: clamp(44px, 8vw, 56px);
+    height: clamp(44px, 8vw, 56px);
   }
 }
 
 @media (max-width: 520px) {
-  .email-dialog[open] {
-    position: fixed;
-    inset: 12px;
-    margin: auto;
-    width: min(calc(100% - 24px), 20rem);
-    max-height: calc(100dvh - 24px);
-    overflow-y: auto;
-    padding: 32px 14px 14px;
-    gap: 8px;
+  .email-dialog {
+    max-width: min(calc(100% - 24px), 20rem);
     border-radius: 14px;
   }
 
+  .email-dialog[open] {
+    padding: 14px;
+  }
+
   .email-dialog__close {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 2rem;
-    height: 2rem;
-    padding: 0;
-    z-index: 1;
+    top: 6px;
+    right: 6px;
+    width: 26px;
+    height: 26px;
   }
 
   .email-dialog__close span {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
   }
 
   .email-dialog__address-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
+    margin-top: 22px;
     padding: 10px;
     border-radius: 10px;
   }
 
   .email-dialog__address {
-    font-size: 0.86rem;
+    font-size: 0.84rem;
     word-break: break-all;
   }
 
   .email-dialog__copy {
-    width: 100%;
-    min-height: 2rem;
-    padding: 0 0.6rem;
-    font-size: 0.86rem;
+    height: 2rem;
+    font-size: 0.82rem;
   }
 
   .email-dialog__actions {
-    flex-direction: column;
-    gap: 6px;
+    margin-top: 8px;
   }
 
   .email-dialog__action {
-    width: 100%;
-    min-height: 2rem;
-    padding: 0 0.8rem;
-    font-size: 0.9rem;
-  }
-
-  .email-dialog__action--primary {
-    padding: 0 0.8rem;
+    height: 2.35rem;
+    font-size: 0.88rem;
   }
 
   .shell {
@@ -1755,12 +1921,9 @@
   }
 
   .project-card__media {
+    width: clamp(40px, 10vw, 48px);
+    height: clamp(40px, 10vw, 48px);
     margin-bottom: 10px;
-  }
-
-  .project-card__media img {
-    max-width: 68px;
-    max-height: 68px;
   }
 
   .project-card h3,
@@ -1809,17 +1972,18 @@
     font-size: 0.9rem;
   }
 
-  .project-card__media img {
-    max-width: 64px;
-    max-height: 64px;
+  .project-card__media {
+    width: clamp(36px, 9vw, 44px);
+    height: clamp(36px, 9vw, 44px);
   }
 }
 
 @media (hover: none) {
   .project-card:hover,
   .experience-item:hover {
-    background-color: #f4f4f5;
+    background: #f4f4f5;
     border-color: #e5e7eb;
+    box-shadow: none;
   }
 }
 
