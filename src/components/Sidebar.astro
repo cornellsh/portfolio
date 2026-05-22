@@ -73,7 +73,7 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
       />
     </div>
     {primaryIdentity ? <h2 class="sidebar__role">{profile.role}</h2> : <p class="sidebar__role">{profile.role}</p>}
-    <p class="sidebar__summary">{profile.summary}</p>
+    {profile.summary && <p class="sidebar__summary">{profile.summary}</p>}
   </div>
 
   {resolvedNavItems.length > 0 ? (

@@ -10,11 +10,11 @@ export const czechContent: PortfolioContent = {
   profile: {
     name: 'Cornell Shakh',
     role: 'Full-Stack Vývojář',
-    summary: 'Inženýr myslí, builder srdcem.',
+    summary: '',
     intro: [
-      'Stavím full-stack software, hlavně webové nástroje a interní systémy, od backendových služeb až po frontendová rozhraní.',
-      'Začínal jsem vlastním softwarem, který jsem nejen vyvíjel, ale také prodával a dlouhodobě rozvíjel. Právě tam jsem brzy získal zkušenost s tím, co opravdu znamená vypustit produkt do světa a nést za něj odpovědnost i po vydání.',
-      'Dnes pracuji jako full-stack vývojář na webových nástrojích a AI systémech, se silným důrazem na moderní postupy, aktuální nástroje a reálnou praxi v oboru.',
+      'Vedu produkty od nápadu po nasazení: vymyslím, co stavět, postavím to, vydám a starám se o to dál.',
+      'V roce 2020 jsem začal s vlastním softwarem, který jsem sám prodával. Naučilo mě to, co se s produktem opravdu děje po vydání, a tam je většina skutečné práce.',
+      'Tak pracuji i teď, na webových nástrojích a AI systémech, většinou od nuly a celé v mých rukou.',
     ],
   },
   links: [

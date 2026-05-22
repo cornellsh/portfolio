@@ -12,7 +12,6 @@ interface Props {
 }
 
 const { locale, content, blogPosts } = Astro.props;
-const splitPeriod = (period: string) => period.split('\u2013').map((part) => part.trim());
 const resumeLink = content.links.find((link) => link.type === 'resume');
 const copyEmailLabel = content.headings.copyEmail;
 ---
@@ -61,11 +60,7 @@ const copyEmailLabel = content.headings.copyEmail;
         <div class="experience-list">
           {content.experience.map((item) => (
             <article class="experience-item">
-              <p class="experience-item__meta">
-                <span>{splitPeriod(item.period)[0]}</span>
-                <span class="experience-item__meta-separator" aria-hidden="true"></span>
-                <span class="experience-item__meta-end">{splitPeriod(item.period)[1]}</span>
-              </p>
+              <p class="experience-item__meta">{item.period}</p>
               <div class="experience-item__content">
                 <h3>
                   <span>{item.role}</span>

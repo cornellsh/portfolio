@@ -10,11 +10,11 @@ export const englishContent: PortfolioContent = {
   profile: {
     name: 'Cornell Shakh',
     role: 'Full-Stack Engineer',
-    summary: 'Engineer by mind, builder at heart.',
+    summary: '',
     intro: [
-      'I build full-stack software products, mainly web tools and internal systems, from backend services to frontend interfaces.',
-      'I started by building and selling my own software, handling development, distribution, and long-term iteration. That gave me early experience in shipping real products and taking responsibility for how they performed after release.',
-      'Today, I work as a full-stack engineer building web tools and AI systems, with a strong focus on modern practices, current tooling, and real-world product work.',
+      'I run products from idea to live: I figure out what to build, then build, ship, and keep it running.',
+      'I started in 2020 selling my own software. That taught me what actually happens to a product after launch, which is where most of the real work is.',
+      'I work the same way now on web tools and AI systems, usually starting from nothing and owning the whole thing.',
     ],
   },
   links: [
