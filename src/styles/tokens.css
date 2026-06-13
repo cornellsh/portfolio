@@ -1,27 +1,88 @@
 /* Design tokens, resets, and base element styles.
  * Imported first so every component can rely on these custom properties
- * and base-element defaults. Keep this file small — no component styles. */
+ * and base-element defaults. Keep this file small — no component styles.
+ *
+ * Theming model:
+ *   - :root holds shape tokens (radii, transitions, typography, layout)
+ *     and the light theme as the default colour set.
+ *   - [data-theme="dark"] overrides the colour tokens.
+ *   - data-theme is set on <html> by an inline script in the layout
+ *     <head> before paint, based on localStorage + prefers-color-scheme.
+ *     No @media (prefers-color-scheme) rules here — single source of truth.
+ */
 
 :root {
   color-scheme: light;
+
+  /* Surfaces */
   --bg: #fafafa;
+  --bg-gradient-start: #ffffff;
+  --bg-gradient-end: #f8f9fa;
   --surface: rgba(250, 250, 250, 0.88);
   --surface-strong: #f5f5f5;
+  --surface-sunken: #f7f7f8;
+  --surface-overlay: #ffffff;
+  --surface-pressed: rgba(15, 17, 21, 0.06);
+  --surface-pressed-strong: rgba(15, 17, 21, 0.1);
+
+  /* Text */
   --text: #0f1115;
   --text-muted: #54575c;
+  --text-marker: rgba(15, 17, 21, 0.72);
+  --text-strong: #30343b;
+
+  /* Borders */
   --border: rgba(0, 0, 0, 0.1);
   --border-strong: rgba(0, 0, 0, 0.18);
+
+  /* Accent */
   --accent: #0070f3;
   --accent-gradient-button: linear-gradient(0deg, #1b73ee 0%, #2e8eff 100%);
   --accent-gradient-pill: linear-gradient(0deg, #2278ef 0%, #3a95ff 100%);
   --accent-soft: rgba(0, 112, 243, 0.1);
+  --accent-underline: rgba(0, 112, 243, 0.4);
+
+  /* Card hover */
+  --card-hover-bg: #f3f3f5;
+  --card-hover-border: #e5e7eb;
+
+  /* Badge */
+  --badge-bg: #3d4148;
+  --badge-text: #ffffff;
+
+  /* Dialog */
+  --dialog-shadow:
+    0 24px 48px rgba(15, 17, 21, 0.12),
+    0 2px 8px rgba(15, 17, 21, 0.06);
+  --dialog-backdrop: rgba(15, 17, 21, 0.28);
+  --dialog-border: transparent;
+
+  /* Copy button (email dialog) */
+  --button-soft-bg: #ffffff;
+  --button-soft-bg-hover: #f3f4f6;
+  --button-soft-bg-active: #eceef1;
+  --button-soft-border-hover: #d7d9dd;
+
+  /* Article prose */
+  --code-inline-bg: rgba(15, 17, 21, 0.055);
+  --code-inline-border: rgba(15, 17, 21, 0.08);
+  --prose-link-underline: rgba(15, 17, 21, 0.28);
+
+  /* Selection */
+  --selection-bg: rgba(0, 112, 243, 0.25);
+
+  /* Effects */
   --shadow: 0 14px 32px rgba(0, 0, 0, 0.06);
   --hover-bg: rgba(0, 112, 243, 0.08);
   --hover-border: rgba(0, 112, 243, 0.25);
+
+  /* Typography */
   --font-sans: 'Public Sans Variable', 'Manrope', system-ui, sans-serif;
   --font-display: 'Manrope', 'Public Sans Variable', system-ui, sans-serif;
   --text-xl: clamp(3rem, 3.8vw, 4.1rem);
   --text-lg: clamp(1.7rem, 2.1vw, 2.15rem);
+
+  /* Layout */
   --page-width: 1280px;
   --page-gutter: 128px;
   --radius-lg: 28px;
@@ -31,15 +92,95 @@
   --transition-soft: 280ms ease-out;
 }
 
+/* ── Dark theme ─────────────────────────────────────────────────────
+ *
+ * Register: warm graphite, not OLED black. The page bg sits at a
+ * charcoal that has a faint cool undertone so the accent blue doesn't
+ * clash against it. Text is off-white (#e6e7ea), not pure white —
+ * pure white on dark feels sterile and too high-contrast for long-form
+ * reading. Accent lifts to #4a93ff so it carries the same perceptual
+ * weight on dark as #0070f3 does on light.
+ */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Surfaces */
+  --bg: #0e0f13;
+  --bg-gradient-start: #11131a;
+  --bg-gradient-end: #0c0d12;
+  --surface: rgba(20, 22, 28, 0.88);
+  --surface-strong: #181a21;
+  --surface-sunken: #15161c;
+  --surface-overlay: #181a21;
+  --surface-pressed: rgba(255, 255, 255, 0.06);
+  --surface-pressed-strong: rgba(255, 255, 255, 0.1);
+
+  /* Text */
+  --text: #e6e7ea;
+  --text-muted: #9095a0;
+  --text-marker: rgba(230, 231, 234, 0.72);
+  --text-strong: #c8cad0;
+
+  /* Borders */
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  /* Accent — lifted blue for parity with light mode */
+  --accent: #4a93ff;
+  --accent-gradient-button: linear-gradient(0deg, #2e7df0 0%, #4a93ff 100%);
+  --accent-gradient-pill: linear-gradient(0deg, #2e7df0 0%, #4a93ff 100%);
+  --accent-soft: rgba(74, 147, 255, 0.18);
+  --accent-underline: rgba(74, 147, 255, 0.55);
+
+  /* Card hover — subtle lift from bg */
+  --card-hover-bg: #16181f;
+  --card-hover-border: rgba(255, 255, 255, 0.08);
+
+  /* Badge — mid-tone pill, parallel to the dark pill on light bg.
+   * Pure off-white pills shouted too loud against the page. This sits
+   * one step above the page bg, like a tag chip. */
+  --badge-bg: #20232b;
+  --badge-text: #cdd0d6;
+
+  /* Dialog — drop shadows don't read on dark, use a defined edge */
+  --dialog-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.55),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+  --dialog-backdrop: rgba(0, 0, 0, 0.6);
+  --dialog-border: rgba(255, 255, 255, 0.08);
+
+  /* Copy button — surface tones tuned for dark */
+  --button-soft-bg: #1e2028;
+  --button-soft-bg-hover: #25272f;
+  --button-soft-bg-active: #2c2e37;
+  --button-soft-border-hover: rgba(255, 255, 255, 0.14);
+
+  /* Article prose */
+  --code-inline-bg: rgba(255, 255, 255, 0.06);
+  --code-inline-border: rgba(255, 255, 255, 0.1);
+  --prose-link-underline: rgba(230, 231, 234, 0.35);
+
+  /* Selection */
+  --selection-bg: rgba(74, 147, 255, 0.35);
+
+  /* Effects */
+  --shadow: 0 14px 32px rgba(0, 0, 0, 0.5);
+  --hover-bg: rgba(74, 147, 255, 0.12);
+  --hover-border: rgba(74, 147, 255, 0.3);
+}
+
 * {
   box-sizing: border-box;
 }
 
 html {
-  background:
-    linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+  background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   overflow-x: clip;
   scroll-behavior: smooth;
+  transition:
+    background-color var(--transition-soft),
+    color var(--transition-soft);
 }
 
 body {
@@ -50,16 +191,17 @@ body {
   overflow-x: clip;
   font-family: var(--font-sans);
   color: var(--text);
+  transition: color var(--transition-soft);
 }
 
 ::selection {
-  background: rgba(0, 112, 243, 0.25);
+  background: var(--selection-bg);
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  -webkit-tap-highlight-color: rgba(0, 112, 243, 0.1);
+  -webkit-tap-highlight-color: var(--accent-soft);
 }
 
 img {
@@ -72,5 +214,5 @@ input,
 textarea,
 select {
   font: inherit;
-  -webkit-tap-highlight-color: rgba(0, 112, 243, 0.1);
+  -webkit-tap-highlight-color: var(--accent-soft);
 }

@@ -12,7 +12,7 @@ export const czechContent: PortfolioContent = {
     role: 'Full-Stack Vývojář',
     summary: '',
     intro: [
-      'Vedu produkty od nápadu po nasazení: vymyslím, co stavět, postavím to, vydám a starám se o to dál.',
+      'Vedu produkty od nápadu po nasazení.',
       'V roce 2020 jsem začal s vlastním softwarem, který jsem sám prodával. Naučilo mě to, co se s produktem opravdu děje po vydání, a tam je většina skutečné práce.',
       'Tak pracuji i teď, na webových nástrojích a AI systémech, většinou od nuly a celé v mých rukou.',
     ],

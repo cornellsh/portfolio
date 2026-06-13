@@ -12,7 +12,7 @@ export const englishContent: PortfolioContent = {
     role: 'Full-Stack Engineer',
     summary: '',
     intro: [
-      'I run products from idea to live: I figure out what to build, then build, ship, and keep it running.',
+      'I run products from idea to live.',
       'I started in 2020 selling my own software. That taught me what actually happens to a product after launch, which is where most of the real work is.',
       'I work the same way now on web tools and AI systems, usually starting from nothing and owning the whole thing.',
     ],

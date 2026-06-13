@@ -165,6 +165,26 @@ const structuredData = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    {/*
+     * Theme resolution must happen before any stylesheet loads, otherwise the
+     * page paints in the wrong theme for a frame. Reads localStorage preference
+     * ('system' | 'light' | 'dark', defaulting to 'system') and resolves
+     * against prefers-color-scheme, then sets data-theme on <html>.
+     */}
+    <script is:inline>
+      (function () {
+        try {
+          var pref = localStorage.getItem('theme') || 'system';
+          var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          var theme = pref === 'system' ? (systemDark ? 'dark' : 'light') : pref;
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.setAttribute('data-theme-pref', pref);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'light');
+          document.documentElement.setAttribute('data-theme-pref', 'system');
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://va.vercel-scripts.com" crossorigin />
     {fontPreloads.map((href) => (
       <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />
@@ -182,8 +202,9 @@ const structuredData = {
     <meta name="author" content="Cornell Shakh" />
     <meta name="application-name" content={siteName} />
     <meta name="apple-mobile-web-app-title" content={siteName} />
-    <meta name="theme-color" content="#fafafa" />
-    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e0f13" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
     <meta property="og:type" content={pageType === 'article' ? 'article' : 'website'} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:title" content={pageTitle} />

@@ -177,5 +177,76 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
         ))}
       </div>
     </section>
+
+    <button
+      type="button"
+      class="sidebar__theme-toggle"
+      data-theme-toggle
+      aria-label="Toggle color theme"
+      title="Toggle color theme"
+    >
+      <span class="sidebar__theme-icon sidebar__theme-icon--system" aria-hidden="true">
+        <LucideIcon name="Monitor" />
+      </span>
+      <span class="sidebar__theme-icon sidebar__theme-icon--light" aria-hidden="true">
+        <LucideIcon name="Sun" />
+      </span>
+      <span class="sidebar__theme-icon sidebar__theme-icon--dark" aria-hidden="true">
+        <LucideIcon name="Moon" />
+      </span>
+    </button>
   </div>
 </aside>
+
+<script>
+  /* Theme toggle: cycles system → light → dark → system.
+   * Persists pref to localStorage. Reflects state via data-theme-pref
+   * on <html>; CSS uses that attribute to swap the visible icon.
+   * The no-flash script in BaseLayout has already applied the initial
+   * theme before paint, so this only handles user input + system changes. */
+  (function () {
+    const root = document.documentElement;
+    const toggles = document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+    if (toggles.length === 0) return;
+
+    type Pref = 'system' | 'light' | 'dark';
+    const order: Pref[] = ['system', 'light', 'dark'];
+
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = (pref: Pref) => {
+      const theme = pref === 'system' ? (mq.matches ? 'dark' : 'light') : pref;
+      root.setAttribute('data-theme', theme);
+      root.setAttribute('data-theme-pref', pref);
+    };
+
+    const readPref = (): Pref => {
+      const stored = localStorage.getItem('theme');
+      return stored === 'light' || stored === 'dark' ? stored : 'system';
+    };
+
+    const cycle = () => {
+      const current = readPref();
+      const next = order[(order.indexOf(current) + 1) % order.length];
+      if (next === 'system') {
+        localStorage.removeItem('theme');
+      } else {
+        localStorage.setItem('theme', next);
+      }
+      applyTheme(next);
+    };
+
+    toggles.forEach((btn) => btn.addEventListener('click', cycle));
+
+    // When user pref is 'system', track OS theme changes live.
+    mq.addEventListener('change', () => {
+      if (readPref() === 'system') applyTheme('system');
+    });
+
+    // Cross-tab sync.
+    window.addEventListener('storage', (event) => {
+      if (event.key !== 'theme') return;
+      applyTheme(readPref());
+    });
+  })();
+</script>
