@@ -148,11 +148,11 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
     {emailLink ? (
       <dialog id="email-dialog" class="email-dialog" data-email-dialog aria-label="Email options">
         <button type="button" class="email-dialog__close" data-close-email-dialog aria-label="Close email dialog">
-          <span aria-hidden="true">+</span>
+          <LucideIcon name="X" />
         </button>
         <div class="email-dialog__address-row">
           <code class="email-dialog__address" data-email-address>{emailLink.href.replace('mailto:', '')}</code>
-          <button type="button" class="email-dialog__copy" data-copy-email>
+          <button type="button" class="email-dialog__copy" data-copy-email aria-label={copyEmailLabel}>
             <LucideIcon name="Copy" />
             <span data-copy-email-label>{copyEmailLabel}</span>
           </button>

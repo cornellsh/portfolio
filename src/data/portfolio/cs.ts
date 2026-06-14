@@ -4,7 +4,7 @@ export const czechContent: PortfolioContent = {
   seo: {
     title: 'Cornell Shakh | Full-Stack Vývojář',
     description:
-      'Full-stack vývojář stavějící webové nástroje, interní systémy a AI software s moderními postupy a reálnou praxí z produktové práce.',
+      'Full-stack vývojář, který staví webové nástroje, interní systémy a AI software s moderními postupy a reálnou zkušeností s produkty.',
     siteName: 'Cornell Shakh',
   },
   profile: {
@@ -12,9 +12,9 @@ export const czechContent: PortfolioContent = {
     role: 'Full-Stack Vývojář',
     summary: '',
     intro: [
-      'Vedu produkty od nápadu po nasazení.',
-      'V roce 2020 jsem začal s vlastním softwarem, který jsem sám prodával. Naučilo mě to, co se s produktem opravdu děje po vydání, a tam je většina skutečné práce.',
-      'Tak pracuji i teď, na webových nástrojích a AI systémech, většinou od nuly a celé v mých rukou.',
+      'Vedu produkty od prvního nápadu až po reálné nasazení.',
+      'Začal jsem v roce 2020 s vlastním softwarem, který jsem sám prodával. Tehdy jsem pochopil, co se s produktem děje po vydání, a právě tam je většina skutečné práce.',
+      'Stejně pracuji i dnes na webových nástrojích a AI systémech, většinou od nuly a s odpovědností za celý produkt.',
     ],
   },
   links: [
@@ -80,7 +80,7 @@ export const czechContent: PortfolioContent = {
       organization: 'Independent',
       period: '2024\u00A0\u2013\u00A0Současnost',
       summary:
-        'Navrhuji, stavím a dodávám full-stack produkty od architektury a implementace až po další iterace po vydání.',
+        'Navrhuji, stavím a dodávám full-stack produkty od architektury a implementace až po jejich další rozvoj po spuštění.',
       stack: ['TypeScript', 'React', 'Python', 'Interní systémy'],
     },
     {

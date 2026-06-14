@@ -322,13 +322,9 @@ html.has-dialog-open body {
     color var(--transition);
 }
 
-.email-dialog__close span {
-  display: inline-block;
-  font-size: 1.6rem;
-  line-height: 1;
-  transform: rotate(45deg);
-  user-select: none;
-  -webkit-user-select: none;
+.email-dialog__close svg {
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 .email-dialog__close:hover,
@@ -1080,8 +1076,6 @@ html.has-dialog-open body {
   transition: opacity var(--transition);
 }
 
-#experience:has(.experience-item:first-of-type:hover) .section-header::after,
-#projects:has(.project-card:first-of-type:hover) .section-header::after,
 .blog-index-section:has(.blog-post-card:first-of-type:hover) .section-header::after {
   opacity: 0;
 }
@@ -1213,12 +1207,15 @@ html.has-dialog-open body {
   grid-template-columns: 1fr;
 }
 
-.project-card:hover,
-.project-card:has(a:focus-visible),
 .blog-post-card:hover,
 .blog-post-card:has(a:focus-visible) {
   background-color: var(--card-hover-bg);
   border-color: var(--card-hover-border);
+  z-index: 1;
+}
+
+.project-card:hover,
+.project-card:has(a:focus-visible) {
   z-index: 1;
 }
 
@@ -1321,12 +1318,6 @@ html.has-dialog-open body {
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
-  opacity: 0.7;
-  transition: opacity var(--transition-soft);
-}
-
-.project-card:hover .project-card__media img,
-.project-card:has(a:focus-visible) .project-card__media img {
   opacity: 1;
 }
 
@@ -1943,13 +1934,6 @@ html.has-dialog-open body {
   .project-card__media {
     width: clamp(44px, 11vw, 52px);
     height: clamp(44px, 11vw, 52px);
-  }
-}
-
-@media (hover: none) {
-  .project-card:hover {
-    background: var(--card-hover-bg);
-    border-color: var(--card-hover-border);
   }
 }
 
