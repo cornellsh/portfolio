@@ -177,6 +177,7 @@
 html {
   background: linear-gradient(180deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
   overflow-x: clip;
+  scrollbar-gutter: stable;
   scroll-behavior: smooth;
   transition:
     background-color var(--transition-soft),
