@@ -35,6 +35,9 @@ export const englishContent: PortfolioContent = {
     backToTop: 'Back to top',
     copyEmail: 'Copy',
     openEmail: 'Open email app',
+    themeSystem: 'System',
+    themeLight: 'Light',
+    themeDark: 'Dark',
   },
   projects: [
     {

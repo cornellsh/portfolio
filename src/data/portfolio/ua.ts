@@ -35,6 +35,9 @@ export const ukrainianContent: PortfolioContent = {
     backToTop: 'Назад угору',
     copyEmail: 'Скопіювати',
     openEmail: 'Відкрити поштовий застосунок',
+    themeSystem: 'Системна',
+    themeLight: 'Світла',
+    themeDark: 'Темна',
   },
   projects: [
     {

@@ -35,6 +35,9 @@ export const russianContent: PortfolioContent = {
     backToTop: 'Наверх',
     copyEmail: 'Скопировать',
     openEmail: 'Открыть почтовое приложение',
+    themeSystem: 'Системная',
+    themeLight: 'Светлая',
+    themeDark: 'Тёмная',
   },
   projects: [
     {

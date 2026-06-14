@@ -51,6 +51,9 @@ export type PortfolioContent = {
     backToTop: string;
     copyEmail: string;
     openEmail: string;
+    themeSystem: string;
+    themeLight: string;
+    themeDark: string;
   };
   projects: ProjectItem[];
   experience: ExperienceItem[];

@@ -35,6 +35,9 @@ export const czechContent: PortfolioContent = {
     backToTop: 'Zpět nahoru',
     copyEmail: 'Kopírovat',
     openEmail: 'Otevřít e-mailovou aplikaci',
+    themeSystem: 'Systém',
+    themeLight: 'Světlý',
+    themeDark: 'Tmavý',
   },
   projects: [
     {

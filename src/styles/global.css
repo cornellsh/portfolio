@@ -981,9 +981,8 @@ html.has-dialog-open body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 30px;
   height: 30px;
-  padding: 0;
+  padding: 0 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
   background: var(--surface);
@@ -1002,8 +1001,14 @@ html.has-dialog-open body {
   border-color: var(--border-strong);
 }
 
-.sidebar__theme-icon {
+.sidebar__theme-state {
   display: none;
+  align-items: center;
+  gap: 7px;
+}
+
+.sidebar__theme-icon {
+  display: inline-flex;
   width: 16px;
   height: 16px;
 }
@@ -1014,19 +1019,26 @@ html.has-dialog-open body {
   height: 100%;
 }
 
-/* Show only the icon matching current preference. Default (no attr) = system. */
-:root .sidebar__theme-icon--system,
-[data-theme-pref='system'] .sidebar__theme-icon--system {
+.sidebar__theme-label {
+  font-size: 0.8rem;
+  font-weight: 550;
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+/* Show only the state matching current preference. Default (no attr) = system. */
+:root .sidebar__theme-state--system,
+[data-theme-pref='system'] .sidebar__theme-state--system {
   display: inline-flex;
 }
-[data-theme-pref='light'] .sidebar__theme-icon--system,
-[data-theme-pref='dark'] .sidebar__theme-icon--system {
+[data-theme-pref='light'] .sidebar__theme-state--system,
+[data-theme-pref='dark'] .sidebar__theme-state--system {
   display: none;
 }
-[data-theme-pref='light'] .sidebar__theme-icon--light {
+[data-theme-pref='light'] .sidebar__theme-state--light {
   display: inline-flex;
 }
-[data-theme-pref='dark'] .sidebar__theme-icon--dark {
+[data-theme-pref='dark'] .sidebar__theme-state--dark {
   display: inline-flex;
 }
 

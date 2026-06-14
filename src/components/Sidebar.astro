@@ -26,6 +26,7 @@ interface Props {
   currentLocale: Locale;
   copyEmailLabel?: string;
   openEmailLabel?: string;
+  themeLabels?: { system: string; light: string; dark: string };
   navItems?: NavItem[];
   navLabel?: string;
   blogPosts?: CollectionEntry<'blog'>[];
@@ -42,6 +43,7 @@ const {
   currentLocale,
   copyEmailLabel = 'Copy',
   openEmailLabel = 'Open mail app',
+  themeLabels = { system: 'System', light: 'Light', dark: 'Dark' },
   navItems,
   navLabel = 'Section index',
   blogPosts = [],
@@ -185,14 +187,17 @@ const resolvedNavItems = navItems ?? sections.map((section) => ({ href: `#${sect
       aria-label="Toggle color theme"
       title="Toggle color theme"
     >
-      <span class="sidebar__theme-icon sidebar__theme-icon--system" aria-hidden="true">
-        <LucideIcon name="Monitor" />
+      <span class="sidebar__theme-state sidebar__theme-state--system" aria-hidden="true">
+        <span class="sidebar__theme-icon"><LucideIcon name="Monitor" /></span>
+        <span class="sidebar__theme-label">{themeLabels.system}</span>
       </span>
-      <span class="sidebar__theme-icon sidebar__theme-icon--light" aria-hidden="true">
-        <LucideIcon name="Sun" />
+      <span class="sidebar__theme-state sidebar__theme-state--light" aria-hidden="true">
+        <span class="sidebar__theme-icon"><LucideIcon name="Sun" /></span>
+        <span class="sidebar__theme-label">{themeLabels.light}</span>
       </span>
-      <span class="sidebar__theme-icon sidebar__theme-icon--dark" aria-hidden="true">
-        <LucideIcon name="Moon" />
+      <span class="sidebar__theme-state sidebar__theme-state--dark" aria-hidden="true">
+        <span class="sidebar__theme-icon"><LucideIcon name="Moon" /></span>
+        <span class="sidebar__theme-label">{themeLabels.dark}</span>
       </span>
     </button>
   </div>
