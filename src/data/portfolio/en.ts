@@ -43,7 +43,7 @@ export const englishContent: PortfolioContent = {
     {
       name: 'Dska',
       summary:
-        'A product for Czech businesses looking for a more practical alternative to the official data box portal. It offers a cleaner dashboard, better message handling, and a workflow that fits day-to-day business operations.',
+        'A more usable alternative to the official Czech data box portal. It gives businesses a clearer dashboard, better message handling, and a workflow that fits the way they actually operate day to day.',
       stack: ['NestJS', 'Next.js', 'Go', 'ISDS'],
       image: '/projects/dska.svg',
       websiteHref: 'https://dska.cz',
@@ -52,7 +52,7 @@ export const englishContent: PortfolioContent = {
     {
       name: 'Ombra',
       summary:
-        'A full-stack admin panel for a game development company to manage products and subscriptions. Built for internal use, with a focus on keeping everyday operations clear, efficient, and easy to manage.',
+        'An internal admin panel I built for a game studio to manage their products and subscriptions. The aim was to keep everyday operations quick to handle and easy to stay on top of.',
       stack: ['React', 'Flask', 'SQLAlchemy', 'Internal Tools'],
       image: '/projects/ombra.svg',
       websiteHref: '#',
@@ -61,7 +61,7 @@ export const englishContent: PortfolioContent = {
     {
       name: 'Skill',
       summary:
-        'A native licensing system for controlled software distribution, built around hardware-based authentication, backend verification, and a Windows client designed for stricter access control.',
+        'A licensing system for software that needs tight distribution control. Licenses are tied to the hardware they run on and verified against a backend, with a Windows client built to keep access locked down.',
       stack: ['C++', 'LLVM', 'Licensing', 'Windows'],
       image: '/projects/skill-cx.svg',
       websiteHref: '#',
@@ -70,7 +70,7 @@ export const englishContent: PortfolioContent = {
     {
       name: 'Stealth Sniper',
       summary:
-        'A commercial automation product built for fast, real-time workflows across multiple accounts, where timing, coordination, and reliability were critical.',
+        'A commercial automation tool I built and sold that ran real-time tasks across many accounts at once. Timing and reliability mattered most, so much of the work went into keeping it fast and stable under heavy use.',
       stack: ['C++', 'Automation', 'Real-Time Systems', 'Performance'],
       image: '/projects/stealth-sniper.svg',
       websiteHref: '#',

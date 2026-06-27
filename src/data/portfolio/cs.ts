@@ -43,7 +43,7 @@ export const czechContent: PortfolioContent = {
     {
       name: 'Dska',
       summary:
-        'Produkt pro české firmy, které hledají praktičtější alternativu k oficiálnímu portálu datových schránek. Nabízí přehlednější rozhraní, lepší práci se zprávami a workflow, které lépe odpovídá běžnému firemnímu provozu.',
+        'Použitelnější alternativa k oficiálnímu portálu datových schránek. Firmám dává přehlednější rozhraní, lepší práci se zprávami a postup, který odpovídá tomu, jak reálně fungují den za dnem.',
       stack: ['NestJS', 'Next.js', 'Go', 'ISDS'],
       image: '/projects/dska.svg',
       websiteHref: 'https://dska.cz',
@@ -52,7 +52,7 @@ export const czechContent: PortfolioContent = {
     {
       name: 'Ombra',
       summary:
-        'Full-stack admin panel pro herní studio na správu produktů a předplatných. Vznikl jako interní nástroj s důrazem na přehledný každodenní provoz, efektivitu a snadnější správu.',
+        'Interní admin panel, který jsem postavil pro herní studio na správu produktů a předplatných. Cílem bylo, aby běžná každodenní agenda šla rychle od ruky a dala se snadno udržet pod kontrolou.',
       stack: ['React', 'Flask', 'SQLAlchemy', 'Interní nástroje'],
       image: '/projects/ombra.svg',
       websiteHref: '#',
@@ -61,7 +61,7 @@ export const czechContent: PortfolioContent = {
     {
       name: 'Skill',
       summary:
-        'Nativní licenční systém pro řízenou distribuci softwaru, postavený na hardwarově vázané autentizaci, backendovém ověřování a Windows klientovi navrženém pro přísnější kontrolu přístupu.',
+        'Licenční systém pro software, který vyžaduje přísnou kontrolu distribuce. Licence jsou vázané na konkrétní hardware a ověřují se proti backendu, s Windows klientem postaveným tak, aby držel přístup pod kontrolou.',
       stack: ['C++', 'LLVM', 'Licensing', 'Windows'],
       image: '/projects/skill-cx.svg',
       websiteHref: '#',
@@ -70,7 +70,7 @@ export const czechContent: PortfolioContent = {
     {
       name: 'Stealth Sniper',
       summary:
-        'Komerční automatizační produkt navržený pro rychlé workflow v reálném čase napříč více účty, kde byly klíčové načasování, koordinace a spolehlivost.',
+        'Komerční automatizační nástroj, který jsem postavil a prodával a který běžel v reálném čase na více účtech najednou. Nejvíc záleželo na načasování a spolehlivosti, takže velká část práce šla do toho, aby byl rychlý a stabilní i při zátěži.',
       stack: ['C++', 'Automatizace', 'Systémy v reálném čase', 'Výkon'],
       image: '/projects/stealth-sniper.svg',
       websiteHref: '#',
